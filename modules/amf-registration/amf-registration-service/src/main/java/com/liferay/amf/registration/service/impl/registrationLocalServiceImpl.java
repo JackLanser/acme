@@ -16,6 +16,8 @@ package com.liferay.amf.registration.service.impl;
 
 import com.liferay.amf.registration.service.base.registrationLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -44,4 +46,26 @@ public class registrationLocalServiceImpl
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.registration.service.registrationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.registration.service.registrationLocalServiceUtil</code>.
 	 */
+	
+	public void addUser(String firstName, String lastName, String email, String userName, boolean male, int bMonth, int bDay, int bYear, 
+			String password1, String password2, String homePhone, String mobilePhone, String address1, String address2, String city,
+			String zip, String securityQuestion, String securityAnswer, boolean acceptedTou, long regionId) throws PortalException {
+		
+			User user = userLocalService.addUser(0, 0, false, password1, password2, false, userName, email, 0, null, 
+					null, firstName, null, lastName, 0, 0, male, bMonth, bDay, 
+					bYear, null, null, null, null, null, false, null);
+			
+			userLocalService.updateAgreedToTermsOfUse(user.getUserId(), acceptedTou);
+			
+			userLocalService.updateReminderQuery(user.getUserId(), securityQuestion, securityAnswer);
+			
+			phoneLocalService.addPhone(user.getUserId(), null, 0, homePhone, null, 0, false, null);
+			phoneLocalService.addPhone(user.getUserId(), null, 0, mobilePhone, null, 1, false, null);
+			
+			addressLocalService.addAddress(user.getUserId(), null, 0, address1, address2, null, city, zip, 
+					regionId, 19, 0, false, false, null);
+			
+	}
+	
+	
 }

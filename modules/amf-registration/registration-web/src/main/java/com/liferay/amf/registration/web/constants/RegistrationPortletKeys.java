@@ -6,6 +6,6 @@ package com.liferay.amf.registration.web.constants;
 public class RegistrationPortletKeys {
 
 	public static final String REGISTRATION =
-		"com_liferay_amf_registration_web_RegistrationPortlet";
+		"com_liferay_amf_registration_web_portlet_RegistrationPortlet";
 
 }

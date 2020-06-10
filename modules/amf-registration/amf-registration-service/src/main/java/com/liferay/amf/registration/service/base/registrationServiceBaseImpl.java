@@ -122,13 +122,6 @@ public abstract class registrationServiceBaseImpl
 		classNameService;
 
 	@Reference
-	protected com.liferay.portal.kernel.service.ContactLocalService
-		contactLocalService;
-
-	@Reference
-	protected com.liferay.portal.kernel.service.ContactService contactService;
-
-	@Reference
 	protected com.liferay.portal.kernel.service.PhoneLocalService
 		phoneLocalService;
 

@@ -33,6 +33,22 @@ public class registrationLocalServiceWrapper
 		_registrationLocalService = registrationLocalService;
 	}
 
+	@Override
+	public void addUser(
+			String firstName, String lastName, String email, String userName,
+			boolean male, int bMonth, int bDay, int bYear, String password1,
+			String password2, String homePhone, String mobilePhone,
+			String address1, String address2, String city, String zip,
+			String securityQuestion, String securityAnswer, boolean acceptedTou,
+			long regionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_registrationLocalService.addUser(
+			firstName, lastName, email, userName, male, bMonth, bDay, bYear,
+			password1, password2, homePhone, mobilePhone, address1, address2,
+			city, zip, securityQuestion, securityAnswer, acceptedTou, regionId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

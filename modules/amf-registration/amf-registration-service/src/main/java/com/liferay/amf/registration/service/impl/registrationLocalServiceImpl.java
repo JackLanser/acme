@@ -17,7 +17,12 @@ package com.liferay.amf.registration.service.impl;
 import com.liferay.amf.registration.service.base.registrationLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -50,21 +55,26 @@ public class registrationLocalServiceImpl
 	public void addUser(String firstName, String lastName, String email, String userName, boolean male, int bMonth, int bDay, int bYear, 
 			String password1, String password2, String homePhone, String mobilePhone, String address1, String address2, String city,
 			String zip, String securityQuestion, String securityAnswer, boolean acceptedTou, long regionId) throws PortalException {
+			System.out.println("Reached the local service.");
 		
-			User user = userLocalService.addUser(0, 0, false, password1, password2, false, userName, email, 0, null, 
-					null, firstName, null, lastName, 0, 0, male, bMonth, bDay, 
-					bYear, null, null, null, null, null, false, null);
+			User user = userLocalService.addUser(0, 20101, false, password1, password2, false, userName, email, 01, "", 
+					new Locale.Builder().setLanguage("en").setRegion("US").build(), firstName, "", lastName, 01, 01, male, bMonth, bDay, 
+					bYear, "", new long[0], new long[0], new long[0], new long[0], false, new ServiceContext());
+			
+			System.out.println("Successfully added user");
 			
 			userLocalService.updateAgreedToTermsOfUse(user.getUserId(), acceptedTou);
 			
+			System.out.println("passed TOU");
 			userLocalService.updateReminderQuery(user.getUserId(), securityQuestion, securityAnswer);
-			
-			phoneLocalService.addPhone(user.getUserId(), null, 0, homePhone, null, 0, false, null);
-			phoneLocalService.addPhone(user.getUserId(), null, 0, mobilePhone, null, 1, false, null);
-			
-			addressLocalService.addAddress(user.getUserId(), null, 0, address1, address2, null, city, zip, 
-					regionId, 19, 0, false, false, null);
-			
+			System.out.println("passed Q/A");
+			phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), homePhone, "", 11011, false, new ServiceContext());
+			System.out.println("passed phone");
+			phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), mobilePhone, "", 11008, true, new ServiceContext());
+			System.out.println("passed mobile phone");	
+			addressLocalService.addAddress(user.getUserId(), "", 0, address1, address2, "", city, zip, 
+					regionId, 19, 11001, false, false, new ServiceContext());
+			System.out.println("passed address");
 	}
 	
 	

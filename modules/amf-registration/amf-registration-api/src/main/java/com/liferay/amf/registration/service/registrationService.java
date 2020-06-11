@@ -47,6 +47,14 @@ public interface registrationService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link registrationServiceUtil} to access the registration remote service. Add custom service methods to <code>com.liferay.amf.registration.service.impl.registrationServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addUser(
+			String firstName, String lastName, String email, String userName,
+			boolean male, int bMonth, int bDay, int bYear, String password1,
+			String password2, String homePhone, String mobilePhone,
+			String address1, String address2, String city, String zip,
+			String securityQuestion, String securityAnswer, boolean acceptedTou,
+			String regionId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

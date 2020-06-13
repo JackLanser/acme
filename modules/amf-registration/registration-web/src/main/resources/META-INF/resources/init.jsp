@@ -19,6 +19,7 @@
  <%@ page import="com.liferay.portal.kernel.util.HtmlUtil"%>
  
  <%@ page import="com.liferay.amf.registration.web.constants.MVCCommandNames" %>
+ <%@ page import="com.liferay.portal.kernel.servlet.SessionErrors"%>
 
 
  <liferay-frontend:defineObjects />

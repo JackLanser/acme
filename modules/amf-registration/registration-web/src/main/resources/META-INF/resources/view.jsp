@@ -1,5 +1,7 @@
 <%@ include file="./init.jsp"%>
+<%@ include file="./errors.jsp" %>
 
+<c:set var="states">AK,AL,AR,AS,AZ,CA,CO,CT,DC,DE,FL,GA,GU,HI,IA,ID,IL,IN,KS,KY,LA,MA,MD,ME,MI,MN,MO,MP,MS,MT,NC,ND,NE,NH,NJ,NM,NV,NY,OH,OK,OR,PA,PR,RI,SC,SD,TN,TX,UM,UT,VA,VI,VT,WA,WI,WV,WY</c:set>
 
 <portlet:actionURL var="registrationActionURL" name="<%=MVCCommandNames.SUBMIT_FORM %>"></portlet:actionURL>
 
@@ -12,7 +14,7 @@
 					<aui:input label="Username" name="username" type="text" />
 				</aui:col>
 				<aui:col width="50">
-					<aui:input label="Email" name="email" type="email" />
+					<aui:input label="Email" name="email" type="text" />
 				</aui:col>
 			</aui:row>
 			<aui:row>
@@ -64,7 +66,11 @@
 					<aui:input label="City" name="city" type="input" />
 				</aui:col>
 				<aui:col width="25">
-					<aui:input type="text" label="State" name="state" />
+					<aui:select label="State" name="state">
+						<c:forEach var="s" items="${states}">
+							<aui:option label="${s}" />
+						</c:forEach>
+					</aui:select>
 				</aui:col>
 			</aui:row>
 			<aui:row>

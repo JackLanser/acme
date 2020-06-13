@@ -19,4 +19,10 @@
 	package-path="com.liferay.portal"></reference>
     
     </entity>
+    
+     <!-- Exceptions -->
+
+	 <exceptions>
+	     <exception>RegistrationValidation</exception>
+	 </exceptions>
 </service-builder>

@@ -1,11 +1,13 @@
 package com.liferay.amf.registration.web.portlet.actions;
 
+import com.liferay.amf.registration.exception.RegistrationValidationException;
 import com.liferay.amf.registration.service.registrationService;
 import com.liferay.amf.registration.web.constants.MVCCommandNames;
 import com.liferay.amf.registration.web.constants.RegistrationPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -50,11 +52,13 @@ public class SumbitFormMVCActionCommand extends BaseMVCActionCommand {
 		boolean male = false;
 		
 		if(Gender.equals("Male")) male = true;
-		System.out.println("Calling the remote");
 		try{
 			_registrationService.addUser(firstName, lastName, email, userName, male, bMonth, bDay, bYear, password1,
 				password2, homePhone, mobilePhone, address1, address2, city, zip, securityQuestion, securityAnswer, 
 				acceptedTou, state);
+		}
+		catch (RegistrationValidationException rve) {
+			rve.getErrors().forEach(key -> SessionErrors.add(actionRequest, key));
 		}catch (PortalException e) {
 			e.printStackTrace();
 		}

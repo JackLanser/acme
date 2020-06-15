@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + RegistrationPortletKeys.REGISTRATION,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
-		"com.liferay.portlet.display-category=category.registration",
+		"com.liferay.portlet.display-category=Registration",
 		"com.liferay.portlet.instanceable=false",
 	},
 	service = Portlet.class

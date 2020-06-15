@@ -53,17 +53,14 @@ public class RegistrationValidatorImpl implements RegistrationValidator{
 		Pattern pEmail = Pattern.compile("^[a-zA-Z0-9@.]*$");
 		Pattern pPassword = Pattern.compile("^((?=.*[a-z])(?=.*[0-9])(?=.*[!^&*@#$%])(?=.*[A-Z]).{6,})$");
 		
-		System.out.println("validating firstname");
 		if(firstName.length() > 50) errors.add("firstNameErrorTooLong");
 		if(firstName.equals("")) errors.add("firstNameErrorEmpty");
 		if(!p.matcher(firstName).matches()) errors.add("firstNameErrorNonAlpha");
-		
-		System.out.println("validating lastname");
+;
 		if(lastName.length() > 50) errors.add("lastNameErrorTooLong");
 		if(lastName.equals("")) errors.add("lastNameErrorEmpty");
 		if(!p.matcher(lastName).matches()) errors.add("lastNameErrorNonAlpha");
-		System.out.println("validating email");
-		
+
 		if(email.length() > 255) errors.add("emailErrorTooLong");
 		if(email.equals("")) errors.add("emailErrorEmpty");
 		if(!email.contains("@")) errors.add("emailErrorNoAt");
@@ -78,8 +75,7 @@ public class RegistrationValidatorImpl implements RegistrationValidator{
 		if(!pPassword.matcher(password1).matches()) errors.add("passwordErrorNonAlpha");
 		if(password1.length() < 6) errors.add("passwordErrorTooShort");
 		if(!password1.equals(password2)) errors.add("passwordErrorConfirmMismatch");
-		System.out.println(errors.toString());
-		
+
 		if(compareBirthday(bDay, bMonth, bYear)) errors.add("birthdayError");
 		
 		

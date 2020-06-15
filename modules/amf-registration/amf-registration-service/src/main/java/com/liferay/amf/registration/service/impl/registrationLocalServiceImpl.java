@@ -64,23 +64,21 @@ public class registrationLocalServiceImpl
 			_registrationValidator.validate(firstName, lastName, email, userName, male, bMonth, bDay, bYear, password1,
 					password2, homePhone, mobilePhone, address1, address2, city, zip, securityQuestion, securityAnswer, 
 					acceptedTou);
-			System.out.println("Passed validation");
 			User user = userLocalService.addUser(0, 20101, false, password1, password2, false, userName, email, 01, "", 
 					new Locale.Builder().setLanguage("en").setRegion("US").build(), firstName, "", lastName, 01, 01, male, bMonth, bDay, 
 					bYear, "", new long[0], new long[0], new long[0], new long[0], false, new ServiceContext());
 				
 			userLocalService.updateAgreedToTermsOfUse(user.getUserId(), acceptedTou);
-			
-			System.out.println("passed TOU");
+		
 			userLocalService.updateReminderQuery(user.getUserId(), securityQuestion, securityAnswer);
-			System.out.println("passed Q/A");
+			
 			phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), homePhone, "", 11011, false, new ServiceContext());
-			System.out.println("passed phone");
+			
 			phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), mobilePhone, "", 11008, true, new ServiceContext());
-			System.out.println("passed mobile phone");	
+			
 			addressLocalService.addAddress(user.getUserId(), "", 0, address1, address2, "", city, zip, 
 					region.getRegionId(), 19, 11001, false, false, new ServiceContext());
-			System.out.println("passed address");
+			
 	}
 	
 	@Reference

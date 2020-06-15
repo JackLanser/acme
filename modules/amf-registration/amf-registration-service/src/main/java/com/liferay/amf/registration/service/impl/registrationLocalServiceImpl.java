@@ -19,7 +19,9 @@ import com.liferay.amf.registration.validator.RegistrationValidator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Locale;
@@ -55,8 +57,9 @@ public class registrationLocalServiceImpl
 	
 	public void addUser(String firstName, String lastName, String email, String userName, boolean male, int bMonth, int bDay, int bYear, 
 			String password1, String password2, String homePhone, String mobilePhone, String address1, String address2, String city,
-			String zip, String securityQuestion, String securityAnswer, boolean acceptedTou, long regionId) throws PortalException {
+			String zip, String securityQuestion, String securityAnswer, boolean acceptedTou, String regionId) throws PortalException {
 		
+			Region region = RegionServiceUtil.fetchRegion(19, regionId);
 			
 			_registrationValidator.validate(firstName, lastName, email, userName, male, bMonth, bDay, bYear, password1,
 					password2, homePhone, mobilePhone, address1, address2, city, zip, securityQuestion, securityAnswer, 
@@ -76,7 +79,7 @@ public class registrationLocalServiceImpl
 			phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), mobilePhone, "", 11008, true, new ServiceContext());
 			System.out.println("passed mobile phone");	
 			addressLocalService.addAddress(user.getUserId(), "", 0, address1, address2, "", city, zip, 
-					regionId, 19, 11001, false, false, new ServiceContext());
+					region.getRegionId(), 19, 11001, false, false, new ServiceContext());
 			System.out.println("passed address");
 	}
 	

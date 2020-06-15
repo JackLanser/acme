@@ -1,7 +1,7 @@
 package com.liferay.amf.registration.web.portlet.actions;
 
 import com.liferay.amf.registration.exception.RegistrationValidationException;
-import com.liferay.amf.registration.service.registrationService;
+import com.liferay.amf.registration.service.registrationLocalService;
 import com.liferay.amf.registration.web.constants.MVCCommandNames;
 import com.liferay.amf.registration.web.constants.RegistrationPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,7 +53,7 @@ public class SumbitFormMVCActionCommand extends BaseMVCActionCommand {
 		
 		if(Gender.equals("Male")) male = true;
 		try{
-			_registrationService.addUser(firstName, lastName, email, userName, male, bMonth, bDay, bYear, password1,
+			_registrationLocalService.addUser(firstName, lastName, email, userName, male, bMonth, bDay, bYear, password1,
 				password2, homePhone, mobilePhone, address1, address2, city, zip, securityQuestion, securityAnswer, 
 				acceptedTou, state);
 		}
@@ -67,6 +67,6 @@ public class SumbitFormMVCActionCommand extends BaseMVCActionCommand {
 	}
 	
 	 @Reference
-     protected registrationService _registrationService;
+     protected registrationLocalService _registrationLocalService;
 
 }

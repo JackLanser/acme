@@ -50,7 +50,7 @@ public interface registrationLocalService extends BaseLocalService {
 			String password2, String homePhone, String mobilePhone,
 			String address1, String address2, String city, String zip,
 			String securityQuestion, String securityAnswer, boolean acceptedTou,
-			long regionId)
+			String regionId)
 		throws PortalException;
 
 	/**

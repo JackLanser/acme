@@ -14,15 +14,9 @@
 
 package com.liferay.amf.registration.service.http;
 
-import com.liferay.amf.registration.service.registrationServiceUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.rmi.RemoteException;
-
 /**
  * Provides the SOAP utility for the
- * <code>registrationServiceUtil</code> service
+ * <code>com.liferay.amf.registration.service.registrationServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -49,31 +43,4 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class registrationServiceSoap {
-
-	public static void addUser(
-			String firstName, String lastName, String email, String userName,
-			boolean male, int bMonth, int bDay, int bYear, String password1,
-			String password2, String homePhone, String mobilePhone,
-			String address1, String address2, String city, String zip,
-			String securityQuestion, String securityAnswer, boolean acceptedTou,
-			String regionId)
-		throws RemoteException {
-
-		try {
-			registrationServiceUtil.addUser(
-				firstName, lastName, email, userName, male, bMonth, bDay, bYear,
-				password1, password2, homePhone, mobilePhone, address1,
-				address2, city, zip, securityQuestion, securityAnswer,
-				acceptedTou, regionId);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		registrationServiceSoap.class);
-
 }

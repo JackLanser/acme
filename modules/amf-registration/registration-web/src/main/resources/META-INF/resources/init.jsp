@@ -17,6 +17,7 @@
  <%@ page import="com.liferay.portal.kernel.language.LanguageUtil"%>
  <%@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState"%>
  <%@ page import="com.liferay.portal.kernel.util.HtmlUtil"%>
+ <%@ page import="com.liferay.portal.kernel.theme.ThemeDisplay" %>
  
  <%@ page import="com.liferay.amf.registration.web.constants.MVCCommandNames" %>
  <%@ page import="com.liferay.portal.kernel.servlet.SessionErrors"%>

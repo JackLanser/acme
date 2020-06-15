@@ -50,15 +50,5 @@ public class registrationServiceImpl extends registrationServiceBaseImpl {
 	 * Never reference this class directly. Always use <code>com.liferay.amf.registration.service.registrationServiceUtil</code> to access the registration remote service.
 	 */
 	
-	public void addUser(String firstName, String lastName, String email, String userName, boolean male, int bMonth, int bDay, int bYear, 
-			String password1, String password2, String homePhone, String mobilePhone, String address1, String address2, String city,
-			String zip, String securityQuestion, String securityAnswer, boolean acceptedTou, String regionId) throws PortalException {
-		
-		Region region = regionService.fetchRegion(19, regionId);
-		
-		registrationLocalService.addUser(firstName, lastName, email, userName, male, bMonth, bDay, bYear, password1, password2, homePhone, mobilePhone, address1, 
-				address2, city, zip, securityQuestion, securityAnswer, acceptedTou, region.getRegionId());
-	
-	}
 	
 }

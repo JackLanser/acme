@@ -91,8 +91,20 @@ public class RegistrationValidatorImpl implements RegistrationValidator{
 	}
 	
 	private void validatePhone(String homePhone, String mobilePhone, List<String> errors){
-
+		
 		Pattern pNumber = Pattern.compile("^[0-9]{10}$");
+		if(homePhone.equals("") && mobilePhone.equals("")) {
+			return;
+		}
+		if(homePhone.equals("")) {
+			if(!pNumber.matcher(mobilePhone).matches()) errors.add("mobilePhoneError");
+			return;
+		}
+		if(mobilePhone.equals("")) {
+			if(!pNumber.matcher(homePhone).matches()) errors.add("homePhoneError");
+			return;
+		}
+		
 		if(!pNumber.matcher(homePhone).matches()) errors.add("homePhoneError");
 		if(!pNumber.matcher(mobilePhone).matches()) errors.add("mobilePhoneError");
 

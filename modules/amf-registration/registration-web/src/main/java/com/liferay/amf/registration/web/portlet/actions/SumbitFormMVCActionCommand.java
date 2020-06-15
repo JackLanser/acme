@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.io.IOException;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -28,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SumbitFormMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, PortalException {
+	public void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException, PortalException, IOException {
 		String firstName = ParamUtil.getString(actionRequest, "first_name");
 		String lastName = ParamUtil.getString(actionRequest, "last_name");
 		String userName = ParamUtil.getString(actionRequest, "username");
@@ -50,6 +52,8 @@ public class SumbitFormMVCActionCommand extends BaseMVCActionCommand {
 		String securityAnswer = ParamUtil.getString(actionRequest, "security_answer");
 		boolean acceptedTou = ParamUtil.getBoolean(actionRequest, "accepted_tou");
 		boolean male = false;
+		
+		actionResponse.sendRedirect("/web/guest/signup");
 		
 		if(Gender.equals("Male")) male = true;
 		try{

@@ -72,9 +72,13 @@ public class registrationLocalServiceImpl
 		
 			userLocalService.updateReminderQuery(user.getUserId(), securityQuestion, securityAnswer);
 			
-			phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), homePhone, "", 11011, false, new ServiceContext());
+			if(!homePhone.equals("")) {
+				phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), homePhone, "", 11011, false, new ServiceContext());
+			}
 			
+			if(!mobilePhone.equals("")) {
 			phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), mobilePhone, "", 11008, true, new ServiceContext());
+			}
 			
 			addressLocalService.addAddress(user.getUserId(), "", 0, address1, address2, "", city, zip, 
 					region.getRegionId(), 19, 11001, false, false, new ServiceContext());

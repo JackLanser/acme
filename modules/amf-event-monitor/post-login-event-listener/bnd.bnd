@@ -1,0 +1,6 @@
+Bundle-Name: post-login-event-listener
+Bundle-SymbolicName: com.liferay.amf.login.events.post
+Bundle-Version: 1.0.0
+-privatepackage: \
+	com.liferay.amf.monitor.service,\
+	com.liferay.amf.login.events.post

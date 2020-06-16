@@ -70,6 +70,8 @@ public interface eventMonitorLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public eventMonitor addeventMonitor(eventMonitor eventMonitor);
 
+	public eventMonitor addeventMonitor(long userId, String eventType);
+
 	/**
 	 * Creates a new event monitor with the primary key. Does not add the event monitor to the database.
 	 *

@@ -49,26 +49,27 @@ public class eventMonitorLocalServiceImpl
 	 * Never reference this class directly. Use <code>com.liferay.amf.monitor.service.eventMonitorLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.monitor.service.eventMonitorLocalServiceUtil</code>.
 	 */
 	public eventMonitor addeventMonitor(long userId, String eventType) {
-		User user = userLocalService.fetchUserById(userId);
+		System.out.println("Got to add event monitor");
+//		User user = userLocalService.fetchUserById(userId);
 		long monitorId = counterLocalService.increment();
-		Date date = new Date();
 		eventMonitor event = createeventMonitor(monitorId);
-		event.setUserId(userId);
-		event.setUserName(user.getScreenName());
-		if(eventType.equals("regstration")) {
-			event.setCreateDate(user.getCreateDate());
-		}
-		else {
-			event.setCreateDate(user.getLastLoginDate());
-		}
-		event.setEventType(eventType);
-		if(eventType.equals("registration")) {
-			event.setUserIP(user.getLoginIP());
-		}
-		else {
-			event.setUserIP(user.getLastLoginIP());
-		}
-		return super.addeventMonitor(event);
+//		event.setUserId(userId);
+//		event.setUserName(user.getScreenName());
+//		if(eventType.equals("regstration")) {
+//			event.setCreateDate(user.getCreateDate());
+//		}
+//		else {
+//			event.setCreateDate(user.getLastLoginDate());
+//		}
+//		event.setEventType(eventType);
+//		if(eventType.equals("registration")) {
+//			event.setUserIP(user.getLoginIP());
+//		}
+//		else {
+//			event.setUserIP(user.getLastLoginIP());
+//		}
+		return event;
+		//return super.addeventMonitor(event);
 	}
 	
 	

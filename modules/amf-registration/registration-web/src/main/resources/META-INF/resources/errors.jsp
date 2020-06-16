@@ -41,7 +41,7 @@
 
 <liferay-ui:error key="zipError" message="zip" />
 
-<liferay-ui:error key="securityAnswerNonAlpha" message="security.anser.non.alpha" />
+<liferay-ui:error key="securityAnswerNonAlpha" message="security.answer.non.alpha" />
 <liferay-ui:error key="securityAnswerTooLong" message="security.answer.too.long" />
 <liferay-ui:error key="securityAnswerEmpty" message="security.answer.empty" />
 

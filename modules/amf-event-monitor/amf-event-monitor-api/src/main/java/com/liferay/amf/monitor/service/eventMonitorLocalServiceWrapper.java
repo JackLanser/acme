@@ -46,6 +46,13 @@ public class eventMonitorLocalServiceWrapper
 		return _eventMonitorLocalService.addeventMonitor(eventMonitor);
 	}
 
+	@Override
+	public com.liferay.amf.monitor.model.eventMonitor addeventMonitor(
+		long userId, String eventType) {
+
+		return _eventMonitorLocalService.addeventMonitor(userId, eventType);
+	}
+
 	/**
 	 * Creates a new event monitor with the primary key. Does not add the event monitor to the database.
 	 *

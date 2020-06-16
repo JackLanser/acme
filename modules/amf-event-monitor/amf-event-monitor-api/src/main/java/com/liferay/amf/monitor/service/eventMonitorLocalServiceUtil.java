@@ -50,6 +50,12 @@ public class eventMonitorLocalServiceUtil {
 		return getService().addeventMonitor(eventMonitor);
 	}
 
+	public static com.liferay.amf.monitor.model.eventMonitor addeventMonitor(
+		long userId, String eventType) {
+
+		return getService().addeventMonitor(userId, eventType);
+	}
+
 	/**
 	 * Creates a new event monitor with the primary key. Does not add the event monitor to the database.
 	 *

@@ -77,7 +77,7 @@ public class registrationLocalServiceImpl
 			}
 			
 			if(!mobilePhone.equals("")) {
-			phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), mobilePhone, "", 11008, true, new ServiceContext());
+				phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), mobilePhone, "", 11008, true, new ServiceContext());
 			}
 			
 			addressLocalService.addAddress(user.getUserId(), "", 0, address1, address2, "", city, zip, 

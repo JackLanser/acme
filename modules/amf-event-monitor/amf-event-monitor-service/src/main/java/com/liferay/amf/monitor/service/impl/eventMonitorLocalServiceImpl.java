@@ -55,10 +55,19 @@ public class eventMonitorLocalServiceImpl
 		eventMonitor event = createeventMonitor(monitorId);
 		event.setUserId(userId);
 		event.setUserName(user.getScreenName());
-		event.setCreateDate(date);
+		if(eventType.equals("regstration")) {
+			event.setCreateDate(user.getCreateDate());
+		}
+		else {
+			event.setCreateDate(user.getLastLoginDate());
+		}
 		event.setEventType(eventType);
-		event.setUserIP(user.getLoginIP());
-		
+		if(eventType.equals("registration")) {
+			event.setUserIP(user.getLoginIP());
+		}
+		else {
+			event.setUserIP(user.getLastLoginIP());
+		}
 		return super.addeventMonitor(event);
 	}
 	

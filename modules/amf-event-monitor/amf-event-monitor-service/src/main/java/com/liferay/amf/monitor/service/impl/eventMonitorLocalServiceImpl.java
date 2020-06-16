@@ -14,8 +14,12 @@
 
 package com.liferay.amf.monitor.service.impl;
 
+import com.liferay.amf.monitor.model.eventMonitor;
 import com.liferay.amf.monitor.service.base.eventMonitorLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.model.User;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -44,8 +48,18 @@ public class eventMonitorLocalServiceImpl
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.monitor.service.eventMonitorLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.monitor.service.eventMonitorLocalServiceUtil</code>.
 	 */
-	public void addeventMonitor(long userID) {
+	public eventMonitor addeventMonitor(long userId, String eventType) {
+		User user = userLocalService.fetchUserById(userId);
+		long monitorId = counterLocalService.increment();
+		Date date = new Date();
+		eventMonitor event = createeventMonitor(monitorId);
+		event.setUserId(userId);
+		event.setUserName(user.getScreenName());
+		event.setCreateDate(date);
+		event.setEventType(eventType);
+		event.setUserIP(user.getLoginIP());
 		
+		return super.addeventMonitor(event);
 	}
 	
 	

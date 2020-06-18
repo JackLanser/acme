@@ -177,6 +177,17 @@ public interface eventMonitorLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public eventMonitor fetcheventMonitor(long eventMonitorId);
 
+	public List<eventMonitor> findAll(int start, int end);
+
+	public List<eventMonitor> findByEventType(String eventType);
+
+	public List<eventMonitor> findByEventType(
+		String eventType, int start, int end);
+
+	public List<eventMonitor> findByEventType(
+		String eventType, int start, int end,
+		OrderByComparator<eventMonitor> orderByComparator);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -212,6 +223,9 @@ public interface eventMonitorLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int geteventMonitorsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getEventMonitorsCountByEventType(String eventType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

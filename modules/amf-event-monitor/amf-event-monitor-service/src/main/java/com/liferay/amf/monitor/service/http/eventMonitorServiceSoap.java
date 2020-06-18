@@ -14,9 +14,15 @@
 
 package com.liferay.amf.monitor.service.http;
 
+import com.liferay.amf.monitor.service.eventMonitorServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.amf.monitor.service.eventMonitorServiceUtil</code> service
+ * <code>eventMonitorServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -54,4 +60,122 @@ package com.liferay.amf.monitor.service.http;
  * @generated
  */
 public class eventMonitorServiceSoap {
+
+	public static com.liferay.amf.monitor.model.eventMonitorSoap
+			addeventMonitor(long userId, String eventType)
+		throws RemoteException {
+
+		try {
+			com.liferay.amf.monitor.model.eventMonitor returnValue =
+				eventMonitorServiceUtil.addeventMonitor(userId, eventType);
+
+			return com.liferay.amf.monitor.model.eventMonitorSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.amf.monitor.model.eventMonitorSoap[]
+			findByEventType(String eventType)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+				returnValue = eventMonitorServiceUtil.findByEventType(
+					eventType);
+
+			return com.liferay.amf.monitor.model.eventMonitorSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.amf.monitor.model.eventMonitorSoap[]
+			findByEventType(String eventType, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+				returnValue = eventMonitorServiceUtil.findByEventType(
+					eventType, start, end);
+
+			return com.liferay.amf.monitor.model.eventMonitorSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.amf.monitor.model.eventMonitorSoap[]
+			findByEventType(
+				String eventType, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.amf.monitor.model.eventMonitor>
+						orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+				returnValue = eventMonitorServiceUtil.findByEventType(
+					eventType, start, end, orderByComparator);
+
+			return com.liferay.amf.monitor.model.eventMonitorSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.amf.monitor.model.eventMonitorSoap[] findAll(
+			int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+				returnValue = eventMonitorServiceUtil.findAll(start, end);
+
+			return com.liferay.amf.monitor.model.eventMonitorSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static long getEventMonitorsCountByEventType(String eventType)
+		throws RemoteException {
+
+		try {
+			long returnValue =
+				eventMonitorServiceUtil.getEventMonitorsCountByEventType(
+					eventType);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		eventMonitorServiceSoap.class);
+
 }

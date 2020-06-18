@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -95,16 +97,20 @@ public class eventMonitorModelImpl
 		"drop table AmfEventMonitor_eventMonitor";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY eventMonitor.eventMonitorId ASC";
+		" ORDER BY eventMonitor.createDate DESC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY AmfEventMonitor_eventMonitor.eventMonitorId ASC";
+		" ORDER BY AmfEventMonitor_eventMonitor.createDate DESC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
+
+	public static final long EVENTTYPE_COLUMN_BITMASK = 1L;
+
+	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -378,6 +384,8 @@ public class eventMonitorModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 
@@ -410,7 +418,21 @@ public class eventMonitorModelImpl
 
 	@Override
 	public void setEventType(String eventType) {
+		_columnBitmask |= EVENTTYPE_COLUMN_BITMASK;
+
+		if (_originalEventType == null) {
+			_originalEventType = _eventType;
+		}
+
 		_eventType = eventType;
+	}
+
+	public String getOriginalEventType() {
+		return GetterUtil.getString(_originalEventType);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -459,17 +481,18 @@ public class eventMonitorModelImpl
 
 	@Override
 	public int compareTo(eventMonitor eventMonitor) {
-		long primaryKey = eventMonitor.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = DateUtil.compareTo(
+			getCreateDate(), eventMonitor.getCreateDate());
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -511,6 +534,12 @@ public class eventMonitorModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		eventMonitorModelImpl eventMonitorModelImpl = this;
+
+		eventMonitorModelImpl._originalEventType =
+			eventMonitorModelImpl._eventType;
+
+		eventMonitorModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -637,6 +666,8 @@ public class eventMonitorModelImpl
 	private Date _createDate;
 	private String _userIP;
 	private String _eventType;
+	private String _originalEventType;
+	private long _columnBitmask;
 	private eventMonitor _escapedModel;
 
 }

@@ -10,6 +10,18 @@
 		<!-- PK fields -->
 
 		<column name="eventMonitorId" primary="true" type="long"></column>
+		
+		<!-- Order -->
+		<order by="desc">
+		<order-column name="createDate" />
+		</order>
+		
+		<!-- Finders -->
+		<!-- Find by groupId -->
+		<finder name="EventType" return-type="Collection">
+		<finder-column name="eventType"></finder-column>
+		</finder>
+
 
 		<!-- Group instance -->
 

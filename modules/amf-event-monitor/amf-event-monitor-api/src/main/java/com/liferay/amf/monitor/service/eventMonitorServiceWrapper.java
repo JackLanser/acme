@@ -30,6 +30,51 @@ public class eventMonitorServiceWrapper
 		_eventMonitorService = eventMonitorService;
 	}
 
+	@Override
+	public com.liferay.amf.monitor.model.eventMonitor addeventMonitor(
+		long userId, String eventType) {
+
+		return _eventMonitorService.addeventMonitor(userId, eventType);
+	}
+
+	@Override
+	public java.util.List<com.liferay.amf.monitor.model.eventMonitor> findAll(
+		int start, int end) {
+
+		return _eventMonitorService.findAll(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+		findByEventType(String eventType) {
+
+		return _eventMonitorService.findByEventType(eventType);
+	}
+
+	@Override
+	public java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+		findByEventType(String eventType, int start, int end) {
+
+		return _eventMonitorService.findByEventType(eventType, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+		findByEventType(
+			String eventType, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.amf.monitor.model.eventMonitor>
+					orderByComparator) {
+
+		return _eventMonitorService.findByEventType(
+			eventType, start, end, orderByComparator);
+	}
+
+	@Override
+	public long getEventMonitorsCountByEventType(String eventType) {
+		return _eventMonitorService.getEventMonitorsCountByEventType(eventType);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

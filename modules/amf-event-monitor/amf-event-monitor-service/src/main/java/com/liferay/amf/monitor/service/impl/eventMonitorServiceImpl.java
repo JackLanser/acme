@@ -14,8 +14,14 @@
 
 package com.liferay.amf.monitor.service.impl;
 
+import com.liferay.amf.monitor.model.eventMonitor;
 import com.liferay.amf.monitor.service.base.eventMonitorServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -46,4 +52,35 @@ public class eventMonitorServiceImpl extends eventMonitorServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.amf.monitor.service.eventMonitorServiceUtil</code> to access the event monitor remote service.
 	 */
+	
+	public eventMonitor addeventMonitor(long userId, String eventType) {
+		return eventMonitorLocalService.addeventMonitor(userId, eventType);
+	}
+	
+	public List<eventMonitor> findByEventType(String eventType){
+		return eventMonitorLocalService.findByEventType(eventType);
+	}
+	
+	public List<eventMonitor> findByEventType(
+			String eventType, int start, int end) {
+
+			return eventMonitorLocalService.findByEventType(eventType, start, end);
+		}
+	
+	public List<eventMonitor> findByEventType(
+			String eventType, int start, int end,
+			OrderByComparator<eventMonitor> orderByComparator) {
+
+			return eventMonitorLocalService.findByEventType(eventType, start, end, orderByComparator);
+		}
+	
+	public List<eventMonitor> findAll(int start, int end) {
+		return eventMonitorLocalService.findAll(start, end);
+	}
+	
+	public long getEventMonitorsCountByEventType(String eventType) {
+		return eventMonitorLocalService.getEventMonitorsCountByEventType(eventType);
+	}
+	
+	
 }

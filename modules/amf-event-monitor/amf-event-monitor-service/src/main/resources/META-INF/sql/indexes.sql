@@ -1,0 +1,1 @@
+create index IX_BAA75ED9 on AmfEventMonitor_eventMonitor (eventType[$COLUMN_LENGTH:75$]);

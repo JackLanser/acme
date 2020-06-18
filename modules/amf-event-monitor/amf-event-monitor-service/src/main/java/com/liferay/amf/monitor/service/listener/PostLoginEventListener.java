@@ -1,10 +1,12 @@
-package com.liferay.amf.login.events.post;
+package com.liferay.amf.monitor.service.listener;
 
 import com.liferay.amf.monitor.model.eventMonitor;
-import com.liferay.amf.monitor.service.eventMonitorLocalService;
+import com.liferay.amf.monitor.service.eventMonitorService;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.LifecycleEvent;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
 
 import org.osgi.service.component.annotations.Component;
@@ -25,14 +27,18 @@ public class PostLoginEventListener implements LifecycleAction {
 	@Override
 	public void processLifecycleEvent(LifecycleEvent lifecycleEvent) 
 			throws ActionException {
-		//eventMonitor event = _eventMonitorLocalService.addeventMonitor(0, "Login");
-		System.out.println(_eventMonitorLocalService);
-	}	
+		try {
+			User user = _userService.getCurrentUser();
+			eventMonitor event = _eventMonitorService.addeventMonitor(user.getUserId(), "Login");
+		} catch (PortalException e) {
+			e.printStackTrace();
+		}
+		}	
 	
 	
 	@Reference
 	protected UserService _userService;
 	
 	@Reference
-	protected eventMonitorLocalService _eventMonitorLocalService;
+	protected eventMonitorService _eventMonitorService;
 }

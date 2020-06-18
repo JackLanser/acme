@@ -17,9 +17,12 @@ package com.liferay.amf.monitor.service.impl;
 import com.liferay.amf.monitor.model.eventMonitor;
 import com.liferay.amf.monitor.service.base.eventMonitorLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -50,26 +53,52 @@ public class eventMonitorLocalServiceImpl
 	 */
 	public eventMonitor addeventMonitor(long userId, String eventType) {
 		System.out.println("Got to add event monitor");
-//		User user = userLocalService.fetchUserById(userId);
+		User user = userLocalService.fetchUserById(userId);
 		long monitorId = counterLocalService.increment();
 		eventMonitor event = createeventMonitor(monitorId);
-//		event.setUserId(userId);
-//		event.setUserName(user.getScreenName());
-//		if(eventType.equals("regstration")) {
-//			event.setCreateDate(user.getCreateDate());
-//		}
-//		else {
-//			event.setCreateDate(user.getLastLoginDate());
-//		}
-//		event.setEventType(eventType);
-//		if(eventType.equals("registration")) {
-//			event.setUserIP(user.getLoginIP());
-//		}
-//		else {
-//			event.setUserIP(user.getLastLoginIP());
-//		}
-		return event;
-		//return super.addeventMonitor(event);
+		event.setUserId(userId);
+		event.setUserName(user.getScreenName());
+		if(eventType.equals("Registration")) {
+			event.setCreateDate(user.getCreateDate());
+		}
+		else {
+			event.setCreateDate(user.getLastLoginDate());
+		}
+		event.setEventType(eventType);
+		if(eventType.equals("Registration")) {
+			event.setUserIP("0.0.0.0");
+		}
+		else {
+			event.setUserIP(user.getLastLoginIP());
+		}
+		return super.addeventMonitor(event);
+	}
+	
+	public List<eventMonitor> findByEventType(String eventType){
+		
+		return eventMonitorPersistence.findByEventType(eventType);
+	}
+	
+	public List<eventMonitor> findByEventType(
+			String eventType, int start, int end) {
+
+			return eventMonitorPersistence.findByEventType(eventType, start, end, null);
+		}
+	
+	public List<eventMonitor> findByEventType(
+			String eventType, int start, int end,
+			OrderByComparator<eventMonitor> orderByComparator) {
+
+			return eventMonitorPersistence.findByEventType(eventType, start, end, orderByComparator, true);
+		}
+	
+	public List<eventMonitor> findAll(int start, int end) {
+		return eventMonitorPersistence.findAll(start, end, null);
+	}
+	
+	public long getEventMonitorsCountByEventType(String eventType) {
+		DynamicQuery dynamicQuery = dynamicQuery().add(RestrictionsFactoryUtil.eq("eventType", eventType));
+		return dynamicQueryCount(dynamicQuery);
 	}
 	
 	

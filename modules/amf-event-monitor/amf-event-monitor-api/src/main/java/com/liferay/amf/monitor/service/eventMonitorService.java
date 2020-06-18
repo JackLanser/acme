@@ -14,13 +14,18 @@
 
 package com.liferay.amf.monitor.service;
 
+import com.liferay.amf.monitor.model.eventMonitor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -47,6 +52,21 @@ public interface eventMonitorService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link eventMonitorServiceUtil} to access the event monitor remote service. Add custom service methods to <code>com.liferay.amf.monitor.service.impl.eventMonitorServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public eventMonitor addeventMonitor(long userId, String eventType);
+
+	public List<eventMonitor> findAll(int start, int end);
+
+	public List<eventMonitor> findByEventType(String eventType);
+
+	public List<eventMonitor> findByEventType(
+		String eventType, int start, int end);
+
+	public List<eventMonitor> findByEventType(
+		String eventType, int start, int end,
+		OrderByComparator<eventMonitor> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getEventMonitorsCountByEventType(String eventType);
 
 	/**
 	 * Returns the OSGi service identifier.

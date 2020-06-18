@@ -124,6 +124,175 @@ public class eventMonitorUtil {
 	}
 
 	/**
+	 * Returns all the event monitors where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @return the matching event monitors
+	 */
+	public static List<eventMonitor> findByEventType(String eventType) {
+		return getPersistence().findByEventType(eventType);
+	}
+
+	/**
+	 * Returns a range of all the event monitors where eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
+	 * </p>
+	 *
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of event monitors
+	 * @param end the upper bound of the range of event monitors (not inclusive)
+	 * @return the range of matching event monitors
+	 */
+	public static List<eventMonitor> findByEventType(
+		String eventType, int start, int end) {
+
+		return getPersistence().findByEventType(eventType, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the event monitors where eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
+	 * </p>
+	 *
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of event monitors
+	 * @param end the upper bound of the range of event monitors (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching event monitors
+	 */
+	public static List<eventMonitor> findByEventType(
+		String eventType, int start, int end,
+		OrderByComparator<eventMonitor> orderByComparator) {
+
+		return getPersistence().findByEventType(
+			eventType, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the event monitors where eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
+	 * </p>
+	 *
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of event monitors
+	 * @param end the upper bound of the range of event monitors (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching event monitors
+	 */
+	public static List<eventMonitor> findByEventType(
+		String eventType, int start, int end,
+		OrderByComparator<eventMonitor> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByEventType(
+			eventType, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first event monitor in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching event monitor
+	 * @throws NoSucheventMonitorException if a matching event monitor could not be found
+	 */
+	public static eventMonitor findByEventType_First(
+			String eventType, OrderByComparator<eventMonitor> orderByComparator)
+		throws com.liferay.amf.monitor.exception.NoSucheventMonitorException {
+
+		return getPersistence().findByEventType_First(
+			eventType, orderByComparator);
+	}
+
+	/**
+	 * Returns the first event monitor in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching event monitor, or <code>null</code> if a matching event monitor could not be found
+	 */
+	public static eventMonitor fetchByEventType_First(
+		String eventType, OrderByComparator<eventMonitor> orderByComparator) {
+
+		return getPersistence().fetchByEventType_First(
+			eventType, orderByComparator);
+	}
+
+	/**
+	 * Returns the last event monitor in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching event monitor
+	 * @throws NoSucheventMonitorException if a matching event monitor could not be found
+	 */
+	public static eventMonitor findByEventType_Last(
+			String eventType, OrderByComparator<eventMonitor> orderByComparator)
+		throws com.liferay.amf.monitor.exception.NoSucheventMonitorException {
+
+		return getPersistence().findByEventType_Last(
+			eventType, orderByComparator);
+	}
+
+	/**
+	 * Returns the last event monitor in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching event monitor, or <code>null</code> if a matching event monitor could not be found
+	 */
+	public static eventMonitor fetchByEventType_Last(
+		String eventType, OrderByComparator<eventMonitor> orderByComparator) {
+
+		return getPersistence().fetchByEventType_Last(
+			eventType, orderByComparator);
+	}
+
+	/**
+	 * Returns the event monitors before and after the current event monitor in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventMonitorId the primary key of the current event monitor
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next event monitor
+	 * @throws NoSucheventMonitorException if a event monitor with the primary key could not be found
+	 */
+	public static eventMonitor[] findByEventType_PrevAndNext(
+			long eventMonitorId, String eventType,
+			OrderByComparator<eventMonitor> orderByComparator)
+		throws com.liferay.amf.monitor.exception.NoSucheventMonitorException {
+
+		return getPersistence().findByEventType_PrevAndNext(
+			eventMonitorId, eventType, orderByComparator);
+	}
+
+	/**
+	 * Removes all the event monitors where eventType = &#63; from the database.
+	 *
+	 * @param eventType the event type
+	 */
+	public static void removeByEventType(String eventType) {
+		getPersistence().removeByEventType(eventType);
+	}
+
+	/**
+	 * Returns the number of event monitors where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @return the number of matching event monitors
+	 */
+	public static int countByEventType(String eventType) {
+		return getPersistence().countByEventType(eventType);
+	}
+
+	/**
 	 * Caches the event monitor in the entity cache if it is enabled.
 	 *
 	 * @param eventMonitor the event monitor

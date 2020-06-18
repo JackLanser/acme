@@ -203,6 +203,39 @@ public class eventMonitorLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.amf.monitor.model.eventMonitor> findAll(
+		int start, int end) {
+
+		return _eventMonitorLocalService.findAll(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+		findByEventType(String eventType) {
+
+		return _eventMonitorLocalService.findByEventType(eventType);
+	}
+
+	@Override
+	public java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+		findByEventType(String eventType, int start, int end) {
+
+		return _eventMonitorLocalService.findByEventType(eventType, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+		findByEventType(
+			String eventType, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.amf.monitor.model.eventMonitor>
+					orderByComparator) {
+
+		return _eventMonitorLocalService.findByEventType(
+			eventType, start, end, orderByComparator);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -250,6 +283,12 @@ public class eventMonitorLocalServiceWrapper
 	@Override
 	public int geteventMonitorsCount() {
 		return _eventMonitorLocalService.geteventMonitorsCount();
+	}
+
+	@Override
+	public long getEventMonitorsCountByEventType(String eventType) {
+		return _eventMonitorLocalService.getEventMonitorsCountByEventType(
+			eventType);
 	}
 
 	@Override

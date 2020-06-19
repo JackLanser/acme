@@ -293,6 +293,360 @@ public class eventMonitorUtil {
 	}
 
 	/**
+	 * Returns all the event monitors where userId = &#63; and eventType = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param eventType the event type
+	 * @return the matching event monitors
+	 */
+	public static List<eventMonitor> findByUserId(
+		long userId, String eventType) {
+
+		return getPersistence().findByUserId(userId, eventType);
+	}
+
+	/**
+	 * Returns a range of all the event monitors where userId = &#63; and eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of event monitors
+	 * @param end the upper bound of the range of event monitors (not inclusive)
+	 * @return the range of matching event monitors
+	 */
+	public static List<eventMonitor> findByUserId(
+		long userId, String eventType, int start, int end) {
+
+		return getPersistence().findByUserId(userId, eventType, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the event monitors where userId = &#63; and eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of event monitors
+	 * @param end the upper bound of the range of event monitors (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching event monitors
+	 */
+	public static List<eventMonitor> findByUserId(
+		long userId, String eventType, int start, int end,
+		OrderByComparator<eventMonitor> orderByComparator) {
+
+		return getPersistence().findByUserId(
+			userId, eventType, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the event monitors where userId = &#63; and eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of event monitors
+	 * @param end the upper bound of the range of event monitors (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching event monitors
+	 */
+	public static List<eventMonitor> findByUserId(
+		long userId, String eventType, int start, int end,
+		OrderByComparator<eventMonitor> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUserId(
+			userId, eventType, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first event monitor in the ordered set where userId = &#63; and eventType = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching event monitor
+	 * @throws NoSucheventMonitorException if a matching event monitor could not be found
+	 */
+	public static eventMonitor findByUserId_First(
+			long userId, String eventType,
+			OrderByComparator<eventMonitor> orderByComparator)
+		throws com.liferay.amf.monitor.exception.NoSucheventMonitorException {
+
+		return getPersistence().findByUserId_First(
+			userId, eventType, orderByComparator);
+	}
+
+	/**
+	 * Returns the first event monitor in the ordered set where userId = &#63; and eventType = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching event monitor, or <code>null</code> if a matching event monitor could not be found
+	 */
+	public static eventMonitor fetchByUserId_First(
+		long userId, String eventType,
+		OrderByComparator<eventMonitor> orderByComparator) {
+
+		return getPersistence().fetchByUserId_First(
+			userId, eventType, orderByComparator);
+	}
+
+	/**
+	 * Returns the last event monitor in the ordered set where userId = &#63; and eventType = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching event monitor
+	 * @throws NoSucheventMonitorException if a matching event monitor could not be found
+	 */
+	public static eventMonitor findByUserId_Last(
+			long userId, String eventType,
+			OrderByComparator<eventMonitor> orderByComparator)
+		throws com.liferay.amf.monitor.exception.NoSucheventMonitorException {
+
+		return getPersistence().findByUserId_Last(
+			userId, eventType, orderByComparator);
+	}
+
+	/**
+	 * Returns the last event monitor in the ordered set where userId = &#63; and eventType = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching event monitor, or <code>null</code> if a matching event monitor could not be found
+	 */
+	public static eventMonitor fetchByUserId_Last(
+		long userId, String eventType,
+		OrderByComparator<eventMonitor> orderByComparator) {
+
+		return getPersistence().fetchByUserId_Last(
+			userId, eventType, orderByComparator);
+	}
+
+	/**
+	 * Returns the event monitors before and after the current event monitor in the ordered set where userId = &#63; and eventType = &#63;.
+	 *
+	 * @param eventMonitorId the primary key of the current event monitor
+	 * @param userId the user ID
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next event monitor
+	 * @throws NoSucheventMonitorException if a event monitor with the primary key could not be found
+	 */
+	public static eventMonitor[] findByUserId_PrevAndNext(
+			long eventMonitorId, long userId, String eventType,
+			OrderByComparator<eventMonitor> orderByComparator)
+		throws com.liferay.amf.monitor.exception.NoSucheventMonitorException {
+
+		return getPersistence().findByUserId_PrevAndNext(
+			eventMonitorId, userId, eventType, orderByComparator);
+	}
+
+	/**
+	 * Removes all the event monitors where userId = &#63; and eventType = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param eventType the event type
+	 */
+	public static void removeByUserId(long userId, String eventType) {
+		getPersistence().removeByUserId(userId, eventType);
+	}
+
+	/**
+	 * Returns the number of event monitors where userId = &#63; and eventType = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param eventType the event type
+	 * @return the number of matching event monitors
+	 */
+	public static int countByUserId(long userId, String eventType) {
+		return getPersistence().countByUserId(userId, eventType);
+	}
+
+	/**
+	 * Returns all the event monitors where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching event monitors
+	 */
+	public static List<eventMonitor> findByAllUserId(long userId) {
+		return getPersistence().findByAllUserId(userId);
+	}
+
+	/**
+	 * Returns a range of all the event monitors where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of event monitors
+	 * @param end the upper bound of the range of event monitors (not inclusive)
+	 * @return the range of matching event monitors
+	 */
+	public static List<eventMonitor> findByAllUserId(
+		long userId, int start, int end) {
+
+		return getPersistence().findByAllUserId(userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the event monitors where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of event monitors
+	 * @param end the upper bound of the range of event monitors (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching event monitors
+	 */
+	public static List<eventMonitor> findByAllUserId(
+		long userId, int start, int end,
+		OrderByComparator<eventMonitor> orderByComparator) {
+
+		return getPersistence().findByAllUserId(
+			userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the event monitors where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of event monitors
+	 * @param end the upper bound of the range of event monitors (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching event monitors
+	 */
+	public static List<eventMonitor> findByAllUserId(
+		long userId, int start, int end,
+		OrderByComparator<eventMonitor> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByAllUserId(
+			userId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first event monitor in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching event monitor
+	 * @throws NoSucheventMonitorException if a matching event monitor could not be found
+	 */
+	public static eventMonitor findByAllUserId_First(
+			long userId, OrderByComparator<eventMonitor> orderByComparator)
+		throws com.liferay.amf.monitor.exception.NoSucheventMonitorException {
+
+		return getPersistence().findByAllUserId_First(
+			userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first event monitor in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching event monitor, or <code>null</code> if a matching event monitor could not be found
+	 */
+	public static eventMonitor fetchByAllUserId_First(
+		long userId, OrderByComparator<eventMonitor> orderByComparator) {
+
+		return getPersistence().fetchByAllUserId_First(
+			userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last event monitor in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching event monitor
+	 * @throws NoSucheventMonitorException if a matching event monitor could not be found
+	 */
+	public static eventMonitor findByAllUserId_Last(
+			long userId, OrderByComparator<eventMonitor> orderByComparator)
+		throws com.liferay.amf.monitor.exception.NoSucheventMonitorException {
+
+		return getPersistence().findByAllUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last event monitor in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching event monitor, or <code>null</code> if a matching event monitor could not be found
+	 */
+	public static eventMonitor fetchByAllUserId_Last(
+		long userId, OrderByComparator<eventMonitor> orderByComparator) {
+
+		return getPersistence().fetchByAllUserId_Last(
+			userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the event monitors before and after the current event monitor in the ordered set where userId = &#63;.
+	 *
+	 * @param eventMonitorId the primary key of the current event monitor
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next event monitor
+	 * @throws NoSucheventMonitorException if a event monitor with the primary key could not be found
+	 */
+	public static eventMonitor[] findByAllUserId_PrevAndNext(
+			long eventMonitorId, long userId,
+			OrderByComparator<eventMonitor> orderByComparator)
+		throws com.liferay.amf.monitor.exception.NoSucheventMonitorException {
+
+		return getPersistence().findByAllUserId_PrevAndNext(
+			eventMonitorId, userId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the event monitors where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 */
+	public static void removeByAllUserId(long userId) {
+		getPersistence().removeByAllUserId(userId);
+	}
+
+	/**
+	 * Returns the number of event monitors where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching event monitors
+	 */
+	public static int countByAllUserId(long userId) {
+		return getPersistence().countByAllUserId(userId);
+	}
+
+	/**
 	 * Caches the event monitor in the entity cache if it is enabled.
 	 *
 	 * @param eventMonitor the event monitor

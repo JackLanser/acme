@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -54,12 +55,14 @@ public interface eventMonitorService extends BaseService {
 	 */
 	public eventMonitor addeventMonitor(long userId, String eventType);
 
-	public List<eventMonitor> findAll(int start, int end);
+	public List<eventMonitor> findAll(int start, int end)
+		throws PrincipalException;
 
 	public List<eventMonitor> findByEventType(String eventType);
 
 	public List<eventMonitor> findByEventType(
-		String eventType, int start, int end);
+			String eventType, int start, int end)
+		throws PrincipalException;
 
 	public List<eventMonitor> findByEventType(
 		String eventType, int start, int end,

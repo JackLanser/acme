@@ -39,7 +39,8 @@ public class eventMonitorServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.amf.monitor.model.eventMonitor> findAll(
-		int start, int end) {
+			int start, int end)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return _eventMonitorService.findAll(start, end);
 	}
@@ -53,7 +54,8 @@ public class eventMonitorServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.amf.monitor.model.eventMonitor>
-		findByEventType(String eventType, int start, int end) {
+			findByEventType(String eventType, int start, int end)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return _eventMonitorService.findByEventType(eventType, start, end);
 	}

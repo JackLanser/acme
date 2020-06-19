@@ -16,14 +16,16 @@ package com.liferay.amf.monitor.service.impl;
 
 import com.liferay.amf.monitor.model.eventMonitor;
 import com.liferay.amf.monitor.service.base.eventMonitorServiceBaseImpl;
+import com.liferay.amf.monitor.service.permissions.EventMonitorPermissionCheck;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the event monitor remote service.
@@ -62,9 +64,11 @@ public class eventMonitorServiceImpl extends eventMonitorServiceBaseImpl {
 	}
 	
 	public List<eventMonitor> findByEventType(
-			String eventType, int start, int end) {
-
+			String eventType, int start, int end) throws PrincipalException{
+		if(_eventMonitorPermissionCheck.contains(getPermissionChecker(), "com.liferay.amf.monitor.model", "VIEW_ALL")) {
 			return eventMonitorLocalService.findByEventType(eventType, start, end);
+		}
+		else return eventMonitorLocalService.findByUserId(getUserId(), eventType);
 		}
 	
 	public List<eventMonitor> findByEventType(
@@ -74,13 +78,18 @@ public class eventMonitorServiceImpl extends eventMonitorServiceBaseImpl {
 			return eventMonitorLocalService.findByEventType(eventType, start, end, orderByComparator);
 		}
 	
-	public List<eventMonitor> findAll(int start, int end) {
-		return eventMonitorLocalService.findAll(start, end);
+	public List<eventMonitor> findAll(int start, int end) throws PrincipalException {
+		if(_eventMonitorPermissionCheck.contains(getPermissionChecker(), "com.liferay.amf.monitor.model", "VIEW_ALL")) {
+			return eventMonitorLocalService.findAll(start, end);
+		}
+		else return eventMonitorLocalService.findByAllUserId(getUserId());
 	}
 	
 	public long getEventMonitorsCountByEventType(String eventType) {
 		return eventMonitorLocalService.getEventMonitorsCountByEventType(eventType);
 	}
 	
+	@Reference 
+	private EventMonitorPermissionCheck	_eventMonitorPermissionCheck;
 	
 }

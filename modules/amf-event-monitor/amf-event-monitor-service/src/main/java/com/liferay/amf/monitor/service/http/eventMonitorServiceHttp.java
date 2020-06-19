@@ -117,8 +117,10 @@ public class eventMonitorServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
-		findByEventType(
-			HttpPrincipal httpPrincipal, String eventType, int start, int end) {
+			findByEventType(
+				HttpPrincipal httpPrincipal, String eventType, int start,
+				int end)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -134,6 +136,14 @@ public class eventMonitorServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.security.auth.
+							PrincipalException) {
+
+					throw (com.liferay.portal.kernel.security.auth.
+						PrincipalException)exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -188,7 +198,8 @@ public class eventMonitorServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
-		findAll(HttpPrincipal httpPrincipal, int start, int end) {
+			findAll(HttpPrincipal httpPrincipal, int start, int end)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -204,6 +215,14 @@ public class eventMonitorServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.security.auth.
+							PrincipalException) {
+
+					throw (com.liferay.portal.kernel.security.auth.
+						PrincipalException)exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}

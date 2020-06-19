@@ -203,6 +203,12 @@ public class eventMonitorLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+		findByAllUserId(long userId) {
+
+		return getService().findByAllUserId(userId);
+	}
+
+	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
 		findByEventType(String eventType) {
 
 		return getService().findByEventType(eventType);
@@ -223,6 +229,18 @@ public class eventMonitorLocalServiceUtil {
 
 		return getService().findByEventType(
 			eventType, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+		findByUserId(long userId, String eventType) {
+
+		return getService().findByUserId(userId, eventType);
+	}
+
+	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+		findByUserId(long userId, String eventType, int start, int end) {
+
+		return getService().findByUserId(userId, eventType, start, end);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

@@ -211,6 +211,13 @@ public class eventMonitorLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+		findByAllUserId(long userId) {
+
+		return _eventMonitorLocalService.findByAllUserId(userId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.amf.monitor.model.eventMonitor>
 		findByEventType(String eventType) {
 
 		return _eventMonitorLocalService.findByEventType(eventType);
@@ -233,6 +240,21 @@ public class eventMonitorLocalServiceWrapper
 
 		return _eventMonitorLocalService.findByEventType(
 			eventType, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+		findByUserId(long userId, String eventType) {
+
+		return _eventMonitorLocalService.findByUserId(userId, eventType);
+	}
+
+	@Override
+	public java.util.List<com.liferay.amf.monitor.model.eventMonitor>
+		findByUserId(long userId, String eventType, int start, int end) {
+
+		return _eventMonitorLocalService.findByUserId(
+			userId, eventType, start, end);
 	}
 
 	@Override

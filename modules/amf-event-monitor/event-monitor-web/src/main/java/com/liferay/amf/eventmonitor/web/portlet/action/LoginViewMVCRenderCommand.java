@@ -6,6 +6,7 @@ import com.liferay.amf.monitor.model.eventMonitor;
 import com.liferay.amf.monitor.service.eventMonitorService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -56,17 +57,25 @@ public class LoginViewMVCRenderCommand implements MVCRenderCommand {
 		
 		List<eventMonitor> events;
 		if(curTab.equals("All")) {
-			events =_eventMonitorService.findAll(start, end);
-			renderRequest.setAttribute("eventList", events);
-			long count = _eventMonitorService.getEventMonitorsCountByEventType("Login") + 
-					_eventMonitorService.getEventMonitorsCountByEventType("registration");
-			renderRequest.setAttribute("eventCount", count);
+			try {
+				events =_eventMonitorService.findAll(start, end);
+				renderRequest.setAttribute("eventList", events);
+				long count = _eventMonitorService.getEventMonitorsCountByEventType("Login") + 
+						_eventMonitorService.getEventMonitorsCountByEventType("registration");
+				renderRequest.setAttribute("eventCount", count);
+			} catch (PrincipalException e) {
+				e.printStackTrace();
+			}
 		}
 		else{
-			events =_eventMonitorService.findByEventType(curTab, start, end);
-			renderRequest.setAttribute("eventList", events);
-			long count = _eventMonitorService.getEventMonitorsCountByEventType(curTab);
-			renderRequest.setAttribute("eventCount", count);
+			try {
+				events =_eventMonitorService.findByEventType(curTab, start, end);
+				renderRequest.setAttribute("eventList", events);
+				long count = _eventMonitorService.getEventMonitorsCountByEventType(curTab);
+				renderRequest.setAttribute("eventCount", count);
+			}catch(PrincipalException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		

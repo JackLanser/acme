@@ -44,7 +44,8 @@ public class eventMonitorServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
-		findAll(int start, int end) {
+			findAll(int start, int end)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return getService().findAll(start, end);
 	}
@@ -56,7 +57,8 @@ public class eventMonitorServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
-		findByEventType(String eventType, int start, int end) {
+			findByEventType(String eventType, int start, int end)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return getService().findByEventType(eventType, start, end);
 	}

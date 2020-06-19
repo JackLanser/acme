@@ -110,7 +110,9 @@ public class eventMonitorModelImpl
 
 	public static final long EVENTTYPE_COLUMN_BITMASK = 1L;
 
-	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
+	public static final long USERID_COLUMN_BITMASK = 2L;
+
+	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -341,6 +343,14 @@ public class eventMonitorModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -358,6 +368,10 @@ public class eventMonitorModelImpl
 
 	@Override
 	public void setUserUuid(String userUuid) {
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -536,6 +550,10 @@ public class eventMonitorModelImpl
 	public void resetOriginalValues() {
 		eventMonitorModelImpl eventMonitorModelImpl = this;
 
+		eventMonitorModelImpl._originalUserId = eventMonitorModelImpl._userId;
+
+		eventMonitorModelImpl._setOriginalUserId = false;
+
 		eventMonitorModelImpl._originalEventType =
 			eventMonitorModelImpl._eventType;
 
@@ -662,6 +680,8 @@ public class eventMonitorModelImpl
 
 	private long _eventMonitorId;
 	private long _userId;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private String _userIP;

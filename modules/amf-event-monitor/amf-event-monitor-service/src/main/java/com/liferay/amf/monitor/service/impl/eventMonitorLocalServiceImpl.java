@@ -18,7 +18,9 @@ import com.liferay.amf.monitor.model.eventMonitor;
 import com.liferay.amf.monitor.service.base.eventMonitorLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -52,7 +54,6 @@ public class eventMonitorLocalServiceImpl
 	 * Never reference this class directly. Use <code>com.liferay.amf.monitor.service.eventMonitorLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.monitor.service.eventMonitorLocalServiceUtil</code>.
 	 */
 	public eventMonitor addeventMonitor(long userId, String eventType) {
-		System.out.println("Got to add event monitor");
 		User user = userLocalService.fetchUserById(userId);
 		long monitorId = counterLocalService.increment();
 		eventMonitor event = createeventMonitor(monitorId);
@@ -71,7 +72,9 @@ public class eventMonitorLocalServiceImpl
 		else {
 			event.setUserIP(user.getLastLoginIP());
 		}
-		return super.addeventMonitor(event);
+		event = super.addeventMonitor(event);
+		
+		return event;
 	}
 	
 	public List<eventMonitor> findByEventType(String eventType){
@@ -99,6 +102,21 @@ public class eventMonitorLocalServiceImpl
 	public long getEventMonitorsCountByEventType(String eventType) {
 		DynamicQuery dynamicQuery = dynamicQuery().add(RestrictionsFactoryUtil.eq("eventType", eventType));
 		return dynamicQueryCount(dynamicQuery);
+	}
+	
+	public List<eventMonitor> findByUserId(
+			long userId, String eventType, int start, int end) {
+
+			return eventMonitorPersistence.findByUserId(userId, eventType, start, end, null);
+		}
+	public List<eventMonitor> findByUserId(long userId, String eventType) {
+		return eventMonitorPersistence.findByUserId(
+			userId, eventType);
+	}
+	
+	public List<eventMonitor> findByAllUserId(long userId) {
+		return eventMonitorPersistence.findByAllUserId(
+			userId);
 	}
 	
 	

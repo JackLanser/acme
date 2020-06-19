@@ -179,6 +179,8 @@ public interface eventMonitorLocalService
 
 	public List<eventMonitor> findAll(int start, int end);
 
+	public List<eventMonitor> findByAllUserId(long userId);
+
 	public List<eventMonitor> findByEventType(String eventType);
 
 	public List<eventMonitor> findByEventType(
@@ -187,6 +189,11 @@ public interface eventMonitorLocalService
 	public List<eventMonitor> findByEventType(
 		String eventType, int start, int end,
 		OrderByComparator<eventMonitor> orderByComparator);
+
+	public List<eventMonitor> findByUserId(long userId, String eventType);
+
+	public List<eventMonitor> findByUserId(
+		long userId, String eventType, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

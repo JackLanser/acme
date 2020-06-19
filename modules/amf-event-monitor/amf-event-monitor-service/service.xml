@@ -21,6 +21,15 @@
 		<finder name="EventType" return-type="Collection">
 		<finder-column name="eventType"></finder-column>
 		</finder>
+		
+		<finder name="UserId" return-type="Collection">
+		<finder-column name="userId"></finder-column>
+		<finder-column name="eventType"></finder-column>
+		</finder>
+		
+		<finder name="AllUserId" return-type="Collection">
+		<finder-column name="userId"></finder-column>
+		</finder>
 
 
 		<!-- Group instance -->

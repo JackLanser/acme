@@ -240,7 +240,8 @@ public class eventMonitorServiceHttp {
 	}
 
 	public static long getEventMonitorsCountByEventType(
-		HttpPrincipal httpPrincipal, String eventType) {
+			HttpPrincipal httpPrincipal, String eventType)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -257,6 +258,14 @@ public class eventMonitorServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.security.auth.
+							PrincipalException) {
+
+					throw (com.liferay.portal.kernel.security.auth.
+						PrincipalException)exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}

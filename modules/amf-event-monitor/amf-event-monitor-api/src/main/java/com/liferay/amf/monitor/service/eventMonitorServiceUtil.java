@@ -74,7 +74,9 @@ public class eventMonitorServiceUtil {
 			eventType, start, end, orderByComparator);
 	}
 
-	public static long getEventMonitorsCountByEventType(String eventType) {
+	public static long getEventMonitorsCountByEventType(String eventType)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+
 		return getService().getEventMonitorsCountByEventType(eventType);
 	}
 

@@ -85,8 +85,11 @@ public class eventMonitorServiceImpl extends eventMonitorServiceBaseImpl {
 		else return eventMonitorLocalService.findByAllUserId(getUserId());
 	}
 	
-	public long getEventMonitorsCountByEventType(String eventType) {
-		return eventMonitorLocalService.getEventMonitorsCountByEventType(eventType);
+	public long getEventMonitorsCountByEventType(String eventType) throws PrincipalException {
+		if(_eventMonitorPermissionCheck.contains(getPermissionChecker(), "com.liferay.amf.monitor.model", "VIEW_ALL")) {
+			return eventMonitorLocalService.countByEventType(eventType);
+		}
+		else return eventMonitorLocalService.countByUserId(getUserId(), eventType);
 	}
 	
 	@Reference 

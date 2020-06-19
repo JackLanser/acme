@@ -56,6 +56,14 @@ public class eventMonitorLocalServiceUtil {
 		return getService().addeventMonitor(userId, eventType);
 	}
 
+	public static int countByEventType(String eventType) {
+		return getService().countByEventType(eventType);
+	}
+
+	public static int countByUserId(long userId, String eventType) {
+		return getService().countByUserId(userId, eventType);
+	}
+
 	/**
 	 * Creates a new event monitor with the primary key. Does not add the event monitor to the database.
 	 *

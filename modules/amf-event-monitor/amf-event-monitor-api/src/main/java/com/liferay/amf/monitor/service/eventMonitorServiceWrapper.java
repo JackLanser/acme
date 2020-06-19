@@ -73,7 +73,9 @@ public class eventMonitorServiceWrapper
 	}
 
 	@Override
-	public long getEventMonitorsCountByEventType(String eventType) {
+	public long getEventMonitorsCountByEventType(String eventType)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+
 		return _eventMonitorService.getEventMonitorsCountByEventType(eventType);
 	}
 

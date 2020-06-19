@@ -119,5 +119,13 @@ public class eventMonitorLocalServiceImpl
 			userId);
 	}
 	
+	public int countByUserId(long userId, String eventType) {
+		return eventMonitorPersistence.countByUserId(userId, eventType);
+	}
+	
+	public int countByEventType(String eventType) {
+		return eventMonitorPersistence.countByEventType(eventType);
+	}
+	
 	
 }

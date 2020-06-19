@@ -69,7 +69,8 @@ public interface eventMonitorService extends BaseService {
 		OrderByComparator<eventMonitor> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getEventMonitorsCountByEventType(String eventType);
+	public long getEventMonitorsCountByEventType(String eventType)
+		throws PrincipalException;
 
 	/**
 	 * Returns the OSGi service identifier.

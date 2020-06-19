@@ -53,6 +53,16 @@ public class eventMonitorLocalServiceWrapper
 		return _eventMonitorLocalService.addeventMonitor(userId, eventType);
 	}
 
+	@Override
+	public int countByEventType(String eventType) {
+		return _eventMonitorLocalService.countByEventType(eventType);
+	}
+
+	@Override
+	public int countByUserId(long userId, String eventType) {
+		return _eventMonitorLocalService.countByUserId(userId, eventType);
+	}
+
 	/**
 	 * Creates a new event monitor with the primary key. Does not add the event monitor to the database.
 	 *

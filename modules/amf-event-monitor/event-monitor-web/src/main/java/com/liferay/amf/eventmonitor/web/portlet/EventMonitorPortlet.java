@@ -14,7 +14,6 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.display-category=category.sample",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.display-name=EventMonitor",
@@ -24,7 +23,6 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"com.liferay.portlet.display-category=category.amf-even-monitor",
-		"com.liferay.portlet.instanceable=false",
 	},
 	service = Portlet.class
 )

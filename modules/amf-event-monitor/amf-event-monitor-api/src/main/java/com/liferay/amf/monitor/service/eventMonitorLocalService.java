@@ -190,10 +190,6 @@ public interface eventMonitorLocalService
 	public List<eventMonitor> findByEventType(
 		String eventType, int start, int end);
 
-	public List<eventMonitor> findByEventType(
-		String eventType, int start, int end,
-		OrderByComparator<eventMonitor> orderByComparator);
-
 	public List<eventMonitor> findByUserId(long userId, String eventType);
 
 	public List<eventMonitor> findByUserId(
@@ -234,9 +230,6 @@ public interface eventMonitorLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int geteventMonitorsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getEventMonitorsCountByEventType(String eventType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

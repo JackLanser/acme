@@ -53,6 +53,8 @@ public class eventMonitorLocalServiceImpl
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.monitor.service.eventMonitorLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.monitor.service.eventMonitorLocalServiceUtil</code>.
 	 */
+	private String registrationIp = "0.0.0.0";
+	
 	public eventMonitor addeventMonitor(long userId, String eventType) {
 		User user = userLocalService.fetchUserById(userId);
 		long monitorId = counterLocalService.increment();
@@ -67,7 +69,7 @@ public class eventMonitorLocalServiceImpl
 		}
 		event.setEventType(eventType);
 		if(eventType.equals("Registration")) {
-			event.setUserIP("0.0.0.0");
+			event.setUserIP(registrationIp);
 		}
 		else {
 			event.setUserIP(user.getLastLoginIP());
@@ -88,20 +90,8 @@ public class eventMonitorLocalServiceImpl
 			return eventMonitorPersistence.findByEventType(eventType, start, end, null);
 		}
 	
-	public List<eventMonitor> findByEventType(
-			String eventType, int start, int end,
-			OrderByComparator<eventMonitor> orderByComparator) {
-
-			return eventMonitorPersistence.findByEventType(eventType, start, end, orderByComparator, true);
-		}
-	
 	public List<eventMonitor> findAll(int start, int end) {
 		return eventMonitorPersistence.findAll(start, end, null);
-	}
-	
-	public long getEventMonitorsCountByEventType(String eventType) {
-		DynamicQuery dynamicQuery = dynamicQuery().add(RestrictionsFactoryUtil.eq("eventType", eventType));
-		return dynamicQueryCount(dynamicQuery);
 	}
 	
 	public List<eventMonitor> findByUserId(

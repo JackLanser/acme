@@ -29,7 +29,9 @@ public class PostLoginEventListener implements LifecycleAction {
 			throws ActionException {
 		try {
 			User user = _userService.getCurrentUser();
-			eventMonitor event = _eventMonitorService.addeventMonitor(user.getUserId(), "Login");
+			if(!user.getLastLoginIP().equals(null)) {
+				_eventMonitorService.addeventMonitor(user.getUserId(), "Login");
+			}
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}

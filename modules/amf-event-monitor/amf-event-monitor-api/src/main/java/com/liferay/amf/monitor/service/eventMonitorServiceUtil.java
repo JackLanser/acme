@@ -63,17 +63,6 @@ public class eventMonitorServiceUtil {
 		return getService().findByEventType(eventType, start, end);
 	}
 
-	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
-		findByEventType(
-			String eventType, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.amf.monitor.model.eventMonitor>
-					orderByComparator) {
-
-		return getService().findByEventType(
-			eventType, start, end, orderByComparator);
-	}
-
 	public static long getEventMonitorsCountByEventType(String eventType)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 

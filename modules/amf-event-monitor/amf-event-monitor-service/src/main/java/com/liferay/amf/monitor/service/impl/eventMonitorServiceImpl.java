@@ -54,6 +54,7 @@ public class eventMonitorServiceImpl extends eventMonitorServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.amf.monitor.service.eventMonitorServiceUtil</code> to access the event monitor remote service.
 	 */
+	private String actionId = "VIEW_ALL";
 	
 	public eventMonitor addeventMonitor(long userId, String eventType) {
 		return eventMonitorLocalService.addeventMonitor(userId, eventType);
@@ -65,28 +66,21 @@ public class eventMonitorServiceImpl extends eventMonitorServiceBaseImpl {
 	
 	public List<eventMonitor> findByEventType(
 			String eventType, int start, int end) throws PrincipalException{
-		if(_eventMonitorPermissionCheck.contains(getPermissionChecker(), "com.liferay.amf.monitor.model", "VIEW_ALL")) {
+		if(_eventMonitorPermissionCheck.contains(getPermissionChecker(), actionId)) {
 			return eventMonitorLocalService.findByEventType(eventType, start, end);
 		}
 		else return eventMonitorLocalService.findByUserId(getUserId(), eventType);
 		}
 	
-	public List<eventMonitor> findByEventType(
-			String eventType, int start, int end,
-			OrderByComparator<eventMonitor> orderByComparator) {
-
-			return eventMonitorLocalService.findByEventType(eventType, start, end, orderByComparator);
-		}
-	
 	public List<eventMonitor> findAll(int start, int end) throws PrincipalException {
-		if(_eventMonitorPermissionCheck.contains(getPermissionChecker(), "com.liferay.amf.monitor.model", "VIEW_ALL")) {
+		if(_eventMonitorPermissionCheck.contains(getPermissionChecker(), actionId)) {
 			return eventMonitorLocalService.findAll(start, end);
 		}
 		else return eventMonitorLocalService.findByAllUserId(getUserId());
 	}
 	
 	public long getEventMonitorsCountByEventType(String eventType) throws PrincipalException {
-		if(_eventMonitorPermissionCheck.contains(getPermissionChecker(), "com.liferay.amf.monitor.model", "VIEW_ALL")) {
+		if(_eventMonitorPermissionCheck.contains(getPermissionChecker(), actionId)) {
 			return eventMonitorLocalService.countByEventType(eventType);
 		}
 		else return eventMonitorLocalService.countByUserId(getUserId(), eventType);

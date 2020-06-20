@@ -10,8 +10,11 @@ import org.osgi.service.component.annotations.Component;
 )
 public class EventMonitorPermissionCheck{
 
-	public boolean contains(PermissionChecker permissionChecker, String modelclassname, String actionId){
-		return permissionChecker.hasPermission(0, modelclassname, 0, actionId);
+	private String modelClassName = "com.liferay.amf.monitor.model";
+	private long groupId = 0;
+	
+	public boolean contains(PermissionChecker permissionChecker, String actionId){
+		return permissionChecker.hasPermission(groupId, modelClassName, groupId, actionId);
 	}
 
 }

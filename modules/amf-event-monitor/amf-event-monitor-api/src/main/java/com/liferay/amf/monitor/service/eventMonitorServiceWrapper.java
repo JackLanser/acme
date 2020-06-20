@@ -61,18 +61,6 @@ public class eventMonitorServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.amf.monitor.model.eventMonitor>
-		findByEventType(
-			String eventType, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.amf.monitor.model.eventMonitor>
-					orderByComparator) {
-
-		return _eventMonitorService.findByEventType(
-			eventType, start, end, orderByComparator);
-	}
-
-	@Override
 	public long getEventMonitorsCountByEventType(String eventType)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 

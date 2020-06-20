@@ -161,50 +161,13 @@ public class eventMonitorServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
-		findByEventType(
-			HttpPrincipal httpPrincipal, String eventType, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.amf.monitor.model.eventMonitor>
-					orderByComparator) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				eventMonitorServiceUtil.class, "findByEventType",
-				_findByEventTypeParameterTypes3);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, eventType, start, end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (java.util.List<com.liferay.amf.monitor.model.eventMonitor>)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
 			findAll(HttpPrincipal httpPrincipal, int start, int end)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				eventMonitorServiceUtil.class, "findAll",
-				_findAllParameterTypes4);
+				_findAllParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, start, end);
@@ -247,7 +210,7 @@ public class eventMonitorServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				eventMonitorServiceUtil.class,
 				"getEventMonitorsCountByEventType",
-				_getEventMonitorsCountByEventTypeParameterTypes5);
+				_getEventMonitorsCountByEventTypeParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, eventType);
@@ -290,16 +253,11 @@ public class eventMonitorServiceHttp {
 		new Class[] {String.class};
 	private static final Class<?>[] _findByEventTypeParameterTypes2 =
 		new Class[] {String.class, int.class, int.class};
-	private static final Class<?>[] _findByEventTypeParameterTypes3 =
-		new Class[] {
-			String.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[] _findAllParameterTypes4 = new Class[] {
+	private static final Class<?>[] _findAllParameterTypes3 = new Class[] {
 		int.class, int.class
 	};
 	private static final Class<?>[]
-		_getEventMonitorsCountByEventTypeParameterTypes5 = new Class[] {
+		_getEventMonitorsCountByEventTypeParameterTypes4 = new Class[] {
 			String.class
 		};
 

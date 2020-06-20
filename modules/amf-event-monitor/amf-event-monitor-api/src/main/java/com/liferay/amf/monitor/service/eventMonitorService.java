@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -63,10 +62,6 @@ public interface eventMonitorService extends BaseService {
 	public List<eventMonitor> findByEventType(
 			String eventType, int start, int end)
 		throws PrincipalException;
-
-	public List<eventMonitor> findByEventType(
-		String eventType, int start, int end,
-		OrderByComparator<eventMonitor> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getEventMonitorsCountByEventType(String eventType)

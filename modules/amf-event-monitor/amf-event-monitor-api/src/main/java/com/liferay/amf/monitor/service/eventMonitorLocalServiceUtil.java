@@ -229,17 +229,6 @@ public class eventMonitorLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
-		findByEventType(
-			String eventType, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.amf.monitor.model.eventMonitor>
-					orderByComparator) {
-
-		return getService().findByEventType(
-			eventType, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.amf.monitor.model.eventMonitor>
 		findByUserId(long userId, String eventType) {
 
 		return getService().findByUserId(userId, eventType);
@@ -295,10 +284,6 @@ public class eventMonitorLocalServiceUtil {
 	 */
 	public static int geteventMonitorsCount() {
 		return getService().geteventMonitorsCount();
-	}
-
-	public static long getEventMonitorsCountByEventType(String eventType) {
-		return getService().getEventMonitorsCountByEventType(eventType);
 	}
 
 	public static

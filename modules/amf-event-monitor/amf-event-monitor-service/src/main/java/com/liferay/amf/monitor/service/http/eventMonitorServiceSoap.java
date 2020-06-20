@@ -117,29 +117,6 @@ public class eventMonitorServiceSoap {
 		}
 	}
 
-	public static com.liferay.amf.monitor.model.eventMonitorSoap[]
-			findByEventType(
-				String eventType, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.amf.monitor.model.eventMonitor>
-						orderByComparator)
-		throws RemoteException {
-
-		try {
-			java.util.List<com.liferay.amf.monitor.model.eventMonitor>
-				returnValue = eventMonitorServiceUtil.findByEventType(
-					eventType, start, end, orderByComparator);
-
-			return com.liferay.amf.monitor.model.eventMonitorSoap.toSoapModels(
-				returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
 	public static com.liferay.amf.monitor.model.eventMonitorSoap[] findAll(
 			int start, int end)
 		throws RemoteException {

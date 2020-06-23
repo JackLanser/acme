@@ -1,4 +1,0 @@
-<portlet:renderURL var="allViewURL">
-     <portlet:param name="mvcRenderCommandName" value="<%=MVCCommandNames.ALL_VIEW %>" />
-</portlet:renderURL>
-<p>Hello World</p>

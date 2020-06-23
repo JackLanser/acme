@@ -18,9 +18,7 @@ import com.liferay.amf.monitor.model.eventMonitor;
 import com.liferay.amf.monitor.service.base.eventMonitorServiceBaseImpl;
 import com.liferay.amf.monitor.service.permissions.EventMonitorPermissionCheck;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -55,38 +53,58 @@ public class eventMonitorServiceImpl extends eventMonitorServiceBaseImpl {
 	 * Never reference this class directly. Always use <code>com.liferay.amf.monitor.service.eventMonitorServiceUtil</code> to access the event monitor remote service.
 	 */
 	private String actionId = "VIEW_ALL";
-	
+
 	public eventMonitor addeventMonitor(long userId, String eventType) {
 		return eventMonitorLocalService.addeventMonitor(userId, eventType);
 	}
-	
-	public List<eventMonitor> findByEventType(String eventType){
+
+	public List<eventMonitor> findByEventType(String eventType) {
 		return eventMonitorLocalService.findByEventType(eventType);
 	}
-	
+
 	public List<eventMonitor> findByEventType(
-			String eventType, int start, int end) throws PrincipalException{
-		if(_eventMonitorPermissionCheck.contains(getPermissionChecker(), actionId)) {
-			return eventMonitorLocalService.findByEventType(eventType, start, end);
+			String eventType, int start, int end)
+		throws PrincipalException {
+
+		if (_eventMonitorPermissionCheck.contains(
+				getPermissionChecker(), actionId)) {
+
+			return eventMonitorLocalService.findByEventType(
+				eventType, start, end);
 		}
-		else return eventMonitorLocalService.findByUserId(getUserId(), eventType);
-		}
-	
-	public List<eventMonitor> findAll(int start, int end) throws PrincipalException {
-		if(_eventMonitorPermissionCheck.contains(getPermissionChecker(), actionId)) {
+
+		else
+
+		return eventMonitorLocalService.findByUserId(getUserId(), eventType);
+	}
+
+	public List<eventMonitor> findAll(int start, int end)
+		throws PrincipalException {
+
+		if (_eventMonitorPermissionCheck.contains(
+				getPermissionChecker(), actionId)) {
+
 			return eventMonitorLocalService.findAll(start, end);
 		}
-		else return eventMonitorLocalService.findByAllUserId(getUserId());
+		else
+
+		return eventMonitorLocalService.findByAllUserId(getUserId());
 	}
-	
-	public long getEventMonitorsCountByEventType(String eventType) throws PrincipalException {
-		if(_eventMonitorPermissionCheck.contains(getPermissionChecker(), actionId)) {
+
+	public long getEventMonitorsCountByEventType(String eventType)
+		throws PrincipalException {
+
+		if (_eventMonitorPermissionCheck.contains(
+				getPermissionChecker(), actionId)) {
+
 			return eventMonitorLocalService.countByEventType(eventType);
 		}
-		else return eventMonitorLocalService.countByUserId(getUserId(), eventType);
+		else
+
+		return eventMonitorLocalService.countByUserId(getUserId(), eventType);
 	}
-	
-	@Reference 
-	private EventMonitorPermissionCheck	_eventMonitorPermissionCheck;
-	
+
+	@Reference
+	private EventMonitorPermissionCheck _eventMonitorPermissionCheck;
+
 }

@@ -1,7 +1,7 @@
 Bundle-Name: amf-event-monitor-service
 Bundle-SymbolicName: com.liferay.amf.monitor.service
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.amf.monitor.service.impl
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 -dsannotations-options: inherit
-Export-Package: com.liferay.amf.monitor.service.impl

@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSucheventMonitorException extends NoSuchModelException {
+public class NoSuchEventMonitorException extends NoSuchModelException {
 
-	public NoSucheventMonitorException() {
+	public NoSuchEventMonitorException() {
 	}
 
-	public NoSucheventMonitorException(String msg) {
+	public NoSuchEventMonitorException(String msg) {
 		super(msg);
 	}
 
-	public NoSucheventMonitorException(String msg, Throwable cause) {
+	public NoSuchEventMonitorException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSucheventMonitorException(Throwable cause) {
+	public NoSuchEventMonitorException(Throwable cause) {
 		super(cause);
 	}
 

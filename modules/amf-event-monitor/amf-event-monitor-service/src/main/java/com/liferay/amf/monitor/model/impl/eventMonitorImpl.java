@@ -25,7 +25,7 @@ package com.liferay.amf.monitor.model.impl;
  */
 public class eventMonitorImpl extends eventMonitorBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a event monitor model instance should use the {@link com.liferay.amf.monitor.model.eventMonitor} interface instead.

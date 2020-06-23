@@ -1,7 +1,6 @@
 package com.liferay.amf.eventmonitor.web.portlet;
 
 import com.liferay.amf.eventmonitor.web.constants.EventMonitorPortletKeys;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -22,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + EventMonitorPortletKeys.EVENTMONITOR,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
-		"com.liferay.portlet.display-category=category.amf-even-monitor",
+		"com.liferay.portlet.display-category=category.amf-even-monitor"
 	},
 	service = Portlet.class
 )

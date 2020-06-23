@@ -4,33 +4,31 @@
 <service-builder dependency-injector="ds" package-path="com.liferay.amf.monitor">
 	<namespace>AmfEventMonitor</namespace>
 	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" remote-service="false" session-factory="sampleSessionFactory" table="foo" tx-manager="sampleTransactionManager uuid="true"">-->
-	<entity name="eventMonitor" local-service="true">
-
+	<entity name="eventMonitor" local-service="true"> <!-- Event -->
 
 		<!-- PK fields -->
 
 		<column name="eventMonitorId" primary="true" type="long"></column>
-		
+
 		<!-- Order -->
 		<order by="desc">
-		<order-column name="createDate" />
+			<order-column name="createDate" />
 		</order>
-		
+
 		<!-- Finders -->
 		<!-- Find by groupId -->
 		<finder name="EventType" return-type="Collection">
-		<finder-column name="eventType"></finder-column>
-		</finder>
-		
-		<finder name="UserId" return-type="Collection">
-		<finder-column name="userId"></finder-column>
-		<finder-column name="eventType"></finder-column>
-		</finder>
-		
-		<finder name="AllUserId" return-type="Collection">
-		<finder-column name="userId"></finder-column>
+			<finder-column name="eventType"></finder-column>
 		</finder>
 
+		<finder name="UserId" return-type="Collection"> <!-- E_U -->
+			<finder-column name="eventType"></finder-column>
+			<finder-column name="userId"></finder-column>
+		</finder>
+
+		<finder name="AllUserId" return-type="Collection">
+			<finder-column name="userId"></finder-column>
+		</finder>
 
 		<!-- Group instance -->
 
@@ -39,10 +37,12 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="userIP" type="String"></column>
-        <column name="eventType" type="String"></column>
+		<column name="eventType" type="String"></column>
 	</entity>
-	
-	<reference entity="User"
-	package-path="com.liferay.portal"></reference>
-	
+
+	<reference
+		entity="User"
+	package-path="com.liferay.portal"></reference
+>
+
 </service-builder>

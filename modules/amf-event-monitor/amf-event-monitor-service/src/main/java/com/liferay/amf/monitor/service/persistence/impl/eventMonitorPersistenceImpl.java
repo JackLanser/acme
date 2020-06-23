@@ -85,6 +85,504 @@ public class eventMonitorPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByAllUserId;
+	private FinderPath _finderPathWithoutPaginationFindByAllUserId;
+	private FinderPath _finderPathCountByAllUserId;
+
+	/**
+	 * Returns all the event monitors where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching event monitors
+	 */
+	@Override
+	public List<eventMonitor> findByAllUserId(long userId) {
+		return findByAllUserId(
+			userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the event monitors where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of event monitors
+	 * @param end the upper bound of the range of event monitors (not inclusive)
+	 * @return the range of matching event monitors
+	 */
+	@Override
+	public List<eventMonitor> findByAllUserId(long userId, int start, int end) {
+		return findByAllUserId(userId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the event monitors where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of event monitors
+	 * @param end the upper bound of the range of event monitors (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching event monitors
+	 */
+	@Override
+	public List<eventMonitor> findByAllUserId(
+		long userId, int start, int end,
+		OrderByComparator<eventMonitor> orderByComparator) {
+
+		return findByAllUserId(userId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the event monitors where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of event monitors
+	 * @param end the upper bound of the range of event monitors (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching event monitors
+	 */
+	@Override
+	public List<eventMonitor> findByAllUserId(
+		long userId, int start, int end,
+		OrderByComparator<eventMonitor> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByAllUserId;
+				finderArgs = new Object[] {userId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByAllUserId;
+			finderArgs = new Object[] {userId, start, end, orderByComparator};
+		}
+
+		List<eventMonitor> list = null;
+
+		if (useFinderCache) {
+			list = (List<eventMonitor>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (eventMonitor eventMonitor : list) {
+					if (userId != eventMonitor.getUserId()) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_EVENTMONITOR_WHERE);
+
+			sb.append(_FINDER_COLUMN_ALLUSERID_USERID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(eventMonitorModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				list = (List<eventMonitor>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first event monitor in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching event monitor
+	 * @throws NoSucheventMonitorException if a matching event monitor could not be found
+	 */
+	@Override
+	public eventMonitor findByAllUserId_First(
+			long userId, OrderByComparator<eventMonitor> orderByComparator)
+		throws NoSucheventMonitorException {
+
+		eventMonitor eventMonitor = fetchByAllUserId_First(
+			userId, orderByComparator);
+
+		if (eventMonitor != null) {
+			return eventMonitor;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("userId=");
+		sb.append(userId);
+
+		sb.append("}");
+
+		throw new NoSucheventMonitorException(sb.toString());
+	}
+
+	/**
+	 * Returns the first event monitor in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching event monitor, or <code>null</code> if a matching event monitor could not be found
+	 */
+	@Override
+	public eventMonitor fetchByAllUserId_First(
+		long userId, OrderByComparator<eventMonitor> orderByComparator) {
+
+		List<eventMonitor> list = findByAllUserId(
+			userId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last event monitor in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching event monitor
+	 * @throws NoSucheventMonitorException if a matching event monitor could not be found
+	 */
+	@Override
+	public eventMonitor findByAllUserId_Last(
+			long userId, OrderByComparator<eventMonitor> orderByComparator)
+		throws NoSucheventMonitorException {
+
+		eventMonitor eventMonitor = fetchByAllUserId_Last(
+			userId, orderByComparator);
+
+		if (eventMonitor != null) {
+			return eventMonitor;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("userId=");
+		sb.append(userId);
+
+		sb.append("}");
+
+		throw new NoSucheventMonitorException(sb.toString());
+	}
+
+	/**
+	 * Returns the last event monitor in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching event monitor, or <code>null</code> if a matching event monitor could not be found
+	 */
+	@Override
+	public eventMonitor fetchByAllUserId_Last(
+		long userId, OrderByComparator<eventMonitor> orderByComparator) {
+
+		int count = countByAllUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<eventMonitor> list = findByAllUserId(
+			userId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the event monitors before and after the current event monitor in the ordered set where userId = &#63;.
+	 *
+	 * @param eventMonitorId the primary key of the current event monitor
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next event monitor
+	 * @throws NoSucheventMonitorException if a event monitor with the primary key could not be found
+	 */
+	@Override
+	public eventMonitor[] findByAllUserId_PrevAndNext(
+			long eventMonitorId, long userId,
+			OrderByComparator<eventMonitor> orderByComparator)
+		throws NoSucheventMonitorException {
+
+		eventMonitor eventMonitor = findByPrimaryKey(eventMonitorId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			eventMonitor[] array = new eventMonitorImpl[3];
+
+			array[0] = getByAllUserId_PrevAndNext(
+				session, eventMonitor, userId, orderByComparator, true);
+
+			array[1] = eventMonitor;
+
+			array[2] = getByAllUserId_PrevAndNext(
+				session, eventMonitor, userId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected eventMonitor getByAllUserId_PrevAndNext(
+		Session session, eventMonitor eventMonitor, long userId,
+		OrderByComparator<eventMonitor> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_EVENTMONITOR_WHERE);
+
+		sb.append(_FINDER_COLUMN_ALLUSERID_USERID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(eventMonitorModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(userId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(eventMonitor)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<eventMonitor> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the event monitors where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 */
+	@Override
+	public void removeByAllUserId(long userId) {
+		for (eventMonitor eventMonitor :
+				findByAllUserId(
+					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(eventMonitor);
+		}
+	}
+
+	/**
+	 * Returns the number of event monitors where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching event monitors
+	 */
+	@Override
+	public int countByAllUserId(long userId) {
+		FinderPath finderPath = _finderPathCountByAllUserId;
+
+		Object[] finderArgs = new Object[] {userId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_EVENTMONITOR_WHERE);
+
+			sb.append(_FINDER_COLUMN_ALLUSERID_USERID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ALLUSERID_USERID_2 =
+		"eventMonitor.userId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByEventType;
 	private FinderPath _finderPathWithoutPaginationFindByEventType;
 	private FinderPath _finderPathCountByEventType;
@@ -634,47 +1132,47 @@ public class eventMonitorPersistenceImpl
 	private FinderPath _finderPathCountByUserId;
 
 	/**
-	 * Returns all the event monitors where eventType = &#63; and userId = &#63;.
+	 * Returns all the event monitors where userId = &#63; and eventType = &#63;.
 	 *
-	 * @param eventType the event type
 	 * @param userId the user ID
+	 * @param eventType the event type
 	 * @return the matching event monitors
 	 */
 	@Override
-	public List<eventMonitor> findByUserId(String eventType, long userId) {
+	public List<eventMonitor> findByUserId(long userId, String eventType) {
 		return findByUserId(
-			eventType, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			userId, eventType, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the event monitors where eventType = &#63; and userId = &#63;.
+	 * Returns a range of all the event monitors where userId = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
 	 * </p>
 	 *
-	 * @param eventType the event type
 	 * @param userId the user ID
+	 * @param eventType the event type
 	 * @param start the lower bound of the range of event monitors
 	 * @param end the upper bound of the range of event monitors (not inclusive)
 	 * @return the range of matching event monitors
 	 */
 	@Override
 	public List<eventMonitor> findByUserId(
-		String eventType, long userId, int start, int end) {
+		long userId, String eventType, int start, int end) {
 
-		return findByUserId(eventType, userId, start, end, null);
+		return findByUserId(userId, eventType, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the event monitors where eventType = &#63; and userId = &#63;.
+	 * Returns an ordered range of all the event monitors where userId = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
 	 * </p>
 	 *
-	 * @param eventType the event type
 	 * @param userId the user ID
+	 * @param eventType the event type
 	 * @param start the lower bound of the range of event monitors
 	 * @param end the upper bound of the range of event monitors (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -682,22 +1180,22 @@ public class eventMonitorPersistenceImpl
 	 */
 	@Override
 	public List<eventMonitor> findByUserId(
-		String eventType, long userId, int start, int end,
+		long userId, String eventType, int start, int end,
 		OrderByComparator<eventMonitor> orderByComparator) {
 
 		return findByUserId(
-			eventType, userId, start, end, orderByComparator, true);
+			userId, eventType, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the event monitors where eventType = &#63; and userId = &#63;.
+	 * Returns an ordered range of all the event monitors where userId = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
 	 * </p>
 	 *
-	 * @param eventType the event type
 	 * @param userId the user ID
+	 * @param eventType the event type
 	 * @param start the lower bound of the range of event monitors
 	 * @param end the upper bound of the range of event monitors (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -706,7 +1204,7 @@ public class eventMonitorPersistenceImpl
 	 */
 	@Override
 	public List<eventMonitor> findByUserId(
-		String eventType, long userId, int start, int end,
+		long userId, String eventType, int start, int end,
 		OrderByComparator<eventMonitor> orderByComparator,
 		boolean useFinderCache) {
 
@@ -720,13 +1218,13 @@ public class eventMonitorPersistenceImpl
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUserId;
-				finderArgs = new Object[] {eventType, userId};
+				finderArgs = new Object[] {userId, eventType};
 			}
 		}
 		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {
-				eventType, userId, start, end, orderByComparator
+				userId, eventType, start, end, orderByComparator
 			};
 		}
 
@@ -738,8 +1236,8 @@ public class eventMonitorPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (eventMonitor eventMonitor : list) {
-					if (!eventType.equals(eventMonitor.getEventType()) ||
-						(userId != eventMonitor.getUserId())) {
+					if ((userId != eventMonitor.getUserId()) ||
+						!eventType.equals(eventMonitor.getEventType())) {
 
 						list = null;
 
@@ -762,6 +1260,8 @@ public class eventMonitorPersistenceImpl
 
 			sb.append(_SQL_SELECT_EVENTMONITOR_WHERE);
 
+			sb.append(_FINDER_COLUMN_USERID_USERID_2);
+
 			boolean bindEventType = false;
 
 			if (eventType.isEmpty()) {
@@ -772,8 +1272,6 @@ public class eventMonitorPersistenceImpl
 
 				sb.append(_FINDER_COLUMN_USERID_EVENTTYPE_2);
 			}
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -794,11 +1292,11 @@ public class eventMonitorPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
+				queryPos.add(userId);
+
 				if (bindEventType) {
 					queryPos.add(eventType);
 				}
-
-				queryPos.add(userId);
 
 				list = (List<eventMonitor>)QueryUtil.list(
 					query, getDialect(), start, end);
@@ -825,22 +1323,22 @@ public class eventMonitorPersistenceImpl
 	}
 
 	/**
-	 * Returns the first event monitor in the ordered set where eventType = &#63; and userId = &#63;.
+	 * Returns the first event monitor in the ordered set where userId = &#63; and eventType = &#63;.
 	 *
-	 * @param eventType the event type
 	 * @param userId the user ID
+	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching event monitor
 	 * @throws NoSucheventMonitorException if a matching event monitor could not be found
 	 */
 	@Override
 	public eventMonitor findByUserId_First(
-			String eventType, long userId,
+			long userId, String eventType,
 			OrderByComparator<eventMonitor> orderByComparator)
 		throws NoSucheventMonitorException {
 
 		eventMonitor eventMonitor = fetchByUserId_First(
-			eventType, userId, orderByComparator);
+			userId, eventType, orderByComparator);
 
 		if (eventMonitor != null) {
 			return eventMonitor;
@@ -850,11 +1348,11 @@ public class eventMonitorPersistenceImpl
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("eventType=");
-		sb.append(eventType);
-
-		sb.append(", userId=");
+		sb.append("userId=");
 		sb.append(userId);
+
+		sb.append(", eventType=");
+		sb.append(eventType);
 
 		sb.append("}");
 
@@ -862,20 +1360,20 @@ public class eventMonitorPersistenceImpl
 	}
 
 	/**
-	 * Returns the first event monitor in the ordered set where eventType = &#63; and userId = &#63;.
+	 * Returns the first event monitor in the ordered set where userId = &#63; and eventType = &#63;.
 	 *
-	 * @param eventType the event type
 	 * @param userId the user ID
+	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching event monitor, or <code>null</code> if a matching event monitor could not be found
 	 */
 	@Override
 	public eventMonitor fetchByUserId_First(
-		String eventType, long userId,
+		long userId, String eventType,
 		OrderByComparator<eventMonitor> orderByComparator) {
 
 		List<eventMonitor> list = findByUserId(
-			eventType, userId, 0, 1, orderByComparator);
+			userId, eventType, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -885,22 +1383,22 @@ public class eventMonitorPersistenceImpl
 	}
 
 	/**
-	 * Returns the last event monitor in the ordered set where eventType = &#63; and userId = &#63;.
+	 * Returns the last event monitor in the ordered set where userId = &#63; and eventType = &#63;.
 	 *
-	 * @param eventType the event type
 	 * @param userId the user ID
+	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching event monitor
 	 * @throws NoSucheventMonitorException if a matching event monitor could not be found
 	 */
 	@Override
 	public eventMonitor findByUserId_Last(
-			String eventType, long userId,
+			long userId, String eventType,
 			OrderByComparator<eventMonitor> orderByComparator)
 		throws NoSucheventMonitorException {
 
 		eventMonitor eventMonitor = fetchByUserId_Last(
-			eventType, userId, orderByComparator);
+			userId, eventType, orderByComparator);
 
 		if (eventMonitor != null) {
 			return eventMonitor;
@@ -910,11 +1408,11 @@ public class eventMonitorPersistenceImpl
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("eventType=");
-		sb.append(eventType);
-
-		sb.append(", userId=");
+		sb.append("userId=");
 		sb.append(userId);
+
+		sb.append(", eventType=");
+		sb.append(eventType);
 
 		sb.append("}");
 
@@ -922,26 +1420,26 @@ public class eventMonitorPersistenceImpl
 	}
 
 	/**
-	 * Returns the last event monitor in the ordered set where eventType = &#63; and userId = &#63;.
+	 * Returns the last event monitor in the ordered set where userId = &#63; and eventType = &#63;.
 	 *
-	 * @param eventType the event type
 	 * @param userId the user ID
+	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching event monitor, or <code>null</code> if a matching event monitor could not be found
 	 */
 	@Override
 	public eventMonitor fetchByUserId_Last(
-		String eventType, long userId,
+		long userId, String eventType,
 		OrderByComparator<eventMonitor> orderByComparator) {
 
-		int count = countByUserId(eventType, userId);
+		int count = countByUserId(userId, eventType);
 
 		if (count == 0) {
 			return null;
 		}
 
 		List<eventMonitor> list = findByUserId(
-			eventType, userId, count - 1, count, orderByComparator);
+			userId, eventType, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -951,18 +1449,18 @@ public class eventMonitorPersistenceImpl
 	}
 
 	/**
-	 * Returns the event monitors before and after the current event monitor in the ordered set where eventType = &#63; and userId = &#63;.
+	 * Returns the event monitors before and after the current event monitor in the ordered set where userId = &#63; and eventType = &#63;.
 	 *
 	 * @param eventMonitorId the primary key of the current event monitor
-	 * @param eventType the event type
 	 * @param userId the user ID
+	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next event monitor
 	 * @throws NoSucheventMonitorException if a event monitor with the primary key could not be found
 	 */
 	@Override
 	public eventMonitor[] findByUserId_PrevAndNext(
-			long eventMonitorId, String eventType, long userId,
+			long eventMonitorId, long userId, String eventType,
 			OrderByComparator<eventMonitor> orderByComparator)
 		throws NoSucheventMonitorException {
 
@@ -978,13 +1476,13 @@ public class eventMonitorPersistenceImpl
 			eventMonitor[] array = new eventMonitorImpl[3];
 
 			array[0] = getByUserId_PrevAndNext(
-				session, eventMonitor, eventType, userId, orderByComparator,
+				session, eventMonitor, userId, eventType, orderByComparator,
 				true);
 
 			array[1] = eventMonitor;
 
 			array[2] = getByUserId_PrevAndNext(
-				session, eventMonitor, eventType, userId, orderByComparator,
+				session, eventMonitor, userId, eventType, orderByComparator,
 				false);
 
 			return array;
@@ -998,8 +1496,8 @@ public class eventMonitorPersistenceImpl
 	}
 
 	protected eventMonitor getByUserId_PrevAndNext(
-		Session session, eventMonitor eventMonitor, String eventType,
-		long userId, OrderByComparator<eventMonitor> orderByComparator,
+		Session session, eventMonitor eventMonitor, long userId,
+		String eventType, OrderByComparator<eventMonitor> orderByComparator,
 		boolean previous) {
 
 		StringBundler sb = null;
@@ -1015,6 +1513,8 @@ public class eventMonitorPersistenceImpl
 
 		sb.append(_SQL_SELECT_EVENTMONITOR_WHERE);
 
+		sb.append(_FINDER_COLUMN_USERID_USERID_2);
+
 		boolean bindEventType = false;
 
 		if (eventType.isEmpty()) {
@@ -1025,8 +1525,6 @@ public class eventMonitorPersistenceImpl
 
 			sb.append(_FINDER_COLUMN_USERID_EVENTTYPE_2);
 		}
-
-		sb.append(_FINDER_COLUMN_USERID_USERID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -1097,11 +1595,11 @@ public class eventMonitorPersistenceImpl
 
 		QueryPos queryPos = QueryPos.getInstance(query);
 
+		queryPos.add(userId);
+
 		if (bindEventType) {
 			queryPos.add(eventType);
 		}
-
-		queryPos.add(userId);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
@@ -1122,16 +1620,16 @@ public class eventMonitorPersistenceImpl
 	}
 
 	/**
-	 * Removes all the event monitors where eventType = &#63; and userId = &#63; from the database.
+	 * Removes all the event monitors where userId = &#63; and eventType = &#63; from the database.
 	 *
-	 * @param eventType the event type
 	 * @param userId the user ID
+	 * @param eventType the event type
 	 */
 	@Override
-	public void removeByUserId(String eventType, long userId) {
+	public void removeByUserId(long userId, String eventType) {
 		for (eventMonitor eventMonitor :
 				findByUserId(
-					eventType, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					userId, eventType, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
 			remove(eventMonitor);
@@ -1139,19 +1637,19 @@ public class eventMonitorPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of event monitors where eventType = &#63; and userId = &#63;.
+	 * Returns the number of event monitors where userId = &#63; and eventType = &#63;.
 	 *
-	 * @param eventType the event type
 	 * @param userId the user ID
+	 * @param eventType the event type
 	 * @return the number of matching event monitors
 	 */
 	@Override
-	public int countByUserId(String eventType, long userId) {
+	public int countByUserId(long userId, String eventType) {
 		eventType = Objects.toString(eventType, "");
 
 		FinderPath finderPath = _finderPathCountByUserId;
 
-		Object[] finderArgs = new Object[] {eventType, userId};
+		Object[] finderArgs = new Object[] {userId, eventType};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1159,6 +1657,8 @@ public class eventMonitorPersistenceImpl
 			StringBundler sb = new StringBundler(3);
 
 			sb.append(_SQL_COUNT_EVENTMONITOR_WHERE);
+
+			sb.append(_FINDER_COLUMN_USERID_USERID_2);
 
 			boolean bindEventType = false;
 
@@ -1171,8 +1671,6 @@ public class eventMonitorPersistenceImpl
 				sb.append(_FINDER_COLUMN_USERID_EVENTTYPE_2);
 			}
 
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
 			String sql = sb.toString();
 
 			Session session = null;
@@ -1183,13 +1681,13 @@ public class eventMonitorPersistenceImpl
 				Query query = session.createQuery(sql);
 
 				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
 
 				if (bindEventType) {
 					queryPos.add(eventType);
 				}
 
-				queryPos.add(userId);
-
 				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(finderPath, finderArgs, count);
@@ -1206,513 +1704,15 @@ public class eventMonitorPersistenceImpl
 
 		return count.intValue();
 	}
-
-	private static final String _FINDER_COLUMN_USERID_EVENTTYPE_2 =
-		"eventMonitor.eventType = ? AND ";
-
-	private static final String _FINDER_COLUMN_USERID_EVENTTYPE_3 =
-		"(eventMonitor.eventType IS NULL OR eventMonitor.eventType = '') AND ";
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 =
-		"eventMonitor.userId = ?";
+		"eventMonitor.userId = ? AND ";
 
-	private FinderPath _finderPathWithPaginationFindByAllUserId;
-	private FinderPath _finderPathWithoutPaginationFindByAllUserId;
-	private FinderPath _finderPathCountByAllUserId;
+	private static final String _FINDER_COLUMN_USERID_EVENTTYPE_2 =
+		"eventMonitor.eventType = ?";
 
-	/**
-	 * Returns all the event monitors where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching event monitors
-	 */
-	@Override
-	public List<eventMonitor> findByAllUserId(long userId) {
-		return findByAllUserId(
-			userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the event monitors where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of event monitors
-	 * @param end the upper bound of the range of event monitors (not inclusive)
-	 * @return the range of matching event monitors
-	 */
-	@Override
-	public List<eventMonitor> findByAllUserId(long userId, int start, int end) {
-		return findByAllUserId(userId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the event monitors where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of event monitors
-	 * @param end the upper bound of the range of event monitors (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching event monitors
-	 */
-	@Override
-	public List<eventMonitor> findByAllUserId(
-		long userId, int start, int end,
-		OrderByComparator<eventMonitor> orderByComparator) {
-
-		return findByAllUserId(userId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the event monitors where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>eventMonitorModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of event monitors
-	 * @param end the upper bound of the range of event monitors (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching event monitors
-	 */
-	@Override
-	public List<eventMonitor> findByAllUserId(
-		long userId, int start, int end,
-		OrderByComparator<eventMonitor> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByAllUserId;
-				finderArgs = new Object[] {userId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByAllUserId;
-			finderArgs = new Object[] {userId, start, end, orderByComparator};
-		}
-
-		List<eventMonitor> list = null;
-
-		if (useFinderCache) {
-			list = (List<eventMonitor>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (eventMonitor eventMonitor : list) {
-					if (userId != eventMonitor.getUserId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_EVENTMONITOR_WHERE);
-
-			sb.append(_FINDER_COLUMN_ALLUSERID_USERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(eventMonitorModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				list = (List<eventMonitor>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first event monitor in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching event monitor
-	 * @throws NoSucheventMonitorException if a matching event monitor could not be found
-	 */
-	@Override
-	public eventMonitor findByAllUserId_First(
-			long userId, OrderByComparator<eventMonitor> orderByComparator)
-		throws NoSucheventMonitorException {
-
-		eventMonitor eventMonitor = fetchByAllUserId_First(
-			userId, orderByComparator);
-
-		if (eventMonitor != null) {
-			return eventMonitor;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSucheventMonitorException(sb.toString());
-	}
-
-	/**
-	 * Returns the first event monitor in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching event monitor, or <code>null</code> if a matching event monitor could not be found
-	 */
-	@Override
-	public eventMonitor fetchByAllUserId_First(
-		long userId, OrderByComparator<eventMonitor> orderByComparator) {
-
-		List<eventMonitor> list = findByAllUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last event monitor in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching event monitor
-	 * @throws NoSucheventMonitorException if a matching event monitor could not be found
-	 */
-	@Override
-	public eventMonitor findByAllUserId_Last(
-			long userId, OrderByComparator<eventMonitor> orderByComparator)
-		throws NoSucheventMonitorException {
-
-		eventMonitor eventMonitor = fetchByAllUserId_Last(
-			userId, orderByComparator);
-
-		if (eventMonitor != null) {
-			return eventMonitor;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSucheventMonitorException(sb.toString());
-	}
-
-	/**
-	 * Returns the last event monitor in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching event monitor, or <code>null</code> if a matching event monitor could not be found
-	 */
-	@Override
-	public eventMonitor fetchByAllUserId_Last(
-		long userId, OrderByComparator<eventMonitor> orderByComparator) {
-
-		int count = countByAllUserId(userId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<eventMonitor> list = findByAllUserId(
-			userId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the event monitors before and after the current event monitor in the ordered set where userId = &#63;.
-	 *
-	 * @param eventMonitorId the primary key of the current event monitor
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next event monitor
-	 * @throws NoSucheventMonitorException if a event monitor with the primary key could not be found
-	 */
-	@Override
-	public eventMonitor[] findByAllUserId_PrevAndNext(
-			long eventMonitorId, long userId,
-			OrderByComparator<eventMonitor> orderByComparator)
-		throws NoSucheventMonitorException {
-
-		eventMonitor eventMonitor = findByPrimaryKey(eventMonitorId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			eventMonitor[] array = new eventMonitorImpl[3];
-
-			array[0] = getByAllUserId_PrevAndNext(
-				session, eventMonitor, userId, orderByComparator, true);
-
-			array[1] = eventMonitor;
-
-			array[2] = getByAllUserId_PrevAndNext(
-				session, eventMonitor, userId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected eventMonitor getByAllUserId_PrevAndNext(
-		Session session, eventMonitor eventMonitor, long userId,
-		OrderByComparator<eventMonitor> orderByComparator, boolean previous) {
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			sb = new StringBundler(3);
-		}
-
-		sb.append(_SQL_SELECT_EVENTMONITOR_WHERE);
-
-		sb.append(_FINDER_COLUMN_ALLUSERID_USERID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				sb.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			sb.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						sb.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC);
-					}
-					else {
-						sb.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			sb.append(eventMonitorModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = sb.toString();
-
-		Query query = session.createQuery(sql);
-
-		query.setFirstResult(0);
-		query.setMaxResults(2);
-
-		QueryPos queryPos = QueryPos.getInstance(query);
-
-		queryPos.add(userId);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(eventMonitor)) {
-
-				queryPos.add(orderByConditionValue);
-			}
-		}
-
-		List<eventMonitor> list = query.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the event monitors where userId = &#63; from the database.
-	 *
-	 * @param userId the user ID
-	 */
-	@Override
-	public void removeByAllUserId(long userId) {
-		for (eventMonitor eventMonitor :
-				findByAllUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(eventMonitor);
-		}
-	}
-
-	/**
-	 * Returns the number of event monitors where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the number of matching event monitors
-	 */
-	@Override
-	public int countByAllUserId(long userId) {
-		FinderPath finderPath = _finderPathCountByAllUserId;
-
-		Object[] finderArgs = new Object[] {userId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_EVENTMONITOR_WHERE);
-
-			sb.append(_FINDER_COLUMN_ALLUSERID_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_ALLUSERID_USERID_2 =
-		"eventMonitor.userId = ?";
+	private static final String _FINDER_COLUMN_USERID_EVENTTYPE_3 =
+		"(eventMonitor.eventType IS NULL OR eventMonitor.eventType = '')";
 
 	public eventMonitorPersistenceImpl() {
 		setModelClass(eventMonitor.class);
@@ -1963,32 +1963,51 @@ public class eventMonitorPersistenceImpl
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
-			Object[] args = new Object[] {eventMonitorModelImpl.getEventType()};
+			Object[] args = new Object[] {eventMonitorModelImpl.getUserId()};
+
+			finderCache.removeResult(_finderPathCountByAllUserId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByAllUserId, args);
+
+			args = new Object[] {eventMonitorModelImpl.getEventType()};
 
 			finderCache.removeResult(_finderPathCountByEventType, args);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByEventType, args);
 
 			args = new Object[] {
-				eventMonitorModelImpl.getEventType(),
-				eventMonitorModelImpl.getUserId()
+				eventMonitorModelImpl.getUserId(),
+				eventMonitorModelImpl.getEventType()
 			};
 
 			finderCache.removeResult(_finderPathCountByUserId, args);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByUserId, args);
 
-			args = new Object[] {eventMonitorModelImpl.getUserId()};
-
-			finderCache.removeResult(_finderPathCountByAllUserId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByAllUserId, args);
-
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
 		}
 		else {
+			if ((eventMonitorModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByAllUserId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					eventMonitorModelImpl.getOriginalUserId()
+				};
+
+				finderCache.removeResult(_finderPathCountByAllUserId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByAllUserId, args);
+
+				args = new Object[] {eventMonitorModelImpl.getUserId()};
+
+				finderCache.removeResult(_finderPathCountByAllUserId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByAllUserId, args);
+			}
+
 			if ((eventMonitorModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByEventType.
 					 getColumnBitmask()) != 0) {
@@ -2013,8 +2032,8 @@ public class eventMonitorPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					eventMonitorModelImpl.getOriginalEventType(),
-					eventMonitorModelImpl.getOriginalUserId()
+					eventMonitorModelImpl.getOriginalUserId(),
+					eventMonitorModelImpl.getOriginalEventType()
 				};
 
 				finderCache.removeResult(_finderPathCountByUserId, args);
@@ -2022,32 +2041,13 @@ public class eventMonitorPersistenceImpl
 					_finderPathWithoutPaginationFindByUserId, args);
 
 				args = new Object[] {
-					eventMonitorModelImpl.getEventType(),
-					eventMonitorModelImpl.getUserId()
+					eventMonitorModelImpl.getUserId(),
+					eventMonitorModelImpl.getEventType()
 				};
 
 				finderCache.removeResult(_finderPathCountByUserId, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByUserId, args);
-			}
-
-			if ((eventMonitorModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByAllUserId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					eventMonitorModelImpl.getOriginalUserId()
-				};
-
-				finderCache.removeResult(_finderPathCountByAllUserId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByAllUserId, args);
-
-				args = new Object[] {eventMonitorModelImpl.getUserId()};
-
-				finderCache.removeResult(_finderPathCountByAllUserId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByAllUserId, args);
 			}
 		}
 
@@ -2338,6 +2338,26 @@ public class eventMonitorPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
+		_finderPathWithPaginationFindByAllUserId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, eventMonitorImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAllUserId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByAllUserId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, eventMonitorImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAllUserId",
+			new String[] {Long.class.getName()},
+			eventMonitorModelImpl.USERID_COLUMN_BITMASK |
+			eventMonitorModelImpl.CREATEDATE_COLUMN_BITMASK);
+
+		_finderPathCountByAllUserId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAllUserId",
+			new String[] {Long.class.getName()});
+
 		_finderPathWithPaginationFindByEventType = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, eventMonitorImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEventType",
@@ -2362,7 +2382,7 @@ public class eventMonitorPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, eventMonitorImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
-				String.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
@@ -2370,35 +2390,15 @@ public class eventMonitorPersistenceImpl
 		_finderPathWithoutPaginationFindByUserId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, eventMonitorImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {String.class.getName(), Long.class.getName()},
-			eventMonitorModelImpl.EVENTTYPE_COLUMN_BITMASK |
+			new String[] {Long.class.getName(), String.class.getName()},
 			eventMonitorModelImpl.USERID_COLUMN_BITMASK |
+			eventMonitorModelImpl.EVENTTYPE_COLUMN_BITMASK |
 			eventMonitorModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUserId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {String.class.getName(), Long.class.getName()});
-
-		_finderPathWithPaginationFindByAllUserId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, eventMonitorImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAllUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
-
-		_finderPathWithoutPaginationFindByAllUserId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, eventMonitorImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAllUserId",
-			new String[] {Long.class.getName()},
-			eventMonitorModelImpl.USERID_COLUMN_BITMASK |
-			eventMonitorModelImpl.CREATEDATE_COLUMN_BITMASK);
-
-		_finderPathCountByAllUserId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAllUserId",
-			new String[] {Long.class.getName()});
+			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
 	@Deactivate

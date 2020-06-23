@@ -52,7 +52,7 @@ public class eventMonitorServiceImpl extends eventMonitorServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.amf.monitor.service.eventMonitorServiceUtil</code> to access the event monitor remote service.
 	 */
-	private String actionId = "VIEW_ALL";
+	private String _actionId = "VIEW_ALL";
 
 	public eventMonitor addeventMonitor(long userId, String eventType) {
 		return eventMonitorLocalService.addeventMonitor(userId, eventType);
@@ -67,7 +67,7 @@ public class eventMonitorServiceImpl extends eventMonitorServiceBaseImpl {
 		throws PrincipalException {
 
 		if (_eventMonitorPermissionCheck.contains(
-				getPermissionChecker(), actionId)) {
+				getPermissionChecker(), _actionId)) {
 
 			return eventMonitorLocalService.findByEventType(
 				eventType, start, end);
@@ -82,7 +82,7 @@ public class eventMonitorServiceImpl extends eventMonitorServiceBaseImpl {
 		throws PrincipalException {
 
 		if (_eventMonitorPermissionCheck.contains(
-				getPermissionChecker(), actionId)) {
+				getPermissionChecker(), _actionId)) {
 
 			return eventMonitorLocalService.findAll(start, end);
 		}
@@ -95,7 +95,7 @@ public class eventMonitorServiceImpl extends eventMonitorServiceBaseImpl {
 		throws PrincipalException {
 
 		if (_eventMonitorPermissionCheck.contains(
-				getPermissionChecker(), actionId)) {
+				getPermissionChecker(), _actionId)) {
 
 			return eventMonitorLocalService.countByEventType(eventType);
 		}

@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.amf.eventmonitor.web.portlet.action;
 
 import com.liferay.amf.eventmonitor.web.constants.EventMonitorPortletKeys;
@@ -43,10 +57,13 @@ public class LoginViewMVCRenderCommand implements MVCRenderCommand { //ViewEvent
 		int currentPage = ParamUtil.getInteger(
 			renderRequest, SearchContainer.DEFAULT_CUR_PARAM,
 			SearchContainer.DEFAULT_CUR);
+
 		int delta = ParamUtil.getInteger(
 			renderRequest, SearchContainer.DEFAULT_DELTA_PARAM,
 			SearchContainer.DEFAULT_DELTA);
+
 		int start = ((currentPage > 0) ? (currentPage - 1) : 0) * delta;
+
 		int end = start + delta;
 
 		String curTab = ParamUtil.getString(renderRequest, "tab");
@@ -55,7 +72,9 @@ public class LoginViewMVCRenderCommand implements MVCRenderCommand { //ViewEvent
 
 		iteratorURL.setParameter(
 			"mvcRenderCommandName", MVCCommandNames.LOGIN_VIEW);
+
 		iteratorURL.setParameter("tab", curTab);
+
 		renderRequest.setAttribute("iteratorURL", iteratorURL);
 
 		List<eventMonitor> events;
@@ -63,13 +82,18 @@ public class LoginViewMVCRenderCommand implements MVCRenderCommand { //ViewEvent
 		if (curTab.equals("All")) {
 			try {
 				events = _eventMonitorService.findAll(start, end);
+
 				renderRequest.setAttribute("eventList", events);
-				long count =
+
+				long loginCount =
 					_eventMonitorService.getEventMonitorsCountByEventType(
-						"Login") +
-							_eventMonitorService.
-								getEventMonitorsCountByEventType(
-									"Registration");
+						"Login");
+				long registrationCount =
+					_eventMonitorService.getEventMonitorsCountByEventType(
+						"Registration");
+
+				long count = loginCount + registrationCount;
+
 				renderRequest.setAttribute("eventCount", count);
 			}
 			catch (PrincipalException e) {
@@ -80,10 +104,13 @@ public class LoginViewMVCRenderCommand implements MVCRenderCommand { //ViewEvent
 			try {
 				events = _eventMonitorService.findByEventType(
 					curTab, start, end);
+
 				renderRequest.setAttribute("eventList", events);
+
 				long count =
 					_eventMonitorService.getEventMonitorsCountByEventType(
 						curTab);
+
 				renderRequest.setAttribute("eventCount", count);
 			}
 			catch (PrincipalException e) {

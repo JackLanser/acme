@@ -45,26 +45,25 @@ public class eventMonitorLocalServiceImpl
 
 	public eventMonitor addeventMonitor(long userId, String eventType) {
 		User user = userLocalService.fetchUserById(userId);
+
 		long monitorId = counterLocalService.increment();
+
 		eventMonitor event = createeventMonitor(monitorId);
+
 		event.setUserId(userId);
+
 		event.setUserName(user.getScreenName());
 
 		if (eventType.equals("Registration")) {
 			event.setCreateDate(user.getCreateDate());
+			event.setUserIP(_registrationIp);
 		}
 		else {
 			event.setCreateDate(user.getLastLoginDate());
+			event.setUserIP(user.getLastLoginIP());
 		}
 
 		event.setEventType(eventType);
-
-		if (eventType.equals("Registration")) {
-			event.setUserIP(registrationIp);
-		}
-		else {
-			event.setUserIP(user.getLastLoginIP());
-		}
 
 		event = super.addeventMonitor(event);
 
@@ -76,7 +75,7 @@ public class eventMonitorLocalServiceImpl
 	}
 
 	public int countByUserId(long userId, String eventType) {
-		return eventMonitorPersistence.countByUserId(eventType, userId);
+		return eventMonitorPersistence.countByUserId(userId, eventType);
 	}
 
 	public List<eventMonitor> findAll(int start, int end) {
@@ -98,14 +97,14 @@ public class eventMonitorLocalServiceImpl
 	}
 
 	public List<eventMonitor> findByUserId(long userId, String eventType) {
-		return eventMonitorPersistence.findByUserId(eventType, userId);
+		return eventMonitorPersistence.findByUserId(userId, eventType);
 	}
 
 	public List<eventMonitor> findByUserId(
 		long userId, String eventType, int start, int end) {
 
 		return eventMonitorPersistence.findByUserId(
-			eventType, userId, start, end);
+			userId, eventType, start, end);
 	}
 
 	/**
@@ -113,6 +112,6 @@ public class eventMonitorLocalServiceImpl
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.monitor.service.eventMonitorLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.monitor.service.eventMonitorLocalServiceUtil</code>.
 	 */
-	private String registrationIp = "0.0.0.0";
+	private String _registrationIp = "0.0.0.0";
 
 }

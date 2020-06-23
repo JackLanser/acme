@@ -16,8 +16,11 @@ package com.liferay.amf.search.service.impl;
 
 import com.liferay.amf.search.service.base.ZipcodeSearchLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the zipcode search local service.
@@ -44,4 +47,11 @@ public class ZipcodeSearchLocalServiceImpl
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.search.service.ZipcodeSearchLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.search.service.ZipcodeSearchLocalServiceUtil</code>.
 	 */
+	
+	public User findUserByZip(String zip) {
+		return _userLocalService.createUser(0);
+	}
+	
+	@Reference
+	private UserLocalService _userLocalService;
 }

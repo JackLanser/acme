@@ -49,6 +49,8 @@ public interface ZipcodeSearchLocalService extends BaseLocalService {
 	 */
 	public List<User> findUserByZip(String zip);
 
+	public List<User> findUserByZip(String zip, int start, int end);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

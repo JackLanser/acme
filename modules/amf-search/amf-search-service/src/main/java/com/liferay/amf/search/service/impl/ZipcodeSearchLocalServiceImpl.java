@@ -80,5 +80,31 @@ public class ZipcodeSearchLocalServiceImpl
 		
 		return null;
 	}
+	
+	public List<User> findUserByZip(String zip, int start, int end) {
+	    try {
+	    	
+	        DynamicQuery addressQuery = DynamicQueryFactoryUtil.forClass(Address.class)
+	            .add(RestrictionsFactoryUtil.eq("zip", zip))
+	       		.setProjection(ProjectionFactoryUtil.property("userId"));
+	            
+	        DynamicQuery userQuery = DynamicQueryFactoryUtil.forClass(User.class)
+	            .add(PropertyFactoryUtil.forName("userId").in(addressQuery));
+	        System.out.println("About to call search");
+	        List<User> users = userLocalService.dynamicQuery(userQuery, start, end);
+
+	        return users;
+	    }
+	    catch (Exception e) {
+	        try {
+	            throw new SystemException(e);
+	        }
+	        catch (SystemException se) {
+	            se.printStackTrace();
+	        }
+	    }
+		
+		return null;
+	}
 
 }

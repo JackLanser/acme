@@ -43,6 +43,12 @@ public class ZipcodeSearchLocalServiceUtil {
 		return getService().findUserByZip(zip);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.User>
+		findUserByZip(String zip, int start, int end) {
+
+		return getService().findUserByZip(zip, start, end);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.util.List;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -45,7 +47,7 @@ public interface ZipcodeSearchLocalService extends BaseLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ZipcodeSearchLocalServiceUtil} to access the zipcode search local service. Add custom service methods to <code>com.liferay.amf.search.service.impl.ZipcodeSearchLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public User findUserByZip(String zip);
+	public List<User> findUserByZip(String zip);
 
 	/**
 	 * Returns the OSGi service identifier.

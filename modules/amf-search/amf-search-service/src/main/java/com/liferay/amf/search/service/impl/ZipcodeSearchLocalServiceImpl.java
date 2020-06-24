@@ -16,11 +16,18 @@ package com.liferay.amf.search.service.impl;
 
 import com.liferay.amf.search.service.base.ZipcodeSearchLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the zipcode search local service.
@@ -48,10 +55,30 @@ public class ZipcodeSearchLocalServiceImpl
 	 * Never reference this class directly. Use <code>com.liferay.amf.search.service.ZipcodeSearchLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.search.service.ZipcodeSearchLocalServiceUtil</code>.
 	 */
 	
-	public User findUserByZip(String zip) {
-		return _userLocalService.createUser(0);
+	public List<User> findUserByZip(String zip) {
+	    try {
+
+	        DynamicQuery addressQuery = DynamicQueryFactoryUtil.forClass(Address.class)
+	            .add(RestrictionsFactoryUtil.eq("zip", zip))
+	       		.setProjection(ProjectionFactoryUtil.property("userId"));
+	            
+	        DynamicQuery userQuery = DynamicQueryFactoryUtil.forClass(User.class)
+	            .add(PropertyFactoryUtil.forName("userId").in(addressQuery));
+
+	        List<User> users = userLocalService.dynamicQuery(userQuery);
+
+	        return users;
+	    }
+	    catch (Exception e) {
+	        try {
+	            throw new SystemException(e);
+	        }
+	        catch (SystemException se) {
+	            se.printStackTrace();
+	        }
+	    }
+		
+		return null;
 	}
-	
-	@Reference
-	private UserLocalService _userLocalService;
+
 }

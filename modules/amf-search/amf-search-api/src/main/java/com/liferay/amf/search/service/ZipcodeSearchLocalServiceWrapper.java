@@ -34,7 +34,9 @@ public class ZipcodeSearchLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.User findUserByZip(String zip) {
+	public java.util.List<com.liferay.portal.kernel.model.User> findUserByZip(
+		String zip) {
+
 		return _zipcodeSearchLocalService.findUserByZip(zip);
 	}
 

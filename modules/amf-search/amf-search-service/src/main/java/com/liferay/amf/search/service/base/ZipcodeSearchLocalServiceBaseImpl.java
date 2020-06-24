@@ -103,6 +103,10 @@ public abstract class ZipcodeSearchLocalServiceBaseImpl
 		counterLocalService;
 
 	@Reference
+	protected com.liferay.portal.kernel.service.AddressLocalService
+		addressLocalService;
+
+	@Reference
 	protected com.liferay.portal.kernel.service.ClassNameLocalService
 		classNameLocalService;
 

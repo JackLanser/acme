@@ -37,8 +37,8 @@ public class ZipcodeSearchLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.amf.search.service.impl.ZipcodeSearchLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.User findUserByZip(
-		String zip) {
+	public static java.util.List<com.liferay.portal.kernel.model.User>
+		findUserByZip(String zip) {
 
 		return getService().findUserByZip(zip);
 	}

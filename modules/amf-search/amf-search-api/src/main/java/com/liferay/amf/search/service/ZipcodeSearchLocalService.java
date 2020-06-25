@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.util.List;
@@ -57,5 +58,8 @@ public interface ZipcodeSearchLocalService extends BaseLocalService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getUserCount(String zip);
 
 }

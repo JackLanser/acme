@@ -2,15 +2,16 @@
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
 	<liferay-portlet:param  name="mvcRenderCommandName" value="<%=MVCCommandNames.LIST_USER %>" />
+	<liferay-portlet:param 	name="zipcode" value="${zip}" />
 </liferay-portlet:renderURL>
 
 
 <liferay-ui:search-container
-		delta="20"
+		delta="5"
 		deltaConfigurable="true"
 		emptyResultsMessage="no-items"
 		iteratorURL="${iteratorURL}"
-		total="100"
+		total="${userCount}"
 	>
 		<liferay-ui:search-container-results results="${users}" />
 

@@ -32,6 +32,13 @@ public class ZipcodeSearchServiceWrapper
 		_zipcodeSearchService = zipcodeSearchService;
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> findUserByZip(
+		String zip, int start, int end) {
+
+		return _zipcodeSearchService.findUserByZip(zip, start, end);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -40,6 +47,11 @@ public class ZipcodeSearchServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _zipcodeSearchService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public long getUserCount(String zip) {
+		return _zipcodeSearchService.getUserCount(zip);
 	}
 
 	@Override

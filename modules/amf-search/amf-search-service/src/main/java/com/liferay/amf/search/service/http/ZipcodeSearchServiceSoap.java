@@ -14,9 +14,15 @@
 
 package com.liferay.amf.search.service.http;
 
+import com.liferay.amf.search.service.ZipcodeSearchServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.amf.search.service.ZipcodeSearchServiceUtil</code> service
+ * <code>ZipcodeSearchServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -43,4 +49,39 @@ package com.liferay.amf.search.service.http;
  * @generated
  */
 public class ZipcodeSearchServiceSoap {
+
+	public static com.liferay.portal.kernel.model.User[] findUserByZip(
+			String zip, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.portal.kernel.model.User> returnValue =
+				ZipcodeSearchServiceUtil.findUserByZip(zip, start, end);
+
+			return returnValue.toArray(
+				new com.liferay.portal.kernel.model.User[returnValue.size()]);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static long getUserCount(String zip) throws RemoteException {
+		try {
+			long returnValue = ZipcodeSearchServiceUtil.getUserCount(zip);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ZipcodeSearchServiceSoap.class);
+
 }

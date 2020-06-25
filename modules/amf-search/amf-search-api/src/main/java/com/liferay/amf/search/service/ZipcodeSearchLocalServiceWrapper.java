@@ -58,6 +58,11 @@ public class ZipcodeSearchLocalServiceWrapper
 	}
 
 	@Override
+	public long getUserCount(String zip) {
+		return _zipcodeSearchLocalService.getUserCount(zip);
+	}
+
+	@Override
 	public ZipcodeSearchLocalService getWrappedService() {
 		return _zipcodeSearchLocalService;
 	}

@@ -58,6 +58,10 @@ public class ZipcodeSearchLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static long getUserCount(String zip) {
+		return getService().getUserCount(zip);
+	}
+
 	public static ZipcodeSearchLocalService getService() {
 		return _serviceTracker.getService();
 	}

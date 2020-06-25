@@ -14,8 +14,12 @@
 
 package com.liferay.amf.search.service.impl;
 
+import com.liferay.amf.search.service.ZipcodeSearchLocalService;
 import com.liferay.amf.search.service.base.ZipcodeSearchServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.model.User;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -46,4 +50,12 @@ public class ZipcodeSearchServiceImpl extends ZipcodeSearchServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.amf.search.service.ZipcodeSearchServiceUtil</code> to access the zipcode search remote service.
 	 */
+	
+	public List<User> findUserByZip(String zip, int start, int end) {
+		return zipcodeSearchLocalService.findUserByZip(zip, start, end);
+	}
+	
+	public long getUserCount(String zip) {
+		return zipcodeSearchLocalService.getUserCount(zip);
+	}
 }

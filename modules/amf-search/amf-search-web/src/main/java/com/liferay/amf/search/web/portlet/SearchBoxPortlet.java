@@ -3,8 +3,13 @@ package com.liferay.amf.search.web.portlet;
 import com.liferay.amf.search.web.constants.SearchBoxPortletKeys;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ParamUtil;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.ProcessAction;
+import javax.xml.namespace.QName;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,9 +27,11 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.view-template=/search_box.jsp",
 		"javax.portlet.name=" + SearchBoxPortletKeys.SEARCHBOX,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.supported-publishing-event=producemessage;http://zipcode.com"
 	},
 	service = Portlet.class
 )
 public class SearchBoxPortlet extends MVCPortlet {
+	
 }

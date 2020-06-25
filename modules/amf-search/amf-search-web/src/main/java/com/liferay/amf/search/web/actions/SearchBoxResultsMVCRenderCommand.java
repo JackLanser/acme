@@ -1,6 +1,6 @@
 package com.liferay.amf.search.web.actions;
 
-import com.liferay.amf.search.service.ZipcodeSearchLocalService;
+import com.liferay.amf.search.service.ZipcodeSearchService;
 import com.liferay.amf.search.web.constants.MVCCommandNames;
 import com.liferay.amf.search.web.constants.SearchBoxResultsPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -43,17 +43,22 @@ public class SearchBoxResultsMVCRenderCommand implements MVCRenderCommand{
 
 		int delta = ParamUtil.getInteger(
 				renderRequest, SearchContainer.DEFAULT_DELTA_PARAM,
-				SearchContainer.DEFAULT_DELTA);
-
+				5);
+		
 		int start = ((currentPage > 0) ? (currentPage - 1) : 0) * delta;
 
 		int end = start + delta;
-		List<User> users = _zipCodeSearchLocalService.findUserByZip("12345", start, end);
+		String zipcode = ParamUtil.getString(renderRequest, "zipcode");
+		List<User> users = _zipCodeSearchService.findUserByZip(zipcode, start, end);
+		long userCount = _zipCodeSearchService.getUserCount(zipcode);
+		renderRequest.setAttribute("userCount", userCount);
 		renderRequest.setAttribute("users", users);
-		renderRequest.setAttribute("zip", "12345");
+		renderRequest.setAttribute("zip", zipcode);
 	}
+	
+	
 
 	@Reference
-	private ZipcodeSearchLocalService _zipCodeSearchLocalService;
+	private ZipcodeSearchService _zipCodeSearchService;
 	
 }

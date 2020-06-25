@@ -80,8 +80,9 @@ public class registrationLocalServiceImpl
 				phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), mobilePhone, "", 11008, true, new ServiceContext());
 			}
 			
-			addressLocalService.addAddress(user.getUserId(), "", 0, address1, address2, "", city, zip, 
-					region.getRegionId(), 19, 11001, false, false, new ServiceContext());
+			addressLocalService.addAddress(user.getUserId(), Contact.class.getName(), user.getContactId(), address1, address2, "", city, zip, 
+					region.getRegionId(), 19, 11001, false, true, new ServiceContext());
+			
 			
 	}
 	

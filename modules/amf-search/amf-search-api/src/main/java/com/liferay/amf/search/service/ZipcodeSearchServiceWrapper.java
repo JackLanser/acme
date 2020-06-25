@@ -34,7 +34,8 @@ public class ZipcodeSearchServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.User> findUserByZip(
-		String zip, int start, int end) {
+			String zip, int start, int end)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return _zipcodeSearchService.findUserByZip(zip, start, end);
 	}
@@ -50,7 +51,9 @@ public class ZipcodeSearchServiceWrapper
 	}
 
 	@Override
-	public long getUserCount(String zip) {
+	public long getUserCount(String zip)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+
 		return _zipcodeSearchService.getUserCount(zip);
 	}
 

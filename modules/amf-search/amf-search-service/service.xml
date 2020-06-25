@@ -10,4 +10,7 @@
 	package-path="com.liferay.portal"></reference>
     
     </entity>
+    <exceptions>
+        <exception>ZipcodeValidation</exception>
+    </exceptions>
 </service-builder>

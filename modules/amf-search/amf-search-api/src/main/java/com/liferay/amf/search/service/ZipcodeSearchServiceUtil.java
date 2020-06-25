@@ -38,7 +38,8 @@ public class ZipcodeSearchServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.amf.search.service.impl.ZipcodeSearchServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static java.util.List<com.liferay.portal.kernel.model.User>
-		findUserByZip(String zip, int start, int end) {
+			findUserByZip(String zip, int start, int end)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return getService().findUserByZip(zip, start, end);
 	}
@@ -52,7 +53,9 @@ public class ZipcodeSearchServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static long getUserCount(String zip) {
+	public static long getUserCount(String zip)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+
 		return getService().getUserCount(zip);
 	}
 

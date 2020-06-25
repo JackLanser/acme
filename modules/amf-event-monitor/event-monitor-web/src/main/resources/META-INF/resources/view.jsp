@@ -41,6 +41,6 @@
 			<liferay-ui:search-container-column-text name="Event Type" value="${entry.eventType}" />
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon"/>
 	</liferay-ui:search-container>
 </liferay-ui:tabs>

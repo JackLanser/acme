@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -51,7 +52,8 @@ public interface ZipcodeSearchService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ZipcodeSearchServiceUtil} to access the zipcode search remote service. Add custom service methods to <code>com.liferay.amf.search.service.impl.ZipcodeSearchServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public List<User> findUserByZip(String zip, int start, int end);
+	public List<User> findUserByZip(String zip, int start, int end)
+		throws PrincipalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -61,6 +63,6 @@ public interface ZipcodeSearchService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getUserCount(String zip);
+	public long getUserCount(String zip) throws PrincipalException;
 
 }

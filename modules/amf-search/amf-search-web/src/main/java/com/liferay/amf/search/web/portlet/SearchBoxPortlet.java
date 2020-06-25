@@ -28,7 +28,8 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + SearchBoxPortletKeys.SEARCHBOX,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
-		"javax.portlet.supported-publishing-event=producemessage;http://zipcode.com"
+		"javax.portlet.supported-publishing-event=producemessage;http://zipcode.com",
+		"javax.portlet.init-param.add-process-action-success-action=false"
 	},
 	service = Portlet.class
 )

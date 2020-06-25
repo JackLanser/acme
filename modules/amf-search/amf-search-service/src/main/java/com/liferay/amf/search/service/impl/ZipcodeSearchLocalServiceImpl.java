@@ -86,6 +86,7 @@ public class ZipcodeSearchLocalServiceImpl
 	    	
 	        DynamicQuery addressQuery = DynamicQueryFactoryUtil.forClass(Address.class)
 	            .add(RestrictionsFactoryUtil.eq("zip", zip))
+	            .add(RestrictionsFactoryUtil.eq("primary", true))
 	       		.setProjection(ProjectionFactoryUtil.property("userId"));
 	            
 	        DynamicQuery userQuery = DynamicQueryFactoryUtil.forClass(User.class)
@@ -109,6 +110,7 @@ public class ZipcodeSearchLocalServiceImpl
 	public long getUserCount(String zip) {
 		DynamicQuery addressQuery = DynamicQueryFactoryUtil.forClass(Address.class)
 	            .add(RestrictionsFactoryUtil.eq("zip", zip))
+	            .add(RestrictionsFactoryUtil.eq("primary", true))
 	       		.setProjection(ProjectionFactoryUtil.property("userId"));
 	            
         DynamicQuery userQuery = DynamicQueryFactoryUtil.forClass(User.class)

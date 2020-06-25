@@ -6,6 +6,7 @@ import com.liferay.amf.search.web.constants.SearchBoxResultsPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
@@ -49,10 +50,18 @@ public class SearchBoxResultsMVCRenderCommand implements MVCRenderCommand{
 
 		int end = start + delta;
 		String zipcode = ParamUtil.getString(renderRequest, "zipcode");
-		List<User> users = _zipCodeSearchService.findUserByZip(zipcode, start, end);
-		long userCount = _zipCodeSearchService.getUserCount(zipcode);
-		renderRequest.setAttribute("userCount", userCount);
-		renderRequest.setAttribute("users", users);
+		try {
+			List<User> users = _zipCodeSearchService.findUserByZip(zipcode, start, end);
+			renderRequest.setAttribute("users", users);
+			
+			long userCount = _zipCodeSearchService.getUserCount(zipcode);
+			renderRequest.setAttribute("userCount", userCount);
+			
+		} catch (PrincipalException e1) {
+			e1.printStackTrace();
+		}
+		
+		
 		renderRequest.setAttribute("zip", zipcode);
 	}
 	

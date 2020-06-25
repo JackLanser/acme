@@ -52,8 +52,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class ZipcodeSearchServiceHttp {
 
 	public static java.util.List<com.liferay.portal.kernel.model.User>
-		findUserByZip(
-			HttpPrincipal httpPrincipal, String zip, int start, int end) {
+			findUserByZip(
+				HttpPrincipal httpPrincipal, String zip, int start, int end)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -69,6 +70,14 @@ public class ZipcodeSearchServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.security.auth.
+							PrincipalException) {
+
+					throw (com.liferay.portal.kernel.security.auth.
+						PrincipalException)exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -85,7 +94,9 @@ public class ZipcodeSearchServiceHttp {
 		}
 	}
 
-	public static long getUserCount(HttpPrincipal httpPrincipal, String zip) {
+	public static long getUserCount(HttpPrincipal httpPrincipal, String zip)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+
 		try {
 			MethodKey methodKey = new MethodKey(
 				ZipcodeSearchServiceUtil.class, "getUserCount",
@@ -99,6 +110,14 @@ public class ZipcodeSearchServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.security.auth.
+							PrincipalException) {
+
+					throw (com.liferay.portal.kernel.security.auth.
+						PrincipalException)exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}

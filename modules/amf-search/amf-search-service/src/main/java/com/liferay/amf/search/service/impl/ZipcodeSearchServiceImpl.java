@@ -14,14 +14,17 @@
 
 package com.liferay.amf.search.service.impl;
 
-import com.liferay.amf.search.service.ZipcodeSearchLocalService;
 import com.liferay.amf.search.service.base.ZipcodeSearchServiceBaseImpl;
+import com.liferay.amf.search.service.permissions.SearchPermissionCheck;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the zipcode search remote service.
@@ -50,12 +53,22 @@ public class ZipcodeSearchServiceImpl extends ZipcodeSearchServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.amf.search.service.ZipcodeSearchServiceUtil</code> to access the zipcode search remote service.
 	 */
+	private String _actionId = "VIEW";
 	
-	public List<User> findUserByZip(String zip, int start, int end) {
-		return zipcodeSearchLocalService.findUserByZip(zip, start, end);
+	public List<User> findUserByZip(String zip, int start, int end) throws PrincipalException {
+		if(_searchPermissionCheck.contains(getPermissionChecker(), _actionId)) {
+			return zipcodeSearchLocalService.findUserByZip(zip, start, end);
+		}
+		else return new ArrayList<User>();
 	}
 	
-	public long getUserCount(String zip) {
-		return zipcodeSearchLocalService.getUserCount(zip);
+	public long getUserCount(String zip) throws PrincipalException {
+		if(_searchPermissionCheck.contains(getPermissionChecker(), _actionId)) {
+			return zipcodeSearchLocalService.getUserCount(zip);
+		}
+		else return 0;
 	}
+	
+	@Reference
+	private SearchPermissionCheck _searchPermissionCheck;
 }

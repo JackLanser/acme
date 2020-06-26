@@ -11,19 +11,19 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.amf.search.service.permissions;
 
-import com.liferay.amf.search.service.permissions.SearchPermissionCheck;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
-
 
 /**
  * @author liferay
  */
 @Component(immediate = true, service = SearchPermissionCheck.class)
 public class SearchPermissionCheck {
+
 	public boolean contains(
 		PermissionChecker permissionChecker, String actionId) {
 
@@ -33,4 +33,5 @@ public class SearchPermissionCheck {
 
 	private long _groupId = 0;
 	private String _modelClassName = "com.liferay.amf.search";
+
 }

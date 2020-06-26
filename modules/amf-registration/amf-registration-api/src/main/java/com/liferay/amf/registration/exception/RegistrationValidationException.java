@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.amf.registration.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,21 +23,18 @@ import java.util.List;
  */
 public class RegistrationValidationException extends PortalException {
 
+	public RegistrationValidationException() {
+	}
+
 	/**
-	* Custom constructor taking a list as a parameter.
-	*
-	* @param errors
-	*/
+	 * Custom constructor taking a list as a parameter.
+	 *
+	 * @param errors
+	 */
 	public RegistrationValidationException(List<String> errors) {
 		super(String.join(",", errors));
+
 		_errors = errors;
-	}
-	public List<String> getErrors() {
-		return _errors;
-	}
-	private List<String> _errors;
-	
-	public RegistrationValidationException() {
 	}
 
 	public RegistrationValidationException(String msg) {
@@ -50,5 +48,11 @@ public class RegistrationValidationException extends PortalException {
 	public RegistrationValidationException(Throwable cause) {
 		super(cause);
 	}
+
+	public List<String> getErrors() {
+		return _errors;
+	}
+
+	private List<String> _errors;
 
 }

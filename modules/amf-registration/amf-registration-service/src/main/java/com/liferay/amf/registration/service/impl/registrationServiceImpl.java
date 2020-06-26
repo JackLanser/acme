@@ -16,9 +16,6 @@ package com.liferay.amf.registration.service.impl;
 
 import com.liferay.amf.registration.service.base.registrationServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.service.ServiceContext;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -44,11 +41,10 @@ import org.osgi.service.component.annotations.Component;
 )
 public class registrationServiceImpl extends registrationServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.amf.registration.service.registrationServiceUtil</code> to access the registration remote service.
 	 */
-	
-	
+
 }

@@ -1,7 +1,7 @@
 Bundle-Name: amf-registration-api
 Bundle-SymbolicName: com.liferay.amf.registration.api
 Bundle-Version: 1.0.0
-Export-Package: \
+Export-Package:\
 	com.liferay.amf.registration.service,\
 	com.liferay.amf.registration.exception,\
 	com.liferay.amf.registration.validator

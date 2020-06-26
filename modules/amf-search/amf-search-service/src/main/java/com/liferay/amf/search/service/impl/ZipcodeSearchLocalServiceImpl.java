@@ -49,74 +49,90 @@ import org.osgi.service.component.annotations.Component;
 public class ZipcodeSearchLocalServiceImpl
 	extends ZipcodeSearchLocalServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.amf.search.service.ZipcodeSearchLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.search.service.ZipcodeSearchLocalServiceUtil</code>.
-	 */
-	
 	public List<User> findUserByZip(String zip) {
-	    try {
+		try {
+			DynamicQuery addressQuery = DynamicQueryFactoryUtil.forClass(
+				Address.class
+			).add(
+				RestrictionsFactoryUtil.eq("zip", zip)
+			).setProjection(
+				ProjectionFactoryUtil.property("userId")
+			);
 
-	        DynamicQuery addressQuery = DynamicQueryFactoryUtil.forClass(Address.class)
-	            .add(RestrictionsFactoryUtil.eq("zip", zip))
-	       		.setProjection(ProjectionFactoryUtil.property("userId"));
-	            
-	        DynamicQuery userQuery = DynamicQueryFactoryUtil.forClass(User.class)
-	            .add(PropertyFactoryUtil.forName("userId").in(addressQuery));
+			DynamicQuery userQuery = DynamicQueryFactoryUtil.forClass(
+				User.class
+			).add(
+				PropertyFactoryUtil.forName(
+					"userId"
+				).in(
+					addressQuery
+				)
+			);
 
-	        List<User> users = userLocalService.dynamicQuery(userQuery);
+			List<User> users = userLocalService.dynamicQuery(userQuery);
 
-	        return users;
-	    }
-	    catch (Exception e) {
-	        try {
-	            throw new SystemException(e);
-	        }
-	        catch (SystemException se) {
-	            se.printStackTrace();
-	        }
-	    }
-		
+			return users;
+		}
+		catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			}
+			catch (SystemException se) {
+				se.printStackTrace();
+			}
+		}
+
 		return null;
 	}
-	
+
 	public List<User> findUserByZip(String zip, int start, int end) {
-	    try {
-	    	
-	        DynamicQuery addressQuery = DynamicQueryFactoryUtil.forClass(Address.class)
-	            .add(RestrictionsFactoryUtil.eq("zip", zip))
-	            .add(RestrictionsFactoryUtil.eq("primary", true))
-	       		.setProjection(ProjectionFactoryUtil.property("userId"));
-	            
-	        DynamicQuery userQuery = DynamicQueryFactoryUtil.forClass(User.class)
-	            .add(PropertyFactoryUtil.forName("userId").in(addressQuery));
-	        List<User> users = userLocalService.dynamicQuery(userQuery, start, end);
+		DynamicQuery addressQuery = DynamicQueryFactoryUtil.forClass(
+			Address.class
+		).add(
+			RestrictionsFactoryUtil.eq("zip", zip)
+		).add(
+			RestrictionsFactoryUtil.eq("primary", true)
+		).setProjection(
+			ProjectionFactoryUtil.property("userId")
+		);
 
-	        return users;
-	    }
-	    catch (Exception e) {
-	        try {
-	            throw new SystemException(e);
-	        }
-	        catch (SystemException se) {
-	            se.printStackTrace();
-	        }
-	    }
-		
-		return null;
+		DynamicQuery userQuery = DynamicQueryFactoryUtil.forClass(
+			User.class
+		).add(
+			PropertyFactoryUtil.forName(
+				"userId"
+			).in(
+				addressQuery
+			)
+		);
+
+		List<User> users = userLocalService.dynamicQuery(userQuery, start, end);
+
+		return users;
 	}
-	
+
 	public long getUserCount(String zip) {
-		DynamicQuery addressQuery = DynamicQueryFactoryUtil.forClass(Address.class)
-	            .add(RestrictionsFactoryUtil.eq("zip", zip))
-	            .add(RestrictionsFactoryUtil.eq("primary", true))
-	       		.setProjection(ProjectionFactoryUtil.property("userId"));
-	            
-        DynamicQuery userQuery = DynamicQueryFactoryUtil.forClass(User.class)
-            .add(PropertyFactoryUtil.forName("userId").in(addressQuery));
-        
-        return userLocalService.dynamicQueryCount(userQuery);
+		DynamicQuery addressQuery = DynamicQueryFactoryUtil.forClass(
+			Address.class
+		).add(
+			RestrictionsFactoryUtil.eq("zip", zip)
+		).add(
+			RestrictionsFactoryUtil.eq("primary", true)
+		).setProjection(
+			ProjectionFactoryUtil.property("userId")
+		);
+
+		DynamicQuery userQuery = DynamicQueryFactoryUtil.forClass(
+			User.class
+		).add(
+			PropertyFactoryUtil.forName(
+				"userId"
+			).in(
+				addressQuery
+			)
+		);
+
+		return userLocalService.dynamicQueryCount(userQuery);
 	}
 
 }

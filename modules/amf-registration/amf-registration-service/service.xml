@@ -3,26 +3,34 @@
 
 <service-builder dependency-injector="ds" package-path="com.liferay.amf.registration">
 	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" remote-service="false" session-factory="sampleSessionFactory" table="foo" tx-manager="sampleTransactionManager uuid="true"">-->
-    <namespace>amfRegistration</namespace>
-    <entity name="registration" local-service="true">
-    
-    <reference entity="User"
-	package-path="com.liferay.portal"></reference>
-	
-	<reference entity="Phone"
-	package-path="com.liferay.portal"></reference>
-	
-	<reference entity="Address"
-	package-path="com.liferay.portal"></reference>
-	
-	<reference entity="Region"
-	package-path="com.liferay.portal"></reference>
-    
-    </entity>
-    
-     <!-- Exceptions -->
+	<namespace>amfRegistration</namespace>
+	<entity local-service="true" name="registration">
 
-	 <exceptions>
-	     <exception>RegistrationValidation</exception>
-	 </exceptions>
+		<reference
+			entity="User"
+	package-path="com.liferay.portal"></reference
+	>
+
+		<reference
+			entity="Phone"
+	package-path="com.liferay.portal"></reference
+	>
+
+		<reference
+			entity="Address"
+	package-path="com.liferay.portal"></reference
+	>
+
+		<reference
+			entity="Region"
+	package-path="com.liferay.portal"></reference
+	>
+
+	</entity>
+
+	<!-- Exceptions -->
+
+	<exceptions>
+		<exception>RegistrationValidation</exception>
+	</exceptions>
 </service-builder>

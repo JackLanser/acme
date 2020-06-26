@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.amf.search.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,26 +21,20 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ZipcodeValidationException extends PortalException {	
-	/**
-	  * Custom constructor taking a list as a parameter.
-	  * 
-	  * @param errors
-	  */
-	 public ZipcodeValidationException(List<String> errors) {
+public class ZipcodeValidationException extends PortalException {
 
-	     super(String.join(",", errors));
-	     _errors = errors;
-	 }
-
-	 public List<String> getErrors() {
-
-	     return _errors;
-	 }
-
-	 private List<String> _errors;
-	
 	public ZipcodeValidationException() {
+	}
+
+	/**
+	 * Custom constructor taking a list as a parameter.
+	 *
+	 * @param errors
+	 */
+	public ZipcodeValidationException(List<String> errors) {
+		super(String.join(",", errors));
+
+		_errors = errors;
 	}
 
 	public ZipcodeValidationException(String msg) {
@@ -53,5 +48,11 @@ public class ZipcodeValidationException extends PortalException {
 	public ZipcodeValidationException(Throwable cause) {
 		super(cause);
 	}
+
+	public List<String> getErrors() {
+		return _errors;
+	}
+
+	private List<String> _errors;
 
 }

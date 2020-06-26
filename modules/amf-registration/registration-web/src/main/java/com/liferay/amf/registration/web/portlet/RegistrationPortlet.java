@@ -1,7 +1,6 @@
 package com.liferay.amf.registration.web.portlet;
 
 import com.liferay.amf.registration.web.constants.RegistrationPortletKeys;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -22,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"com.liferay.portlet.display-category=Registration",
-		"com.liferay.portlet.instanceable=false",
+		"com.liferay.portlet.instanceable=false"
 	},
 	service = Portlet.class
 )

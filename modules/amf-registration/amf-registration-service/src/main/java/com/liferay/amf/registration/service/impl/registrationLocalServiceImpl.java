@@ -49,45 +49,63 @@ import org.osgi.service.component.annotations.Reference;
 public class registrationLocalServiceImpl
 	extends registrationLocalServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.registration.service.registrationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.registration.service.registrationLocalServiceUtil</code>.
 	 */
-	
-	public void addUser(String firstName, String lastName, String email, String userName, boolean male, int bMonth, int bDay, int bYear, 
-			String password1, String password2, String homePhone, String mobilePhone, String address1, String address2, String city,
-			String zip, String securityQuestion, String securityAnswer, boolean acceptedTou, String regionId) throws PortalException {
-		
-			Region region = RegionServiceUtil.fetchRegion(19, regionId);
-			
-			_registrationValidator.validate(firstName, lastName, email, userName, male, bMonth, bDay, bYear, password1,
-					password2, homePhone, mobilePhone, address1, address2, city, zip, securityQuestion, securityAnswer, 
-					acceptedTou);
-			User user = userLocalService.addUser(0, 20101, false, password1, password2, false, userName, email, 01, "", 
-					new Locale.Builder().setLanguage("en").setRegion("US").build(), firstName, "", lastName, 01, 01, male, bMonth, bDay, 
-					bYear, "", new long[0], new long[0], new long[0], new long[0], false, new ServiceContext());
-				
-			userLocalService.updateAgreedToTermsOfUse(user.getUserId(), acceptedTou);
-		
-			userLocalService.updateReminderQuery(user.getUserId(), securityQuestion, securityAnswer);
-			
-			if(!homePhone.equals("")) {
-				phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), homePhone, "", 11011, false, new ServiceContext());
-			}
-			
-			if(!mobilePhone.equals("")) {
-				phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(), user.getContactId(), mobilePhone, "", 11008, true, new ServiceContext());
-			}
-			
-			addressLocalService.addAddress(user.getUserId(), Contact.class.getName(), user.getContactId(), address1, address2, "", city, zip, 
-					region.getRegionId(), 19, 11001, false, true, new ServiceContext());
-			
-			
+	public void addUser(
+			String firstName, String lastName, String email, String userName,
+			boolean male, int bMonth, int bDay, int bYear, String password1,
+			String password2, String homePhone, String mobilePhone,
+			String address1, String address2, String city, String zip,
+			String securityQuestion, String securityAnswer, boolean acceptedTou,
+			String regionId)
+		throws PortalException {
+
+		Region region = RegionServiceUtil.fetchRegion(19, regionId);
+
+		_registrationValidator.validate(
+			firstName, lastName, email, userName, male, bMonth, bDay, bYear,
+			password1, password2, homePhone, mobilePhone, address1, address2,
+			city, zip, securityQuestion, securityAnswer, acceptedTou);
+		User user = userLocalService.addUser(
+			0, 20101, false, password1, password2, false, userName, email, 01,
+			"",
+			new Locale.Builder().setLanguage(
+				"en"
+			).setRegion(
+				"US"
+			).build(),
+			firstName, "", lastName, 01, 01, male, bMonth, bDay, bYear, "",
+			new long[0], new long[0], new long[0], new long[0], false,
+			new ServiceContext());
+
+		userLocalService.updateAgreedToTermsOfUse(
+			user.getUserId(), acceptedTou);
+
+		userLocalService.updateReminderQuery(
+			user.getUserId(), securityQuestion, securityAnswer);
+
+		if (!homePhone.equals("")) {
+			phoneLocalService.addPhone(
+				user.getUserId(), Contact.class.getName(), user.getContactId(),
+				homePhone, "", 11011, false, new ServiceContext());
+		}
+
+		if (!mobilePhone.equals("")) {
+			phoneLocalService.addPhone(
+				user.getUserId(), Contact.class.getName(), user.getContactId(),
+				mobilePhone, "", 11008, true, new ServiceContext());
+		}
+
+		addressLocalService.addAddress(
+			user.getUserId(), Contact.class.getName(), user.getContactId(),
+			address1, address2, "", city, zip, region.getRegionId(), 19, 11001,
+			false, true, new ServiceContext());
 	}
-	
+
 	@Reference
 	RegistrationValidator _registrationValidator;
-	
-	
+
 }

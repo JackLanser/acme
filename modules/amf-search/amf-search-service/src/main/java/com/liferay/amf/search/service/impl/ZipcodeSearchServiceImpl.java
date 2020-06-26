@@ -48,27 +48,34 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ZipcodeSearchServiceImpl extends ZipcodeSearchServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.amf.search.service.ZipcodeSearchServiceUtil</code> to access the zipcode search remote service.
-	 */
 	private String _actionId = "VIEW";
-	
-	public List<User> findUserByZip(String zip, int start, int end) throws PrincipalException {
-		if(_searchPermissionCheck.contains(getPermissionChecker(), _actionId)) {
+
+	public List<User> findUserByZip(String zip, int start, int end)
+		throws PrincipalException {
+
+		if (_searchPermissionCheck.contains(
+				getPermissionChecker(), _actionId)) {
+
 			return zipcodeSearchLocalService.findUserByZip(zip, start, end);
 		}
-		else return new ArrayList<User>();
+
+		else
+
+		return new ArrayList<>();
 	}
-	
+
 	public long getUserCount(String zip) throws PrincipalException {
-		if(_searchPermissionCheck.contains(getPermissionChecker(), _actionId)) {
+		if (_searchPermissionCheck.contains(
+				getPermissionChecker(), _actionId)) {
+
 			return zipcodeSearchLocalService.getUserCount(zip);
 		}
-		else return 0;
+		else
+
+		return 0;
 	}
-	
+
 	@Reference
 	private SearchPermissionCheck _searchPermissionCheck;
+
 }

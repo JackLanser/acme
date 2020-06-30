@@ -81,19 +81,19 @@ public class ArticleSoap implements Serializable {
 	public ArticleSoap() {
 	}
 
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _articleId;
 	}
 
-	public void setPrimaryKey(int pk) {
+	public void setPrimaryKey(long pk) {
 		setArticleId(pk);
 	}
 
-	public int getArticleId() {
+	public long getArticleId() {
 		return _articleId;
 	}
 
-	public void setArticleId(int articleId) {
+	public void setArticleId(long articleId) {
 		_articleId = articleId;
 	}
 
@@ -137,7 +137,7 @@ public class ArticleSoap implements Serializable {
 		_content = content;
 	}
 
-	private int _articleId;
+	private long _articleId;
 	private int _issueNumber;
 	private String _title;
 	private String _author;

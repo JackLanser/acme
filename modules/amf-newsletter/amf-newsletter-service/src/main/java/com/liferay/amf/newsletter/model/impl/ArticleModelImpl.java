@@ -17,12 +17,15 @@ package com.liferay.amf.newsletter.model.impl;
 import com.liferay.amf.newsletter.model.Article;
 import com.liferay.amf.newsletter.model.ArticleModel;
 import com.liferay.amf.newsletter.model.ArticleSoap;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -64,7 +67,7 @@ public class ArticleModelImpl
 	public static final String TABLE_NAME = "NewsLetter_Article";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"articleId", Types.INTEGER}, {"issueNumber", Types.INTEGER},
+		{"articleId", Types.BIGINT}, {"issueNumber", Types.INTEGER},
 		{"title", Types.VARCHAR}, {"author", Types.VARCHAR},
 		{"order_", Types.INTEGER}, {"content", Types.VARCHAR}
 	};
@@ -73,7 +76,7 @@ public class ArticleModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("articleId", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("articleId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("issueNumber", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("author", Types.VARCHAR);
@@ -82,7 +85,7 @@ public class ArticleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NewsLetter_Article (articleId INTEGER not null primary key,issueNumber INTEGER,title VARCHAR(75) null,author VARCHAR(75) null,order_ INTEGER,content VARCHAR(75) null)";
+		"create table NewsLetter_Article (articleId LONG not null primary key,issueNumber INTEGER,title VARCHAR(75) null,author VARCHAR(75) null,order_ INTEGER,content VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table NewsLetter_Article";
 
@@ -153,12 +156,12 @@ public class ArticleModelImpl
 	}
 
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _articleId;
 	}
 
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		setArticleId(primaryKey);
 	}
 
@@ -169,7 +172,7 @@ public class ArticleModelImpl
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Integer)primaryKeyObj).intValue());
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -276,7 +279,7 @@ public class ArticleModelImpl
 
 		attributeGetterFunctions.put("articleId", Article::getArticleId);
 		attributeSetterBiConsumers.put(
-			"articleId", (BiConsumer<Article, Integer>)Article::setArticleId);
+			"articleId", (BiConsumer<Article, Long>)Article::setArticleId);
 		attributeGetterFunctions.put("issueNumber", Article::getIssueNumber);
 		attributeSetterBiConsumers.put(
 			"issueNumber",
@@ -302,12 +305,12 @@ public class ArticleModelImpl
 
 	@JSON
 	@Override
-	public int getArticleId() {
+	public long getArticleId() {
 		return _articleId;
 	}
 
 	@Override
-	public void setArticleId(int articleId) {
+	public void setArticleId(long articleId) {
 		_articleId = articleId;
 	}
 
@@ -382,6 +385,19 @@ public class ArticleModelImpl
 	}
 
 	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			0, Article.class.getName(), getPrimaryKey());
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
 	public Article toEscapedModel() {
 		if (_escapedModel == null) {
 			Function<InvocationHandler, Article>
@@ -414,7 +430,7 @@ public class ArticleModelImpl
 
 	@Override
 	public int compareTo(Article article) {
-		int primaryKey = article.getPrimaryKey();
+		long primaryKey = article.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
 			return -1;
@@ -439,7 +455,7 @@ public class ArticleModelImpl
 
 		Article article = (Article)obj;
 
-		int primaryKey = article.getPrimaryKey();
+		long primaryKey = article.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -451,7 +467,7 @@ public class ArticleModelImpl
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
@@ -578,7 +594,7 @@ public class ArticleModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
-	private int _articleId;
+	private long _articleId;
 	private int _issueNumber;
 	private String _title;
 	private String _author;

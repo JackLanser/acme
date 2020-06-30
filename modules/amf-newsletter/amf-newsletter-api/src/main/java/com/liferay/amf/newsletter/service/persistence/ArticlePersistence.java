@@ -60,7 +60,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	 * @param articleId the primary key for the new article
 	 * @return the new article
 	 */
-	public Article create(int articleId);
+	public Article create(long articleId);
 
 	/**
 	 * Removes the article with the primary key from the database. Also notifies the appropriate model listeners.
@@ -69,7 +69,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	 * @return the article that was removed
 	 * @throws NoSuchArticleException if a article with the primary key could not be found
 	 */
-	public Article remove(int articleId) throws NoSuchArticleException;
+	public Article remove(long articleId) throws NoSuchArticleException;
 
 	public Article updateImpl(Article article);
 
@@ -80,7 +80,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	 * @return the article
 	 * @throws NoSuchArticleException if a article with the primary key could not be found
 	 */
-	public Article findByPrimaryKey(int articleId)
+	public Article findByPrimaryKey(long articleId)
 		throws NoSuchArticleException;
 
 	/**
@@ -89,7 +89,7 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	 * @param articleId the primary key of the article
 	 * @return the article, or <code>null</code> if a article with the primary key could not be found
 	 */
-	public Article fetchByPrimaryKey(int articleId);
+	public Article fetchByPrimaryKey(long articleId);
 
 	/**
 	 * Returns all the articles.

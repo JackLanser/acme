@@ -61,7 +61,7 @@ public class ArticleLocalServiceUtil {
 	 * @return the new article
 	 */
 	public static com.liferay.amf.newsletter.model.Article createArticle(
-		int articleId) {
+		long articleId) {
 
 		return getService().createArticle(articleId);
 	}
@@ -86,7 +86,7 @@ public class ArticleLocalServiceUtil {
 	 * @throws PortalException if a article with the primary key could not be found
 	 */
 	public static com.liferay.amf.newsletter.model.Article deleteArticle(
-			int articleId)
+			long articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteArticle(articleId);
@@ -189,7 +189,7 @@ public class ArticleLocalServiceUtil {
 	}
 
 	public static com.liferay.amf.newsletter.model.Article fetchArticle(
-		int articleId) {
+		long articleId) {
 
 		return getService().fetchArticle(articleId);
 	}
@@ -208,7 +208,7 @@ public class ArticleLocalServiceUtil {
 	 * @throws PortalException if a article with the primary key could not be found
 	 */
 	public static com.liferay.amf.newsletter.model.Article getArticle(
-			int articleId)
+			long articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getArticle(articleId);

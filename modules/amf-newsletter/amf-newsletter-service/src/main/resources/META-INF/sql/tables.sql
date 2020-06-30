@@ -1,5 +1,5 @@
 create table NewsLetter_Article (
-	articleId INTEGER not null primary key,
+	articleId LONG not null primary key,
 	issueNumber INTEGER,
 	title VARCHAR(75) null,
 	author VARCHAR(75) null,

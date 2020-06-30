@@ -2,7 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.amf.newsletter.model.Article">
-		<field name="articleId" type="int" />
+		<field name="articleId" type="long" />
 		<field name="issueNumber" type="int" />
 		<field name="title" type="String" />
 		<field name="author" type="String" />

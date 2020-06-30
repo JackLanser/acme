@@ -44,28 +44,28 @@ public interface ArticleModel extends BaseModel<Article> {
 	 *
 	 * @return the primary key of this article
 	 */
-	public int getPrimaryKey();
+	public long getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this article.
 	 *
 	 * @param primaryKey the primary key of this article
 	 */
-	public void setPrimaryKey(int primaryKey);
+	public void setPrimaryKey(long primaryKey);
 
 	/**
 	 * Returns the article ID of this article.
 	 *
 	 * @return the article ID of this article
 	 */
-	public int getArticleId();
+	public long getArticleId();
 
 	/**
 	 * Sets the article ID of this article.
 	 *
 	 * @param articleId the article ID of this article
 	 */
-	public void setArticleId(int articleId);
+	public void setArticleId(long articleId);
 
 	/**
 	 * Returns the issue number of this article.

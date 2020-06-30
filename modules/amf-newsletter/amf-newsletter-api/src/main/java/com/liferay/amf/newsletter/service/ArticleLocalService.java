@@ -81,7 +81,7 @@ public interface ArticleLocalService
 	 * @return the new article
 	 */
 	@Transactional(enabled = false)
-	public Article createArticle(int articleId);
+	public Article createArticle(long articleId);
 
 	/**
 	 * Deletes the article from the database. Also notifies the appropriate model listeners.
@@ -100,7 +100,7 @@ public interface ArticleLocalService
 	 * @throws PortalException if a article with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public Article deleteArticle(int articleId) throws PortalException;
+	public Article deleteArticle(long articleId) throws PortalException;
 
 	/**
 	 * @throws PortalException
@@ -176,7 +176,7 @@ public interface ArticleLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Article fetchArticle(int articleId);
+	public Article fetchArticle(long articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -189,7 +189,7 @@ public interface ArticleLocalService
 	 * @throws PortalException if a article with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Article getArticle(int articleId) throws PortalException;
+	public Article getArticle(long articleId) throws PortalException;
 
 	/**
 	 * Returns a range of all the articles.

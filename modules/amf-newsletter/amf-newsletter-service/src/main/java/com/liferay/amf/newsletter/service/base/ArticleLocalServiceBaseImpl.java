@@ -93,7 +93,7 @@ public abstract class ArticleLocalServiceBaseImpl
 	 */
 	@Override
 	@Transactional(enabled = false)
-	public Article createArticle(int articleId) {
+	public Article createArticle(long articleId) {
 		return articlePersistence.create(articleId);
 	}
 
@@ -106,7 +106,7 @@ public abstract class ArticleLocalServiceBaseImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Article deleteArticle(int articleId) throws PortalException {
+	public Article deleteArticle(long articleId) throws PortalException {
 		return articlePersistence.remove(articleId);
 	}
 
@@ -210,7 +210,7 @@ public abstract class ArticleLocalServiceBaseImpl
 	}
 
 	@Override
-	public Article fetchArticle(int articleId) {
+	public Article fetchArticle(long articleId) {
 		return articlePersistence.fetchByPrimaryKey(articleId);
 	}
 
@@ -222,7 +222,7 @@ public abstract class ArticleLocalServiceBaseImpl
 	 * @throws PortalException if a article with the primary key could not be found
 	 */
 	@Override
-	public Article getArticle(int articleId) throws PortalException {
+	public Article getArticle(long articleId) throws PortalException {
 		return articlePersistence.findByPrimaryKey(articleId);
 	}
 

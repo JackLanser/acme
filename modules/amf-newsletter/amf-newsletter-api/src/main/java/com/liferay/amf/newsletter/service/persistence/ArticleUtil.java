@@ -147,7 +147,7 @@ public class ArticleUtil {
 	 * @param articleId the primary key for the new article
 	 * @return the new article
 	 */
-	public static Article create(int articleId) {
+	public static Article create(long articleId) {
 		return getPersistence().create(articleId);
 	}
 
@@ -158,7 +158,7 @@ public class ArticleUtil {
 	 * @return the article that was removed
 	 * @throws NoSuchArticleException if a article with the primary key could not be found
 	 */
-	public static Article remove(int articleId)
+	public static Article remove(long articleId)
 		throws com.liferay.amf.newsletter.exception.NoSuchArticleException {
 
 		return getPersistence().remove(articleId);
@@ -175,7 +175,7 @@ public class ArticleUtil {
 	 * @return the article
 	 * @throws NoSuchArticleException if a article with the primary key could not be found
 	 */
-	public static Article findByPrimaryKey(int articleId)
+	public static Article findByPrimaryKey(long articleId)
 		throws com.liferay.amf.newsletter.exception.NoSuchArticleException {
 
 		return getPersistence().findByPrimaryKey(articleId);
@@ -187,7 +187,7 @@ public class ArticleUtil {
 	 * @param articleId the primary key of the article
 	 * @return the article, or <code>null</code> if a article with the primary key could not be found
 	 */
-	public static Article fetchByPrimaryKey(int articleId) {
+	public static Article fetchByPrimaryKey(long articleId) {
 		return getPersistence().fetchByPrimaryKey(articleId);
 	}
 

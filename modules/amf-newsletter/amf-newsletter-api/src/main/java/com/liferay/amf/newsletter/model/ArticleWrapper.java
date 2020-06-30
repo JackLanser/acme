@@ -53,7 +53,7 @@ public class ArticleWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer articleId = (Integer)attributes.get("articleId");
+		Long articleId = (Long)attributes.get("articleId");
 
 		if (articleId != null) {
 			setArticleId(articleId);
@@ -96,7 +96,7 @@ public class ArticleWrapper
 	 * @return the article ID of this article
 	 */
 	@Override
-	public int getArticleId() {
+	public long getArticleId() {
 		return model.getArticleId();
 	}
 
@@ -146,7 +146,7 @@ public class ArticleWrapper
 	 * @return the primary key of this article
 	 */
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
@@ -171,7 +171,7 @@ public class ArticleWrapper
 	 * @param articleId the article ID of this article
 	 */
 	@Override
-	public void setArticleId(int articleId) {
+	public void setArticleId(long articleId) {
 		model.setArticleId(articleId);
 	}
 
@@ -221,7 +221,7 @@ public class ArticleWrapper
 	 * @param primaryKey the primary key of this article
 	 */
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 

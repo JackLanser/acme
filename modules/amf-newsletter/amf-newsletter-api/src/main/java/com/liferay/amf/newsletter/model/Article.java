@@ -36,17 +36,17 @@ public interface Article extends ArticleModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.amf.newsletter.model.impl.ArticleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Article, Integer> ARTICLE_ID_ACCESSOR =
-		new Accessor<Article, Integer>() {
+	public static final Accessor<Article, Long> ARTICLE_ID_ACCESSOR =
+		new Accessor<Article, Long>() {
 
 			@Override
-			public Integer get(Article article) {
+			public Long get(Article article) {
 				return article.getArticleId();
 			}
 
 			@Override
-			public Class<Integer> getAttributeClass() {
-				return Integer.class;
+			public Class<Long> getAttributeClass() {
+				return Long.class;
 			}
 
 			@Override

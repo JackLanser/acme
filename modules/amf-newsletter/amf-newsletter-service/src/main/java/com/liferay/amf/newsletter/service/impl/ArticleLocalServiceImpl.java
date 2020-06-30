@@ -59,7 +59,7 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 			Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
 			Node author = content.selectSingleNode("/root/dynamic-element[@name='Author']/dynamic-content");
 			
-			Article article = createArticle((int)primaryKey);
+			Article article = createArticle(primaryKey);
 			
 			article.setAuthor(author.getText());
 			article.setContent(textContent.getText());

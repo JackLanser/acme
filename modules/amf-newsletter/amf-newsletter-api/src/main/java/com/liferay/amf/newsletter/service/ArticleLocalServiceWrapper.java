@@ -56,7 +56,7 @@ public class ArticleLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.amf.newsletter.model.Article createArticle(
-		int articleId) {
+		long articleId) {
 
 		return _articleLocalService.createArticle(articleId);
 	}
@@ -82,7 +82,8 @@ public class ArticleLocalServiceWrapper
 	 * @throws PortalException if a article with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.amf.newsletter.model.Article deleteArticle(int articleId)
+	public com.liferay.amf.newsletter.model.Article deleteArticle(
+			long articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _articleLocalService.deleteArticle(articleId);
@@ -190,7 +191,7 @@ public class ArticleLocalServiceWrapper
 
 	@Override
 	public com.liferay.amf.newsletter.model.Article fetchArticle(
-		int articleId) {
+		long articleId) {
 
 		return _articleLocalService.fetchArticle(articleId);
 	}
@@ -210,7 +211,7 @@ public class ArticleLocalServiceWrapper
 	 * @throws PortalException if a article with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.amf.newsletter.model.Article getArticle(int articleId)
+	public com.liferay.amf.newsletter.model.Article getArticle(long articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _articleLocalService.getArticle(articleId);

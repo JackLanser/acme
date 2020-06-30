@@ -86,7 +86,7 @@ public class ArticlePersistenceImpl
 		setModelClass(Article.class);
 
 		setModelImplClass(ArticleImpl.class);
-		setModelPKClass(int.class);
+		setModelPKClass(long.class);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -190,7 +190,7 @@ public class ArticlePersistenceImpl
 	 * @return the new article
 	 */
 	@Override
-	public Article create(int articleId) {
+	public Article create(long articleId) {
 		Article article = new ArticleImpl();
 
 		article.setNew(true);
@@ -207,7 +207,7 @@ public class ArticlePersistenceImpl
 	 * @throws NoSuchArticleException if a article with the primary key could not be found
 	 */
 	@Override
-	public Article remove(int articleId) throws NoSuchArticleException {
+	public Article remove(long articleId) throws NoSuchArticleException {
 		return remove((Serializable)articleId);
 	}
 
@@ -357,7 +357,7 @@ public class ArticlePersistenceImpl
 	 * @throws NoSuchArticleException if a article with the primary key could not be found
 	 */
 	@Override
-	public Article findByPrimaryKey(int articleId)
+	public Article findByPrimaryKey(long articleId)
 		throws NoSuchArticleException {
 
 		return findByPrimaryKey((Serializable)articleId);
@@ -370,7 +370,7 @@ public class ArticlePersistenceImpl
 	 * @return the article, or <code>null</code> if a article with the primary key could not be found
 	 */
 	@Override
-	public Article fetchByPrimaryKey(int articleId) {
+	public Article fetchByPrimaryKey(long articleId) {
 		return fetchByPrimaryKey((Serializable)articleId);
 	}
 

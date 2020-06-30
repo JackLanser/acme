@@ -114,7 +114,7 @@ public class ArticleCacheModel implements CacheModel<Article>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		articleId = objectInput.readInt();
+		articleId = objectInput.readLong();
 
 		issueNumber = objectInput.readInt();
 		title = objectInput.readUTF();
@@ -126,7 +126,7 @@ public class ArticleCacheModel implements CacheModel<Article>, Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeInt(articleId);
+		objectOutput.writeLong(articleId);
 
 		objectOutput.writeInt(issueNumber);
 
@@ -154,7 +154,7 @@ public class ArticleCacheModel implements CacheModel<Article>, Externalizable {
 		}
 	}
 
-	public int articleId;
+	public long articleId;
 	public int issueNumber;
 	public String title;
 	public String author;

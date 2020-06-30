@@ -192,6 +192,21 @@ public class IssueLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.amf.newsletter.model.Issue> findByIssueId(
+		long primaryKey) {
+
+		return _issueLocalService.findByIssueId(primaryKey);
+	}
+
+	@Override
+	public com.liferay.amf.newsletter.model.Issue generateIssue(
+			String xmlString, long primaryKey)
+		throws com.liferay.portal.kernel.xml.DocumentException {
+
+		return _issueLocalService.generateIssue(xmlString, primaryKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -286,6 +301,11 @@ public class IssueLocalServiceWrapper
 		com.liferay.amf.newsletter.model.Issue issue) {
 
 		return _issueLocalService.updateIssue(issue);
+	}
+
+	@Override
+	public void updateIssue(String xmlString, long primaryKey) {
+		_issueLocalService.updateIssue(xmlString, primaryKey);
 	}
 
 	@Override

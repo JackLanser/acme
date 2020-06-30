@@ -178,6 +178,11 @@ public interface IssueLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Issue fetchIssue(long issueId);
 
+	public List<Issue> findByIssueId(long primaryKey);
+
+	public Issue generateIssue(String xmlString, long primaryKey)
+		throws DocumentException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -242,5 +247,7 @@ public interface IssueLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Issue updateIssue(Issue issue);
+
+	public void updateIssue(String xmlString, long primaryKey);
 
 }

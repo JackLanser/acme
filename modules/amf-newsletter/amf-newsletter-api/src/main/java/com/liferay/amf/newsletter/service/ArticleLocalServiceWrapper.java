@@ -197,6 +197,21 @@ public class ArticleLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.amf.newsletter.model.Article>
+		findByArticleId(long articleId) {
+
+		return _articleLocalService.findByArticleId(articleId);
+	}
+
+	@Override
+	public com.liferay.amf.newsletter.model.Article generateArticle(
+			String xmlString, long primaryKey)
+		throws com.liferay.portal.kernel.xml.DocumentException {
+
+		return _articleLocalService.generateArticle(xmlString, primaryKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -274,6 +289,11 @@ public class ArticleLocalServiceWrapper
 	}
 
 	@Override
+	public void handleArticleEvents(String xmlString, long primaryKey) {
+		_articleLocalService.handleArticleEvents(xmlString, primaryKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.xml.Document loadXMLFromTitle(String title)
 		throws com.liferay.portal.kernel.xml.DocumentException {
 
@@ -291,6 +311,11 @@ public class ArticleLocalServiceWrapper
 		com.liferay.amf.newsletter.model.Article article) {
 
 		return _articleLocalService.updateArticle(article);
+	}
+
+	@Override
+	public void updateArticle(String xmlString, long primaryKey) {
+		_articleLocalService.updateArticle(xmlString, primaryKey);
 	}
 
 	@Override

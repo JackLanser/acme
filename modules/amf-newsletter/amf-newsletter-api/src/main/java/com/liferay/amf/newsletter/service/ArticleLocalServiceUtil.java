@@ -194,6 +194,19 @@ public class ArticleLocalServiceUtil {
 		return getService().fetchArticle(articleId);
 	}
 
+	public static java.util.List<com.liferay.amf.newsletter.model.Article>
+		findByArticleId(long articleId) {
+
+		return getService().findByArticleId(articleId);
+	}
+
+	public static com.liferay.amf.newsletter.model.Article generateArticle(
+			String xmlString, long primaryKey)
+		throws com.liferay.portal.kernel.xml.DocumentException {
+
+		return getService().generateArticle(xmlString, primaryKey);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -266,6 +279,10 @@ public class ArticleLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static void handleArticleEvents(String xmlString, long primaryKey) {
+		getService().handleArticleEvents(xmlString, primaryKey);
+	}
+
 	public static com.liferay.portal.kernel.xml.Document loadXMLFromTitle(
 			String title)
 		throws com.liferay.portal.kernel.xml.DocumentException {
@@ -283,6 +300,10 @@ public class ArticleLocalServiceUtil {
 		com.liferay.amf.newsletter.model.Article article) {
 
 		return getService().updateArticle(article);
+	}
+
+	public static void updateArticle(String xmlString, long primaryKey) {
+		getService().updateArticle(xmlString, primaryKey);
 	}
 
 	public static ArticleLocalService getService() {

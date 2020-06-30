@@ -178,6 +178,11 @@ public interface ArticleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Article fetchArticle(long articleId);
 
+	public List<Article> findByArticleId(long articleId);
+
+	public Article generateArticle(String xmlString, long primaryKey)
+		throws DocumentException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -231,6 +236,8 @@ public interface ArticleLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void handleArticleEvents(String xmlString, long primaryKey);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Document loadXMLFromTitle(String title) throws DocumentException;
 
@@ -242,5 +249,7 @@ public interface ArticleLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Article updateArticle(Article article);
+
+	public void updateArticle(String xmlString, long primaryKey);
 
 }

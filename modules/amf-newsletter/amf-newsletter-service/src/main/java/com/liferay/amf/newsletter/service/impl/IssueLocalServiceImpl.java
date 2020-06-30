@@ -18,6 +18,7 @@ import com.liferay.amf.newsletter.model.Issue;
 import com.liferay.amf.newsletter.service.base.IssueLocalServiceBaseImpl;
 import com.liferay.amf.newsletter.service.persistence.IssuePersistence;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Node;
@@ -121,8 +122,8 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return issue;
 	}
 	
-	public void deleteIssue(long primaryKey) {
-		super.deleteIssue(primaryKey);
+	public Issue deleteIssue(long primaryKey) throws PortalException {
+		return super.deleteIssue(primaryKey);
 	}
 	
 	public Document loadXMLFromTitle(String title) throws DocumentException

@@ -16,6 +16,7 @@ package com.liferay.amf.newsletter.service.impl;
 
 import com.liferay.amf.newsletter.model.Issue;
 import com.liferay.amf.newsletter.service.base.IssueLocalServiceBaseImpl;
+import com.liferay.amf.newsletter.service.persistence.IssuePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -23,8 +24,10 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the issue local service.
@@ -52,24 +55,40 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 */
 	public void addIssue(String xmlString, long primaryKey) {
 		try {
-			Document content = loadXMLFromTitle(xmlString);
-			
-			Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
-			Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='IssueTitle']/dynamic-content");
-			Node description = content.selectSingleNode("/root/dynamic-element[@name='Description']/dynamic-content");
-			Node issueDate = content.selectSingleNode("/root/dynamic-element[@name='IssueDate']/dynamic-content");
-			
-			Issue issue = createIssue(primaryKey);
-			
-			issue.setTitle(issueTitle.getText());
-			issue.setDescription(description.getText());
-			issue.setIssueDate(Date.valueOf(issueDate.getText()));
+			Issue issue = generateIssue(xmlString, primaryKey);
 			super.addIssue(issue);
-		}
-		catch(DocumentException e) {
-			System.out.println("Error in the Issue local service");
+		} catch(DocumentException e) {
+			System.out.println("Error adding issue");
 			e.printStackTrace();
 		}
+	}
+	
+	public void updateIssue(String xmlString, long primaryKey) {
+		try {
+			Issue issue = generateIssue(xmlString, primaryKey);
+			super.updateIssue(issue);
+		} catch(DocumentException e) {
+			System.out.println("Error updating issue");
+			e.printStackTrace();
+		}
+	}
+	
+	public Issue generateIssue(String xmlString, long primaryKey) throws DocumentException {
+		Document content = loadXMLFromTitle(xmlString);
+		
+		Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
+		Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='IssueTitle']/dynamic-content");
+		Node description = content.selectSingleNode("/root/dynamic-element[@name='Description']/dynamic-content");
+		Node issueDate = content.selectSingleNode("/root/dynamic-element[@name='IssueDate']/dynamic-content");
+		
+		Issue issue = createIssue(primaryKey);
+		
+		issue.setIssueNumber(Integer.valueOf(issueNumber.getText()));
+		issue.setTitle(issueTitle.getText());
+		issue.setDescription(description.getText());
+		issue.setIssueDate(Date.valueOf(issueDate.getText()));
+		
+		return issue;
 	}
 	
 	public Document loadXMLFromTitle(String title) throws DocumentException
@@ -77,4 +96,12 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	    Document doc = SAXReaderUtil.read(title);
 		return doc;
 	}
+	
+	public List<Issue> findByIssueId(long primaryKey){
+		return _issuePersistence.findByIssueId(primaryKey);
+	}
+	
+	@Reference
+	private IssuePersistence _issuePersistence;
+	
 }

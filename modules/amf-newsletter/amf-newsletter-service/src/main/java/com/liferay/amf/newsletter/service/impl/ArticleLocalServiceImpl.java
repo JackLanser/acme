@@ -16,13 +16,17 @@ package com.liferay.amf.newsletter.service.impl;
 
 import com.liferay.amf.newsletter.model.Article;
 import com.liferay.amf.newsletter.service.base.ArticleLocalServiceBaseImpl;
+import com.liferay.amf.newsletter.service.persistence.ArticlePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the article local service.
@@ -49,29 +53,56 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 * Never reference this class directly. Use <code>com.liferay.amf.newsletter.service.ArticleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.newsletter.service.ArticleLocalServiceUtil</code>.
 	 */
 	
+	public void handleArticleEvents(String xmlString, long primaryKey) {
+		List<Article> articles = findByArticleId(primaryKey);
+		if(articles.isEmpty()) {
+			addArticle(xmlString, primaryKey);
+		}
+		else {
+			updateArticle(xmlString, primaryKey);
+		}
+	}
+	
 	public void addArticle(String xmlString, long primaryKey) {
 		try {
-			Document content = loadXMLFromTitle(xmlString);
-			
-			Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
-			Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='Title']/dynamic-content");
-			Node order = content.selectSingleNode("/root/dynamic-element[@name='Order']/dynamic-content");
-			Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
-			Node author = content.selectSingleNode("/root/dynamic-element[@name='Author']/dynamic-content");
-			
-			Article article = createArticle(primaryKey);
-			
-			article.setAuthor(author.getText());
-			article.setContent(textContent.getText());
-			article.setIssueNumber(Integer.valueOf(issueNumber.getText()));
-			article.setTitle(issueTitle.getText());
-			article.setOrder(Integer.valueOf(order.getText()));
+			Article article = generateArticle(xmlString, primaryKey);
 			super.addArticle(article);
 		}
 		catch(DocumentException e) {
-			System.out.println("Error in the article local service");
+			System.out.println("Error in the add article");
 			e.printStackTrace();
 		}
+	}
+	
+	public void updateArticle(String xmlString, long primaryKey) {
+		try {
+			Article article = generateArticle(xmlString, primaryKey);
+			super.updateArticle(article);
+		}
+		catch(DocumentException e) {
+			System.out.println("Error in the update article");
+			e.printStackTrace();
+		}
+	}
+	
+	public Article generateArticle(String xmlString, long primaryKey) throws DocumentException {
+		Document content = loadXMLFromTitle(xmlString);
+		
+		Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
+		Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='Title']/dynamic-content");
+		Node order = content.selectSingleNode("/root/dynamic-element[@name='Order']/dynamic-content");
+		Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
+		Node author = content.selectSingleNode("/root/dynamic-element[@name='Author']/dynamic-content");
+		
+		Article article = createArticle(primaryKey);
+		
+		article.setAuthor(author.getText());
+		article.setContent(textContent.getText());
+		article.setIssueNumber(Integer.valueOf(issueNumber.getText()));
+		article.setTitle(issueTitle.getText());
+		article.setOrder(Integer.valueOf(order.getText()));
+		
+		return article;
 	}
 	
 	public Document loadXMLFromTitle(String title) throws DocumentException
@@ -79,4 +110,10 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	    Document doc = SAXReaderUtil.read(title);
 		return doc;
 	}
+	
+	public List<Article> findByArticleId(long articleId) {
+		return _articlePersistence.findByArticleId(articleId);
+	}
+	@Reference
+	private ArticlePersistence _articlePersistence;
 }

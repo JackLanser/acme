@@ -197,10 +197,10 @@ public class ArticleLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.amf.newsletter.model.Article>
-		findByArticleId(long articleId) {
+	public com.liferay.amf.newsletter.model.Article findByArticleId(
+		long primaryKey) {
 
-		return _articleLocalService.findByArticleId(articleId);
+		return _articleLocalService.findByArticleId(primaryKey);
 	}
 
 	@Override

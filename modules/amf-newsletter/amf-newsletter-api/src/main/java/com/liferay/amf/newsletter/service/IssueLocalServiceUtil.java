@@ -194,8 +194,8 @@ public class IssueLocalServiceUtil {
 		return getService().fetchIssue(issueId);
 	}
 
-	public static java.util.List<com.liferay.amf.newsletter.model.Issue>
-		findByIssueId(long primaryKey) {
+	public static com.liferay.amf.newsletter.model.Issue findByIssueId(
+		long primaryKey) {
 
 		return getService().findByIssueId(primaryKey);
 	}
@@ -276,6 +276,10 @@ public class IssueLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static void handleIssueEvents(String xmlString, long primaryKey) {
+		getService().handleIssueEvents(xmlString, primaryKey);
 	}
 
 	public static com.liferay.portal.kernel.xml.Document loadXMLFromTitle(

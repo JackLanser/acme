@@ -178,7 +178,7 @@ public interface ArticleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Article fetchArticle(long articleId);
 
-	public List<Article> findByArticleId(long articleId);
+	public Article findByArticleId(long primaryKey);
 
 	public Article generateArticle(String xmlString, long primaryKey)
 		throws DocumentException;

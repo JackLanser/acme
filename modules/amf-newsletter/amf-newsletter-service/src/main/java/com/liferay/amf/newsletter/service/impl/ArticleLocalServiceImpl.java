@@ -54,8 +54,8 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 */
 	
 	public void handleArticleEvents(String xmlString, long primaryKey) {
-		List<Article> articles = findByArticleId(primaryKey);
-		if(articles.isEmpty()) {
+		Article article = findByArticleId(primaryKey);
+		if(article == null) {
 			addArticle(xmlString, primaryKey);
 		}
 		else {

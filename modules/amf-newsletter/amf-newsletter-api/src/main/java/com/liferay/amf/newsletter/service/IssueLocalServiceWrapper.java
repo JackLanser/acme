@@ -192,7 +192,7 @@ public class IssueLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.amf.newsletter.model.Issue> findByIssueId(
+	public com.liferay.amf.newsletter.model.Issue findByIssueId(
 		long primaryKey) {
 
 		return _issueLocalService.findByIssueId(primaryKey);
@@ -281,6 +281,11 @@ public class IssueLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _issueLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public void handleIssueEvents(String xmlString, long primaryKey) {
+		_issueLocalService.handleIssueEvents(xmlString, primaryKey);
 	}
 
 	@Override

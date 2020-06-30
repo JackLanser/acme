@@ -178,7 +178,7 @@ public interface IssueLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Issue fetchIssue(long issueId);
 
-	public List<Issue> findByIssueId(long primaryKey);
+	public Issue findByIssueId(long primaryKey);
 
 	public Issue generateIssue(String xmlString, long primaryKey)
 		throws DocumentException;
@@ -235,6 +235,8 @@ public interface IssueLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void handleIssueEvents(String xmlString, long primaryKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Document loadXMLFromTitle(String title) throws DocumentException;

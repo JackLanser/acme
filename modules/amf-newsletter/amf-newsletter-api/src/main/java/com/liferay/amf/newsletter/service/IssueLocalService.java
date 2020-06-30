@@ -252,4 +252,7 @@ public interface IssueLocalService
 
 	public void updateIssue(String xmlString, long primaryKey);
 
+	public void updateIssueValues(Issue issue, String xmlString)
+		throws DocumentException;
+
 }

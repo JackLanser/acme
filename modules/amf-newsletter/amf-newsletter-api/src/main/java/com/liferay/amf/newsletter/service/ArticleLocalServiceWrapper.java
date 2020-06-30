@@ -319,6 +319,14 @@ public class ArticleLocalServiceWrapper
 	}
 
 	@Override
+	public void updateArticleValues(
+			com.liferay.amf.newsletter.model.Article article, String xmlString)
+		throws com.liferay.portal.kernel.xml.DocumentException {
+
+		_articleLocalService.updateArticleValues(article, xmlString);
+	}
+
+	@Override
 	public ArticleLocalService getWrappedService() {
 		return _articleLocalService;
 	}

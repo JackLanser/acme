@@ -306,6 +306,13 @@ public class ArticleLocalServiceUtil {
 		getService().updateArticle(xmlString, primaryKey);
 	}
 
+	public static void updateArticleValues(
+			com.liferay.amf.newsletter.model.Article article, String xmlString)
+		throws com.liferay.portal.kernel.xml.DocumentException {
+
+		getService().updateArticleValues(article, xmlString);
+	}
+
 	public static ArticleLocalService getService() {
 		return _serviceTracker.getService();
 	}

@@ -305,6 +305,13 @@ public class IssueLocalServiceUtil {
 		getService().updateIssue(xmlString, primaryKey);
 	}
 
+	public static void updateIssueValues(
+			com.liferay.amf.newsletter.model.Issue issue, String xmlString)
+		throws com.liferay.portal.kernel.xml.DocumentException {
+
+		getService().updateIssueValues(issue, xmlString);
+	}
+
 	public static IssueLocalService getService() {
 		return _serviceTracker.getService();
 	}

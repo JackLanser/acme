@@ -314,6 +314,14 @@ public class IssueLocalServiceWrapper
 	}
 
 	@Override
+	public void updateIssueValues(
+			com.liferay.amf.newsletter.model.Issue issue, String xmlString)
+		throws com.liferay.portal.kernel.xml.DocumentException {
+
+		_issueLocalService.updateIssueValues(issue, xmlString);
+	}
+
+	@Override
 	public IssueLocalService getWrappedService() {
 		return _issueLocalService;
 	}

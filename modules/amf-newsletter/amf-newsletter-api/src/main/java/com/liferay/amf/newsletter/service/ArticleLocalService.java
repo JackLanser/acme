@@ -252,4 +252,7 @@ public interface ArticleLocalService
 
 	public void updateArticle(String xmlString, long primaryKey);
 
+	public void updateArticleValues(Article article, String xmlString)
+		throws DocumentException;
+
 }

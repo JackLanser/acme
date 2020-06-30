@@ -23,13 +23,12 @@ public class JournalPostUpdateModelListener extends BaseModelListener<JournalArt
 	public void onAfterUpdate(JournalArticle model) {
 		String ddmsKey = model.getDDMStructureKey();
 		if(ddmsKey.equals(ARTICLE_DDMS)) {
-			_articleLocalService.addArticle(model.getContent(), model.getResourcePrimKey());
+			_articleLocalService.handleArticleEvents(model.getContent(), model.getResourcePrimKey());
 		}
 		else {
-			_issueLocalService.addIssue(model.getContent(), model.getResourcePrimKey());
-		}
+			_issueLocalService.handleIssueEvents(model.getContent(), model.getResourcePrimKey());
+		}	
 	}
-	
 	
 	@Reference
 	protected IssueLocalService _issueLocalService;

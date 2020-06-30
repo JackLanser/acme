@@ -111,8 +111,8 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		return doc;
 	}
 	
-	public List<Article> findByArticleId(long articleId) {
-		return _articlePersistence.findByArticleId(articleId);
+	public Article findByArticleId(long primaryKey) {
+		return _articlePersistence.fetchByPrimaryKey(primaryKey);
 	}
 	@Reference
 	private ArticlePersistence _articlePersistence;

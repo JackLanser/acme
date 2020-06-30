@@ -53,6 +53,17 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.newsletter.service.IssueLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.newsletter.service.IssueLocalServiceUtil</code>.
 	 */
+	
+	public void handleIssueEvents(String xmlString, long primaryKey) {
+		Issue issue = findByIssueId(primaryKey);
+		if(issue == null) {
+			addIssue(xmlString, primaryKey);
+		}
+		else {
+			updateIssue(xmlString, primaryKey);
+		}
+	}
+	
 	public void addIssue(String xmlString, long primaryKey) {
 		try {
 			Issue issue = generateIssue(xmlString, primaryKey);
@@ -97,8 +108,8 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return doc;
 	}
 	
-	public List<Issue> findByIssueId(long primaryKey){
-		return _issuePersistence.findByIssueId(primaryKey);
+	public Issue findByIssueId(long primaryKey){
+		return _issuePersistence.fetchByPrimaryKey(primaryKey);
 	}
 	
 	@Reference

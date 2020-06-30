@@ -51,22 +51,22 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	
 	public void addArticle(String xmlString, long primaryKey) {
 		try {
-		Document content = loadXMLFromTitle(xmlString);
-		
-		Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
-		Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='Title']/dynamic-content");
-		Node order = content.selectSingleNode("/root/dynamic-element[@name='Order']/dynamic-content");
-		Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
-		Node author = content.selectSingleNode("/root/dynamic-element[@name='Author']/dynamic-content");
-		
-		Article article = createArticle((int)primaryKey);
-		
-		article.setAuthor(author.getText());
-		article.setContent(textContent.getText());
-		article.setIssueNumber(Integer.valueOf(issueNumber.getText()));
-		article.setTitle(issueTitle.getText());
-		article.setOrder(Integer.valueOf(order.getText()));
-		super.addArticle(article);
+			Document content = loadXMLFromTitle(xmlString);
+			
+			Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
+			Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='Title']/dynamic-content");
+			Node order = content.selectSingleNode("/root/dynamic-element[@name='Order']/dynamic-content");
+			Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
+			Node author = content.selectSingleNode("/root/dynamic-element[@name='Author']/dynamic-content");
+			
+			Article article = createArticle((int)primaryKey);
+			
+			article.setAuthor(author.getText());
+			article.setContent(textContent.getText());
+			article.setIssueNumber(Integer.valueOf(issueNumber.getText()));
+			article.setTitle(issueTitle.getText());
+			article.setOrder(Integer.valueOf(order.getText()));
+			super.addArticle(article);
 		}
 		catch(DocumentException e) {
 			System.out.println("Error in the article local service");

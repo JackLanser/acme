@@ -50,8 +50,8 @@ public class IssueLocalServiceUtil {
 		return getService().addIssue(issue);
 	}
 
-	public static void addIssue(String xmlString) {
-		getService().addIssue(xmlString);
+	public static void addIssue(String xmlString, long primaryKey) {
+		getService().addIssue(xmlString, primaryKey);
 	}
 
 	/**

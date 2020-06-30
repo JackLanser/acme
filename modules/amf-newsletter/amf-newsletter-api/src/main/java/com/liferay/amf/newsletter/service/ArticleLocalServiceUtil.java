@@ -50,8 +50,8 @@ public class ArticleLocalServiceUtil {
 		return getService().addArticle(article);
 	}
 
-	public static void addArticle(String xmlString) {
-		getService().addArticle(xmlString);
+	public static void addArticle(String xmlString, long primaryKey) {
+		getService().addArticle(xmlString, primaryKey);
 	}
 
 	/**

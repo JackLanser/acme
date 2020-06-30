@@ -44,8 +44,8 @@ public class ArticleLocalServiceWrapper
 	}
 
 	@Override
-	public void addArticle(String xmlString) {
-		_articleLocalService.addArticle(xmlString);
+	public void addArticle(String xmlString, long primaryKey) {
+		_articleLocalService.addArticle(xmlString, primaryKey);
 	}
 
 	/**

@@ -24,7 +24,7 @@
 
 		<!-- PK fields -->
 
-		<column name="articleId" primary="true" type="int"></column>
+		<column name="articleId" primary="true" type="long"></column>
 
 		<!-- Group instance -->
 

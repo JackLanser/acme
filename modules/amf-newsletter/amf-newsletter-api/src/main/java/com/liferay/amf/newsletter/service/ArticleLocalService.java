@@ -72,7 +72,7 @@ public interface ArticleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Article addArticle(Article article);
 
-	public void addArticle(String xmlString);
+	public void addArticle(String xmlString, long primaryKey);
 
 	/**
 	 * Creates a new article with the primary key. Does not add the article to the database.

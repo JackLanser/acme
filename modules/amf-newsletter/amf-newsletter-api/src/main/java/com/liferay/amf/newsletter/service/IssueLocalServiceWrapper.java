@@ -44,8 +44,8 @@ public class IssueLocalServiceWrapper
 	}
 
 	@Override
-	public void addIssue(String xmlString) {
-		_issueLocalService.addIssue(xmlString);
+	public void addIssue(String xmlString, long primaryKey) {
+		_issueLocalService.addIssue(xmlString, primaryKey);
 	}
 
 	/**

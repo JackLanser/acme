@@ -72,7 +72,7 @@ public interface IssueLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Issue addIssue(Issue issue);
 
-	public void addIssue(String xmlString);
+	public void addIssue(String xmlString, long primaryKey);
 
 	/**
 	 * Creates a new issue with the primary key. Does not add the issue to the database.

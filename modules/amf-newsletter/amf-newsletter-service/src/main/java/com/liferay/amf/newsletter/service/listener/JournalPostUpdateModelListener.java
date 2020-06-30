@@ -26,7 +26,7 @@ public class JournalPostUpdateModelListener extends BaseModelListener<JournalArt
 			_articleLocalService.addArticle(model.getContent(), model.getResourcePrimKey());
 		}
 		else {
-			_issueLocalService.addIssue(model.getContent(), model.getResourcePrimKey();
+			_issueLocalService.addIssue(model.getContent(), model.getResourcePrimKey());
 		}
 	}
 	

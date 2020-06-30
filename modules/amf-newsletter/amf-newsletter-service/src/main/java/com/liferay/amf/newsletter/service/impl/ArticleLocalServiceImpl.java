@@ -76,13 +76,32 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	
 	public void updateArticle(String xmlString, long primaryKey) {
 		try {
-			Article article = generateArticle(xmlString, primaryKey);
+			Article article = findByArticleId(primaryKey);
+			
+			updateArticleValues(article, xmlString);
+			
 			super.updateArticle(article);
 		}
 		catch(DocumentException e) {
 			System.out.println("Error in the update article");
 			e.printStackTrace();
 		}
+	}
+	
+	public void updateArticleValues(Article article, String xmlString) throws DocumentException{
+		Document content = loadXMLFromTitle(xmlString);
+		
+		Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
+		Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='Title']/dynamic-content");
+		Node order = content.selectSingleNode("/root/dynamic-element[@name='Order']/dynamic-content");
+		Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
+		Node author = content.selectSingleNode("/root/dynamic-element[@name='Author']/dynamic-content");
+		
+		article.setAuthor(author.getText());
+		article.setContent(textContent.getText());
+		article.setIssueNumber(Integer.valueOf(issueNumber.getText()));
+		article.setTitle(issueTitle.getText());
+		article.setOrder(Integer.valueOf(order.getText()));
 	}
 	
 	public Article generateArticle(String xmlString, long primaryKey) throws DocumentException {

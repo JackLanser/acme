@@ -56,7 +56,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	
 	public void handleIssueEvents(String xmlString, long primaryKey) {
 		Issue issue = findByIssueId(primaryKey);
-		System.out.println(issue);
+		
 		if(issue == null) {
 			addIssue(xmlString, primaryKey);
 		}
@@ -68,7 +68,9 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	public void addIssue(String xmlString, long primaryKey) {
 		try {
 			Issue issue = generateIssue(xmlString, primaryKey);
+			
 			super.addIssue(issue);
+			
 		} catch(DocumentException e) {
 			System.out.println("Error adding issue");
 			e.printStackTrace();
@@ -77,14 +79,30 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	
 	public void updateIssue(String xmlString, long primaryKey) {
 		try {
-			Issue issue = generateIssue(xmlString, primaryKey);
+			Issue issue = findByIssueId(primaryKey);
+			
+			updateIssueValues(issue, xmlString);
+			
 			super.updateIssue(issue);
+			
 		} catch(DocumentException e) {
 			System.out.println("Error updating issue");
 			e.printStackTrace();
 		}
 	}
-	
+	public void updateIssueValues(Issue issue, String xmlString) throws DocumentException {
+		Document content = loadXMLFromTitle(xmlString);
+		Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
+		Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='IssueTitle']/dynamic-content");
+		Node description = content.selectSingleNode("/root/dynamic-element[@name='Description']/dynamic-content");
+		Node issueDate = content.selectSingleNode("/root/dynamic-element[@name='IssueDate']/dynamic-content");
+		
+		issue.setIssueNumber(Integer.valueOf(issueNumber.getText()));
+		issue.setTitle(issueTitle.getText());
+		issue.setDescription(description.getText());
+		issue.setIssueDate(Date.valueOf(issueDate.getText()));
+	}
+
 	public Issue generateIssue(String xmlString, long primaryKey) throws DocumentException {
 		Document content = loadXMLFromTitle(xmlString);
 		

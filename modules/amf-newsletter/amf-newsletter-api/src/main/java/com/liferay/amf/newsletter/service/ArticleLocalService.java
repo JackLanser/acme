@@ -70,6 +70,10 @@ public interface ArticleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Article addArticle(Article article);
 
+	public void addArticle(
+		int issueNumber, String title, String author, int order,
+		String content);
+
 	/**
 	 * Creates a new article with the primary key. Does not add the article to the database.
 	 *

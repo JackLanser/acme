@@ -50,6 +50,13 @@ public class ArticleLocalServiceUtil {
 		return getService().addArticle(article);
 	}
 
+	public static void addArticle(
+		int issueNumber, String title, String author, int order,
+		String content) {
+
+		getService().addArticle(issueNumber, title, author, order, content);
+	}
+
 	/**
 	 * Creates a new article with the primary key. Does not add the article to the database.
 	 *

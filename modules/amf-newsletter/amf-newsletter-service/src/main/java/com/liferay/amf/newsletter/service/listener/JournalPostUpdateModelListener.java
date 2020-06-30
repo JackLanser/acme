@@ -29,7 +29,7 @@ public class JournalPostUpdateModelListener extends BaseModelListener<JournalArt
 				Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='Title']/dynamic-content");
 				Node order = content.selectSingleNode("/root/dynamic-element[@name='Order']/dynamic-content");
 				Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
-
+				
 				
 			}
 			else {		

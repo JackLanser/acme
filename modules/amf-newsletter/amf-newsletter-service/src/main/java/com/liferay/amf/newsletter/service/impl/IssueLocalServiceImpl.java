@@ -121,6 +121,10 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return issue;
 	}
 	
+	public void deleteIssue(long primaryKey) {
+		super.deleteIssue(primaryKey);
+	}
+	
 	public Document loadXMLFromTitle(String title) throws DocumentException
 	{
 	    Document doc = SAXReaderUtil.read(title);

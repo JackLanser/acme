@@ -3,8 +3,10 @@ package com.liferay.amf.newsletter.service.listener;
 import com.liferay.amf.newsletter.service.ArticleLocalService;
 import com.liferay.amf.newsletter.service.IssueLocalService;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Node;
@@ -23,11 +25,25 @@ public class JournalPostUpdateModelListener extends BaseModelListener<JournalArt
 	public void onAfterUpdate(JournalArticle model) {
 		String ddmsKey = model.getDDMStructureKey();
 		if(ddmsKey.equals(ARTICLE_DDMS)) {
-			System.out.println("if");
-			_articleLocalService.handleArticleEvents(model.getContent(), model.getResourcePrimKey());
+			if(model.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+				try {
+					_articleLocalService.deleteArticle(model.getResourcePrimKey());
+				} catch (PortalException e) {
+					e.printStackTrace();
+				}
+			}
+			else {
+				_articleLocalService.handleArticleEvents(model.getContent(), model.getResourcePrimKey());
+			}
 		}
 		else {
-			System.out.println("else");
+			if(model.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+				try {
+					_issueLocalService.deleteIssue(model.getResourcePrimKey());
+				} catch (PortalException e) {
+					e.printStackTrace();
+				}
+			}
 			_issueLocalService.handleIssueEvents(model.getContent(), model.getResourcePrimKey());
 		}	
 	}

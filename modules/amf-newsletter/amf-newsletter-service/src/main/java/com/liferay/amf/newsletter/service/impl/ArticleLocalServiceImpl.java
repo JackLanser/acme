@@ -124,6 +124,10 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		return article;
 	}
 	
+	public void deleteArticle(long primaryKey) {
+		super.deleteArticle(primaryKey);
+	}
+	
 	public Document loadXMLFromTitle(String title) throws DocumentException
 	{
 	    Document doc = SAXReaderUtil.read(title);

@@ -120,6 +120,151 @@ public class IssueUtil {
 	}
 
 	/**
+	 * Returns all the issues where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @return the matching issues
+	 */
+	public static List<Issue> findByIssueId(long issueId) {
+		return getPersistence().findByIssueId(issueId);
+	}
+
+	/**
+	 * Returns a range of all the issues where issueId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>IssueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param issueId the issue ID
+	 * @param start the lower bound of the range of issues
+	 * @param end the upper bound of the range of issues (not inclusive)
+	 * @return the range of matching issues
+	 */
+	public static List<Issue> findByIssueId(long issueId, int start, int end) {
+		return getPersistence().findByIssueId(issueId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the issues where issueId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>IssueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param issueId the issue ID
+	 * @param start the lower bound of the range of issues
+	 * @param end the upper bound of the range of issues (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching issues
+	 */
+	public static List<Issue> findByIssueId(
+		long issueId, int start, int end,
+		OrderByComparator<Issue> orderByComparator) {
+
+		return getPersistence().findByIssueId(
+			issueId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the issues where issueId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>IssueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param issueId the issue ID
+	 * @param start the lower bound of the range of issues
+	 * @param end the upper bound of the range of issues (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching issues
+	 */
+	public static List<Issue> findByIssueId(
+		long issueId, int start, int end,
+		OrderByComparator<Issue> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByIssueId(
+			issueId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first issue in the ordered set where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching issue
+	 * @throws NoSuchIssueException if a matching issue could not be found
+	 */
+	public static Issue findByIssueId_First(
+			long issueId, OrderByComparator<Issue> orderByComparator)
+		throws com.liferay.amf.newsletter.exception.NoSuchIssueException {
+
+		return getPersistence().findByIssueId_First(issueId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first issue in the ordered set where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching issue, or <code>null</code> if a matching issue could not be found
+	 */
+	public static Issue fetchByIssueId_First(
+		long issueId, OrderByComparator<Issue> orderByComparator) {
+
+		return getPersistence().fetchByIssueId_First(
+			issueId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last issue in the ordered set where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching issue
+	 * @throws NoSuchIssueException if a matching issue could not be found
+	 */
+	public static Issue findByIssueId_Last(
+			long issueId, OrderByComparator<Issue> orderByComparator)
+		throws com.liferay.amf.newsletter.exception.NoSuchIssueException {
+
+		return getPersistence().findByIssueId_Last(issueId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last issue in the ordered set where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching issue, or <code>null</code> if a matching issue could not be found
+	 */
+	public static Issue fetchByIssueId_Last(
+		long issueId, OrderByComparator<Issue> orderByComparator) {
+
+		return getPersistence().fetchByIssueId_Last(issueId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the issues where issueId = &#63; from the database.
+	 *
+	 * @param issueId the issue ID
+	 */
+	public static void removeByIssueId(long issueId) {
+		getPersistence().removeByIssueId(issueId);
+	}
+
+	/**
+	 * Returns the number of issues where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @return the number of matching issues
+	 */
+	public static int countByIssueId(long issueId) {
+		return getPersistence().countByIssueId(issueId);
+	}
+
+	/**
 	 * Caches the issue in the entity cache if it is enabled.
 	 *
 	 * @param issue the issue

@@ -101,6 +101,8 @@ public class ArticleModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	public static final long ARTICLEID_COLUMN_BITMASK = 1L;
+
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
 	}
@@ -311,7 +313,19 @@ public class ArticleModelImpl
 
 	@Override
 	public void setArticleId(long articleId) {
+		_columnBitmask |= ARTICLEID_COLUMN_BITMASK;
+
+		if (!_setOriginalArticleId) {
+			_setOriginalArticleId = true;
+
+			_originalArticleId = _articleId;
+		}
+
 		_articleId = articleId;
+	}
+
+	public long getOriginalArticleId() {
+		return _originalArticleId;
 	}
 
 	@JSON
@@ -382,6 +396,10 @@ public class ArticleModelImpl
 	@Override
 	public void setContent(String content) {
 		_content = content;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -482,6 +500,13 @@ public class ArticleModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		ArticleModelImpl articleModelImpl = this;
+
+		articleModelImpl._originalArticleId = articleModelImpl._articleId;
+
+		articleModelImpl._setOriginalArticleId = false;
+
+		articleModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -595,11 +620,14 @@ public class ArticleModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _articleId;
+	private long _originalArticleId;
+	private boolean _setOriginalArticleId;
 	private int _issueNumber;
 	private String _title;
 	private String _author;
 	private int _order;
 	private String _content;
+	private long _columnBitmask;
 	private Article _escapedModel;
 
 }

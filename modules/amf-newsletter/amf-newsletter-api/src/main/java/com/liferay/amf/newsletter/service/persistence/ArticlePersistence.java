@@ -41,6 +41,134 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	 */
 
 	/**
+	 * Returns all the articles where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @return the matching articles
+	 */
+	public java.util.List<Article> findByArticleId(long articleId);
+
+	/**
+	 * Returns a range of all the articles where articleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param articleId the article ID
+	 * @param start the lower bound of the range of articles
+	 * @param end the upper bound of the range of articles (not inclusive)
+	 * @return the range of matching articles
+	 */
+	public java.util.List<Article> findByArticleId(
+		long articleId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the articles where articleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param articleId the article ID
+	 * @param start the lower bound of the range of articles
+	 * @param end the upper bound of the range of articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching articles
+	 */
+	public java.util.List<Article> findByArticleId(
+		long articleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Article>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the articles where articleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param articleId the article ID
+	 * @param start the lower bound of the range of articles
+	 * @param end the upper bound of the range of articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching articles
+	 */
+	public java.util.List<Article> findByArticleId(
+		long articleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Article>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first article in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching article
+	 * @throws NoSuchArticleException if a matching article could not be found
+	 */
+	public Article findByArticleId_First(
+			long articleId,
+			com.liferay.portal.kernel.util.OrderByComparator<Article>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns the first article in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching article, or <code>null</code> if a matching article could not be found
+	 */
+	public Article fetchByArticleId_First(
+		long articleId,
+		com.liferay.portal.kernel.util.OrderByComparator<Article>
+			orderByComparator);
+
+	/**
+	 * Returns the last article in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching article
+	 * @throws NoSuchArticleException if a matching article could not be found
+	 */
+	public Article findByArticleId_Last(
+			long articleId,
+			com.liferay.portal.kernel.util.OrderByComparator<Article>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns the last article in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching article, or <code>null</code> if a matching article could not be found
+	 */
+	public Article fetchByArticleId_Last(
+		long articleId,
+		com.liferay.portal.kernel.util.OrderByComparator<Article>
+			orderByComparator);
+
+	/**
+	 * Removes all the articles where articleId = &#63; from the database.
+	 *
+	 * @param articleId the article ID
+	 */
+	public void removeByArticleId(long articleId);
+
+	/**
+	 * Returns the number of articles where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @return the number of matching articles
+	 */
+	public int countByArticleId(long articleId);
+
+	/**
 	 * Caches the article in the entity cache if it is enabled.
 	 *
 	 * @param article the article

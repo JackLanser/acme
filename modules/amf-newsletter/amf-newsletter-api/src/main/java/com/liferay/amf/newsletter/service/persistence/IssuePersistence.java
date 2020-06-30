@@ -41,6 +41,134 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	 */
 
 	/**
+	 * Returns all the issues where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @return the matching issues
+	 */
+	public java.util.List<Issue> findByIssueId(long issueId);
+
+	/**
+	 * Returns a range of all the issues where issueId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>IssueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param issueId the issue ID
+	 * @param start the lower bound of the range of issues
+	 * @param end the upper bound of the range of issues (not inclusive)
+	 * @return the range of matching issues
+	 */
+	public java.util.List<Issue> findByIssueId(
+		long issueId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the issues where issueId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>IssueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param issueId the issue ID
+	 * @param start the lower bound of the range of issues
+	 * @param end the upper bound of the range of issues (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching issues
+	 */
+	public java.util.List<Issue> findByIssueId(
+		long issueId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Issue>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the issues where issueId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>IssueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param issueId the issue ID
+	 * @param start the lower bound of the range of issues
+	 * @param end the upper bound of the range of issues (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching issues
+	 */
+	public java.util.List<Issue> findByIssueId(
+		long issueId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Issue>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first issue in the ordered set where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching issue
+	 * @throws NoSuchIssueException if a matching issue could not be found
+	 */
+	public Issue findByIssueId_First(
+			long issueId,
+			com.liferay.portal.kernel.util.OrderByComparator<Issue>
+				orderByComparator)
+		throws NoSuchIssueException;
+
+	/**
+	 * Returns the first issue in the ordered set where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching issue, or <code>null</code> if a matching issue could not be found
+	 */
+	public Issue fetchByIssueId_First(
+		long issueId,
+		com.liferay.portal.kernel.util.OrderByComparator<Issue>
+			orderByComparator);
+
+	/**
+	 * Returns the last issue in the ordered set where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching issue
+	 * @throws NoSuchIssueException if a matching issue could not be found
+	 */
+	public Issue findByIssueId_Last(
+			long issueId,
+			com.liferay.portal.kernel.util.OrderByComparator<Issue>
+				orderByComparator)
+		throws NoSuchIssueException;
+
+	/**
+	 * Returns the last issue in the ordered set where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching issue, or <code>null</code> if a matching issue could not be found
+	 */
+	public Issue fetchByIssueId_Last(
+		long issueId,
+		com.liferay.portal.kernel.util.OrderByComparator<Issue>
+			orderByComparator);
+
+	/**
+	 * Removes all the issues where issueId = &#63; from the database.
+	 *
+	 * @param issueId the issue ID
+	 */
+	public void removeByIssueId(long issueId);
+
+	/**
+	 * Returns the number of issues where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @return the number of matching issues
+	 */
+	public int countByIssueId(long issueId);
+
+	/**
 	 * Caches the issue in the entity cache if it is enabled.
 	 *
 	 * @param issue the issue

@@ -100,6 +100,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	public static final long ISSUEID_COLUMN_BITMASK = 1L;
+
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
 	}
@@ -375,7 +377,23 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public void setIssueId(long issueId) {
+		_columnBitmask |= ISSUEID_COLUMN_BITMASK;
+
+		if (!_setOriginalIssueId) {
+			_setOriginalIssueId = true;
+
+			_originalIssueId = _issueId;
+		}
+
 		_issueId = issueId;
+	}
+
+	public long getOriginalIssueId() {
+		return _originalIssueId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -476,6 +494,13 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public void resetOriginalValues() {
+		IssueModelImpl issueModelImpl = this;
+
+		issueModelImpl._originalIssueId = issueModelImpl._issueId;
+
+		issueModelImpl._setOriginalIssueId = false;
+
+		issueModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -599,6 +624,9 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	private Date _issueDate;
 	private String _byline;
 	private long _issueId;
+	private long _originalIssueId;
+	private boolean _setOriginalIssueId;
+	private long _columnBitmask;
 	private Issue _escapedModel;
 
 }

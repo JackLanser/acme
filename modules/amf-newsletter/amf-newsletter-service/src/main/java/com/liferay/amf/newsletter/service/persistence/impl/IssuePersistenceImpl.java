@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -34,8 +35,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
@@ -79,6 +83,349 @@ public class IssuePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByIssueId;
+	private FinderPath _finderPathWithoutPaginationFindByIssueId;
+	private FinderPath _finderPathCountByIssueId;
+
+	/**
+	 * Returns all the issues where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @return the matching issues
+	 */
+	@Override
+	public List<Issue> findByIssueId(long issueId) {
+		return findByIssueId(
+			issueId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the issues where issueId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>IssueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param issueId the issue ID
+	 * @param start the lower bound of the range of issues
+	 * @param end the upper bound of the range of issues (not inclusive)
+	 * @return the range of matching issues
+	 */
+	@Override
+	public List<Issue> findByIssueId(long issueId, int start, int end) {
+		return findByIssueId(issueId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the issues where issueId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>IssueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param issueId the issue ID
+	 * @param start the lower bound of the range of issues
+	 * @param end the upper bound of the range of issues (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching issues
+	 */
+	@Override
+	public List<Issue> findByIssueId(
+		long issueId, int start, int end,
+		OrderByComparator<Issue> orderByComparator) {
+
+		return findByIssueId(issueId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the issues where issueId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>IssueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param issueId the issue ID
+	 * @param start the lower bound of the range of issues
+	 * @param end the upper bound of the range of issues (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching issues
+	 */
+	@Override
+	public List<Issue> findByIssueId(
+		long issueId, int start, int end,
+		OrderByComparator<Issue> orderByComparator, boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByIssueId;
+				finderArgs = new Object[] {issueId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByIssueId;
+			finderArgs = new Object[] {issueId, start, end, orderByComparator};
+		}
+
+		List<Issue> list = null;
+
+		if (useFinderCache) {
+			list = (List<Issue>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Issue issue : list) {
+					if (issueId != issue.getIssueId()) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_ISSUE_WHERE);
+
+			sb.append(_FINDER_COLUMN_ISSUEID_ISSUEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(IssueModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(issueId);
+
+				list = (List<Issue>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first issue in the ordered set where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching issue
+	 * @throws NoSuchIssueException if a matching issue could not be found
+	 */
+	@Override
+	public Issue findByIssueId_First(
+			long issueId, OrderByComparator<Issue> orderByComparator)
+		throws NoSuchIssueException {
+
+		Issue issue = fetchByIssueId_First(issueId, orderByComparator);
+
+		if (issue != null) {
+			return issue;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("issueId=");
+		sb.append(issueId);
+
+		sb.append("}");
+
+		throw new NoSuchIssueException(sb.toString());
+	}
+
+	/**
+	 * Returns the first issue in the ordered set where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching issue, or <code>null</code> if a matching issue could not be found
+	 */
+	@Override
+	public Issue fetchByIssueId_First(
+		long issueId, OrderByComparator<Issue> orderByComparator) {
+
+		List<Issue> list = findByIssueId(issueId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last issue in the ordered set where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching issue
+	 * @throws NoSuchIssueException if a matching issue could not be found
+	 */
+	@Override
+	public Issue findByIssueId_Last(
+			long issueId, OrderByComparator<Issue> orderByComparator)
+		throws NoSuchIssueException {
+
+		Issue issue = fetchByIssueId_Last(issueId, orderByComparator);
+
+		if (issue != null) {
+			return issue;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("issueId=");
+		sb.append(issueId);
+
+		sb.append("}");
+
+		throw new NoSuchIssueException(sb.toString());
+	}
+
+	/**
+	 * Returns the last issue in the ordered set where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching issue, or <code>null</code> if a matching issue could not be found
+	 */
+	@Override
+	public Issue fetchByIssueId_Last(
+		long issueId, OrderByComparator<Issue> orderByComparator) {
+
+		int count = countByIssueId(issueId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Issue> list = findByIssueId(
+			issueId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the issues where issueId = &#63; from the database.
+	 *
+	 * @param issueId the issue ID
+	 */
+	@Override
+	public void removeByIssueId(long issueId) {
+		for (Issue issue :
+				findByIssueId(
+					issueId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(issue);
+		}
+	}
+
+	/**
+	 * Returns the number of issues where issueId = &#63;.
+	 *
+	 * @param issueId the issue ID
+	 * @return the number of matching issues
+	 */
+	@Override
+	public int countByIssueId(long issueId) {
+		FinderPath finderPath = _finderPathCountByIssueId;
+
+		Object[] finderArgs = new Object[] {issueId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_ISSUE_WHERE);
+
+			sb.append(_FINDER_COLUMN_ISSUEID_ISSUEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(issueId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ISSUEID_ISSUEID_2 =
+		"issue.issueId = ?";
 
 	public IssuePersistenceImpl() {
 		setModelClass(Issue.class);
@@ -274,6 +621,24 @@ public class IssuePersistenceImpl
 	public Issue updateImpl(Issue issue) {
 		boolean isNew = issue.isNew();
 
+		if (!(issue instanceof IssueModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(issue.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(issue);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in issue proxy " +
+						invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Issue implementation " +
+					issue.getClass());
+		}
+
+		IssueModelImpl issueModelImpl = (IssueModelImpl)issue;
+
 		Session session = null;
 
 		try {
@@ -297,10 +662,39 @@ public class IssuePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (!_columnBitmaskEnabled) {
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+		else if (isNew) {
+			Object[] args = new Object[] {issueModelImpl.getIssueId()};
+
+			finderCache.removeResult(_finderPathCountByIssueId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByIssueId, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((issueModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByIssueId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					issueModelImpl.getOriginalIssueId()
+				};
+
+				finderCache.removeResult(_finderPathCountByIssueId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByIssueId, args);
+
+				args = new Object[] {issueModelImpl.getIssueId()};
+
+				finderCache.removeResult(_finderPathCountByIssueId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByIssueId, args);
+			}
 		}
 
 		entityCache.putResult(
@@ -587,6 +981,25 @@ public class IssuePersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
+
+		_finderPathWithPaginationFindByIssueId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, IssueImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByIssueId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByIssueId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, IssueImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByIssueId",
+			new String[] {Long.class.getName()},
+			IssueModelImpl.ISSUEID_COLUMN_BITMASK);
+
+		_finderPathCountByIssueId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByIssueId",
+			new String[] {Long.class.getName()});
 	}
 
 	@Deactivate
@@ -640,13 +1053,22 @@ public class IssuePersistenceImpl
 	private static final String _SQL_SELECT_ISSUE =
 		"SELECT issue FROM Issue issue";
 
+	private static final String _SQL_SELECT_ISSUE_WHERE =
+		"SELECT issue FROM Issue issue WHERE ";
+
 	private static final String _SQL_COUNT_ISSUE =
 		"SELECT COUNT(issue) FROM Issue issue";
+
+	private static final String _SQL_COUNT_ISSUE_WHERE =
+		"SELECT COUNT(issue) FROM Issue issue WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "issue.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No Issue exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No Issue exists with the key {";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IssuePersistenceImpl.class);

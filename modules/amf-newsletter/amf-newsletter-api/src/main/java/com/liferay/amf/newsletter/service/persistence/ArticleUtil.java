@@ -124,6 +124,156 @@ public class ArticleUtil {
 	}
 
 	/**
+	 * Returns all the articles where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @return the matching articles
+	 */
+	public static List<Article> findByArticleId(long articleId) {
+		return getPersistence().findByArticleId(articleId);
+	}
+
+	/**
+	 * Returns a range of all the articles where articleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param articleId the article ID
+	 * @param start the lower bound of the range of articles
+	 * @param end the upper bound of the range of articles (not inclusive)
+	 * @return the range of matching articles
+	 */
+	public static List<Article> findByArticleId(
+		long articleId, int start, int end) {
+
+		return getPersistence().findByArticleId(articleId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the articles where articleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param articleId the article ID
+	 * @param start the lower bound of the range of articles
+	 * @param end the upper bound of the range of articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching articles
+	 */
+	public static List<Article> findByArticleId(
+		long articleId, int start, int end,
+		OrderByComparator<Article> orderByComparator) {
+
+		return getPersistence().findByArticleId(
+			articleId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the articles where articleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param articleId the article ID
+	 * @param start the lower bound of the range of articles
+	 * @param end the upper bound of the range of articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching articles
+	 */
+	public static List<Article> findByArticleId(
+		long articleId, int start, int end,
+		OrderByComparator<Article> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByArticleId(
+			articleId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first article in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching article
+	 * @throws NoSuchArticleException if a matching article could not be found
+	 */
+	public static Article findByArticleId_First(
+			long articleId, OrderByComparator<Article> orderByComparator)
+		throws com.liferay.amf.newsletter.exception.NoSuchArticleException {
+
+		return getPersistence().findByArticleId_First(
+			articleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first article in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching article, or <code>null</code> if a matching article could not be found
+	 */
+	public static Article fetchByArticleId_First(
+		long articleId, OrderByComparator<Article> orderByComparator) {
+
+		return getPersistence().fetchByArticleId_First(
+			articleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last article in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching article
+	 * @throws NoSuchArticleException if a matching article could not be found
+	 */
+	public static Article findByArticleId_Last(
+			long articleId, OrderByComparator<Article> orderByComparator)
+		throws com.liferay.amf.newsletter.exception.NoSuchArticleException {
+
+		return getPersistence().findByArticleId_Last(
+			articleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last article in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching article, or <code>null</code> if a matching article could not be found
+	 */
+	public static Article fetchByArticleId_Last(
+		long articleId, OrderByComparator<Article> orderByComparator) {
+
+		return getPersistence().fetchByArticleId_Last(
+			articleId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the articles where articleId = &#63; from the database.
+	 *
+	 * @param articleId the article ID
+	 */
+	public static void removeByArticleId(long articleId) {
+		getPersistence().removeByArticleId(articleId);
+	}
+
+	/**
+	 * Returns the number of articles where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @return the number of matching articles
+	 */
+	public static int countByArticleId(long articleId) {
+		return getPersistence().countByArticleId(articleId);
+	}
+
+	/**
 	 * Caches the article in the entity cache if it is enabled.
 	 *
 	 * @param article the article

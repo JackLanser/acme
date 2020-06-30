@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -34,9 +35,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -81,6 +85,352 @@ public class ArticlePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByArticleId;
+	private FinderPath _finderPathWithoutPaginationFindByArticleId;
+	private FinderPath _finderPathCountByArticleId;
+
+	/**
+	 * Returns all the articles where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @return the matching articles
+	 */
+	@Override
+	public List<Article> findByArticleId(long articleId) {
+		return findByArticleId(
+			articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the articles where articleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param articleId the article ID
+	 * @param start the lower bound of the range of articles
+	 * @param end the upper bound of the range of articles (not inclusive)
+	 * @return the range of matching articles
+	 */
+	@Override
+	public List<Article> findByArticleId(long articleId, int start, int end) {
+		return findByArticleId(articleId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the articles where articleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param articleId the article ID
+	 * @param start the lower bound of the range of articles
+	 * @param end the upper bound of the range of articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching articles
+	 */
+	@Override
+	public List<Article> findByArticleId(
+		long articleId, int start, int end,
+		OrderByComparator<Article> orderByComparator) {
+
+		return findByArticleId(articleId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the articles where articleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param articleId the article ID
+	 * @param start the lower bound of the range of articles
+	 * @param end the upper bound of the range of articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching articles
+	 */
+	@Override
+	public List<Article> findByArticleId(
+		long articleId, int start, int end,
+		OrderByComparator<Article> orderByComparator, boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByArticleId;
+				finderArgs = new Object[] {articleId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByArticleId;
+			finderArgs = new Object[] {
+				articleId, start, end, orderByComparator
+			};
+		}
+
+		List<Article> list = null;
+
+		if (useFinderCache) {
+			list = (List<Article>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Article article : list) {
+					if (articleId != article.getArticleId()) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_ARTICLE_WHERE);
+
+			sb.append(_FINDER_COLUMN_ARTICLEID_ARTICLEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(ArticleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(articleId);
+
+				list = (List<Article>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first article in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching article
+	 * @throws NoSuchArticleException if a matching article could not be found
+	 */
+	@Override
+	public Article findByArticleId_First(
+			long articleId, OrderByComparator<Article> orderByComparator)
+		throws NoSuchArticleException {
+
+		Article article = fetchByArticleId_First(articleId, orderByComparator);
+
+		if (article != null) {
+			return article;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("articleId=");
+		sb.append(articleId);
+
+		sb.append("}");
+
+		throw new NoSuchArticleException(sb.toString());
+	}
+
+	/**
+	 * Returns the first article in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching article, or <code>null</code> if a matching article could not be found
+	 */
+	@Override
+	public Article fetchByArticleId_First(
+		long articleId, OrderByComparator<Article> orderByComparator) {
+
+		List<Article> list = findByArticleId(
+			articleId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last article in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching article
+	 * @throws NoSuchArticleException if a matching article could not be found
+	 */
+	@Override
+	public Article findByArticleId_Last(
+			long articleId, OrderByComparator<Article> orderByComparator)
+		throws NoSuchArticleException {
+
+		Article article = fetchByArticleId_Last(articleId, orderByComparator);
+
+		if (article != null) {
+			return article;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("articleId=");
+		sb.append(articleId);
+
+		sb.append("}");
+
+		throw new NoSuchArticleException(sb.toString());
+	}
+
+	/**
+	 * Returns the last article in the ordered set where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching article, or <code>null</code> if a matching article could not be found
+	 */
+	@Override
+	public Article fetchByArticleId_Last(
+		long articleId, OrderByComparator<Article> orderByComparator) {
+
+		int count = countByArticleId(articleId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Article> list = findByArticleId(
+			articleId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the articles where articleId = &#63; from the database.
+	 *
+	 * @param articleId the article ID
+	 */
+	@Override
+	public void removeByArticleId(long articleId) {
+		for (Article article :
+				findByArticleId(
+					articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(article);
+		}
+	}
+
+	/**
+	 * Returns the number of articles where articleId = &#63;.
+	 *
+	 * @param articleId the article ID
+	 * @return the number of matching articles
+	 */
+	@Override
+	public int countByArticleId(long articleId) {
+		FinderPath finderPath = _finderPathCountByArticleId;
+
+		Object[] finderArgs = new Object[] {articleId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_ARTICLE_WHERE);
+
+			sb.append(_FINDER_COLUMN_ARTICLEID_ARTICLEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(articleId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ARTICLEID_ARTICLEID_2 =
+		"article.articleId = ?";
 
 	public ArticlePersistenceImpl() {
 		setModelClass(Article.class);
@@ -286,6 +636,24 @@ public class ArticlePersistenceImpl
 	public Article updateImpl(Article article) {
 		boolean isNew = article.isNew();
 
+		if (!(article instanceof ArticleModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(article.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(article);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in article proxy " +
+						invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Article implementation " +
+					article.getClass());
+		}
+
+		ArticleModelImpl articleModelImpl = (ArticleModelImpl)article;
+
 		Session session = null;
 
 		try {
@@ -309,10 +677,39 @@ public class ArticlePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (!_columnBitmaskEnabled) {
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+		else if (isNew) {
+			Object[] args = new Object[] {articleModelImpl.getArticleId()};
+
+			finderCache.removeResult(_finderPathCountByArticleId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByArticleId, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((articleModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByArticleId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					articleModelImpl.getOriginalArticleId()
+				};
+
+				finderCache.removeResult(_finderPathCountByArticleId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByArticleId, args);
+
+				args = new Object[] {articleModelImpl.getArticleId()};
+
+				finderCache.removeResult(_finderPathCountByArticleId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByArticleId, args);
+			}
 		}
 
 		entityCache.putResult(
@@ -606,6 +1003,25 @@ public class ArticlePersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
+
+		_finderPathWithPaginationFindByArticleId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ArticleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByArticleId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByArticleId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, ArticleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByArticleId",
+			new String[] {Long.class.getName()},
+			ArticleModelImpl.ARTICLEID_COLUMN_BITMASK);
+
+		_finderPathCountByArticleId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByArticleId",
+			new String[] {Long.class.getName()});
 	}
 
 	@Deactivate
@@ -659,13 +1075,22 @@ public class ArticlePersistenceImpl
 	private static final String _SQL_SELECT_ARTICLE =
 		"SELECT article FROM Article article";
 
+	private static final String _SQL_SELECT_ARTICLE_WHERE =
+		"SELECT article FROM Article article WHERE ";
+
 	private static final String _SQL_COUNT_ARTICLE =
 		"SELECT COUNT(article) FROM Article article";
+
+	private static final String _SQL_COUNT_ARTICLE_WHERE =
+		"SELECT COUNT(article) FROM Article article WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "article.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No Article exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No Article exists with the key {";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ArticlePersistenceImpl.class);

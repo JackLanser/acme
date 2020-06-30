@@ -140,24 +140,24 @@ public class IssueUtil {
 	/**
 	 * Creates a new issue with the primary key. Does not add the issue to the database.
 	 *
-	 * @param issueNumber the primary key for the new issue
+	 * @param issueId the primary key for the new issue
 	 * @return the new issue
 	 */
-	public static Issue create(int issueNumber) {
-		return getPersistence().create(issueNumber);
+	public static Issue create(long issueId) {
+		return getPersistence().create(issueId);
 	}
 
 	/**
 	 * Removes the issue with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue that was removed
 	 * @throws NoSuchIssueException if a issue with the primary key could not be found
 	 */
-	public static Issue remove(int issueNumber)
+	public static Issue remove(long issueId)
 		throws com.liferay.amf.newsletter.exception.NoSuchIssueException {
 
-		return getPersistence().remove(issueNumber);
+		return getPersistence().remove(issueId);
 	}
 
 	public static Issue updateImpl(Issue issue) {
@@ -167,24 +167,24 @@ public class IssueUtil {
 	/**
 	 * Returns the issue with the primary key or throws a <code>NoSuchIssueException</code> if it could not be found.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue
 	 * @throws NoSuchIssueException if a issue with the primary key could not be found
 	 */
-	public static Issue findByPrimaryKey(int issueNumber)
+	public static Issue findByPrimaryKey(long issueId)
 		throws com.liferay.amf.newsletter.exception.NoSuchIssueException {
 
-		return getPersistence().findByPrimaryKey(issueNumber);
+		return getPersistence().findByPrimaryKey(issueId);
 	}
 
 	/**
 	 * Returns the issue with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue, or <code>null</code> if a issue with the primary key could not be found
 	 */
-	public static Issue fetchByPrimaryKey(int issueNumber) {
-		return getPersistence().fetchByPrimaryKey(issueNumber);
+	public static Issue fetchByPrimaryKey(long issueId) {
+		return getPersistence().fetchByPrimaryKey(issueId);
 	}
 
 	/**

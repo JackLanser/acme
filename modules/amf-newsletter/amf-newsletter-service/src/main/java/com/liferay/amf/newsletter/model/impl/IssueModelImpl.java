@@ -17,12 +17,15 @@ package com.liferay.amf.newsletter.model.impl;
 import com.liferay.amf.newsletter.model.Issue;
 import com.liferay.amf.newsletter.model.IssueModel;
 import com.liferay.amf.newsletter.model.IssueSoap;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -66,7 +69,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	public static final Object[][] TABLE_COLUMNS = {
 		{"issueNumber", Types.INTEGER}, {"title", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"issueDate", Types.TIMESTAMP},
-		{"byline", Types.VARCHAR}
+		{"byline", Types.VARCHAR}, {"issueId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -78,18 +81,18 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("issueDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("byline", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("issueId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NewsLetter_Issue (issueNumber INTEGER not null primary key,title VARCHAR(75) null,description VARCHAR(75) null,issueDate DATE null,byline VARCHAR(75) null)";
+		"create table NewsLetter_Issue (issueNumber INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueDate DATE null,byline VARCHAR(75) null,issueId LONG not null primary key)";
 
 	public static final String TABLE_SQL_DROP = "drop table NewsLetter_Issue";
 
-	public static final String ORDER_BY_JPQL =
-		" ORDER BY issue.issueNumber ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY issue.issueId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY NewsLetter_Issue.issueNumber ASC";
+		" ORDER BY NewsLetter_Issue.issueId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -123,6 +126,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		model.setDescription(soapModel.getDescription());
 		model.setIssueDate(soapModel.getIssueDate());
 		model.setByline(soapModel.getByline());
+		model.setIssueId(soapModel.getIssueId());
 
 		return model;
 	}
@@ -151,23 +155,23 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	}
 
 	@Override
-	public int getPrimaryKey() {
-		return _issueNumber;
+	public long getPrimaryKey() {
+		return _issueId;
 	}
 
 	@Override
-	public void setPrimaryKey(int primaryKey) {
-		setIssueNumber(primaryKey);
+	public void setPrimaryKey(long primaryKey) {
+		setIssueId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _issueNumber;
+		return _issueId;
 	}
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Integer)primaryKeyObj).intValue());
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -283,6 +287,9 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		attributeGetterFunctions.put("byline", Issue::getByline);
 		attributeSetterBiConsumers.put(
 			"byline", (BiConsumer<Issue, String>)Issue::setByline);
+		attributeGetterFunctions.put("issueId", Issue::getIssueId);
+		attributeSetterBiConsumers.put(
+			"issueId", (BiConsumer<Issue, Long>)Issue::setIssueId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -360,6 +367,30 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		_byline = byline;
 	}
 
+	@JSON
+	@Override
+	public long getIssueId() {
+		return _issueId;
+	}
+
+	@Override
+	public void setIssueId(long issueId) {
+		_issueId = issueId;
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			0, Issue.class.getName(), getPrimaryKey());
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
+	}
+
 	@Override
 	public Issue toEscapedModel() {
 		if (_escapedModel == null) {
@@ -384,6 +415,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		issueImpl.setDescription(getDescription());
 		issueImpl.setIssueDate(getIssueDate());
 		issueImpl.setByline(getByline());
+		issueImpl.setIssueId(getIssueId());
 
 		issueImpl.resetOriginalValues();
 
@@ -392,7 +424,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public int compareTo(Issue issue) {
-		int primaryKey = issue.getPrimaryKey();
+		long primaryKey = issue.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
 			return -1;
@@ -417,7 +449,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 		Issue issue = (Issue)obj;
 
-		int primaryKey = issue.getPrimaryKey();
+		long primaryKey = issue.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -429,7 +461,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
@@ -484,6 +516,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		if ((byline != null) && (byline.length() == 0)) {
 			issueCacheModel.byline = null;
 		}
+
+		issueCacheModel.issueId = getIssueId();
 
 		return issueCacheModel;
 	}
@@ -564,6 +598,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	private String _description;
 	private Date _issueDate;
 	private String _byline;
+	private long _issueId;
 	private Issue _escapedModel;
 
 }

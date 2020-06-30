@@ -36,6 +36,7 @@ public class IssueSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setIssueDate(model.getIssueDate());
 		soapModel.setByline(model.getByline());
+		soapModel.setIssueId(model.getIssueId());
 
 		return soapModel;
 	}
@@ -80,12 +81,12 @@ public class IssueSoap implements Serializable {
 	public IssueSoap() {
 	}
 
-	public int getPrimaryKey() {
-		return _issueNumber;
+	public long getPrimaryKey() {
+		return _issueId;
 	}
 
-	public void setPrimaryKey(int pk) {
-		setIssueNumber(pk);
+	public void setPrimaryKey(long pk) {
+		setIssueId(pk);
 	}
 
 	public int getIssueNumber() {
@@ -128,10 +129,19 @@ public class IssueSoap implements Serializable {
 		_byline = byline;
 	}
 
+	public long getIssueId() {
+		return _issueId;
+	}
+
+	public void setIssueId(long issueId) {
+		_issueId = issueId;
+	}
+
 	private int _issueNumber;
 	private String _title;
 	private String _description;
 	private Date _issueDate;
 	private String _byline;
+	private long _issueId;
 
 }

@@ -17,7 +17,7 @@
         <column name="description" type="String"></column>
         <column name="issueDate" type="Date"></column>
         <column name="byline" type="String"></column>
-        <column name="issueId" primary="true"></column>
+        <column name="issueId" primary="true" type="long"></column>
         
 	</entity>
 	<entity name="Article" local-service="true">

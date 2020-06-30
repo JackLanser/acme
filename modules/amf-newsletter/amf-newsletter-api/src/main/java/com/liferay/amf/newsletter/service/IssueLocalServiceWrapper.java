@@ -51,26 +51,12 @@ public class IssueLocalServiceWrapper
 	/**
 	 * Creates a new issue with the primary key. Does not add the issue to the database.
 	 *
-	 * @param issueNumber the primary key for the new issue
+	 * @param issueId the primary key for the new issue
 	 * @return the new issue
 	 */
 	@Override
-	public com.liferay.amf.newsletter.model.Issue createIssue(int issueNumber) {
-		return _issueLocalService.createIssue(issueNumber);
-	}
-
-	/**
-	 * Deletes the issue with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param issueNumber the primary key of the issue
-	 * @return the issue that was removed
-	 * @throws PortalException if a issue with the primary key could not be found
-	 */
-	@Override
-	public com.liferay.amf.newsletter.model.Issue deleteIssue(int issueNumber)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _issueLocalService.deleteIssue(issueNumber);
+	public com.liferay.amf.newsletter.model.Issue createIssue(long issueId) {
+		return _issueLocalService.createIssue(issueId);
 	}
 
 	/**
@@ -84,6 +70,20 @@ public class IssueLocalServiceWrapper
 		com.liferay.amf.newsletter.model.Issue issue) {
 
 		return _issueLocalService.deleteIssue(issue);
+	}
+
+	/**
+	 * Deletes the issue with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param issueId the primary key of the issue
+	 * @return the issue that was removed
+	 * @throws PortalException if a issue with the primary key could not be found
+	 */
+	@Override
+	public com.liferay.amf.newsletter.model.Issue deleteIssue(long issueId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _issueLocalService.deleteIssue(issueId);
 	}
 
 	/**
@@ -187,8 +187,8 @@ public class IssueLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.amf.newsletter.model.Issue fetchIssue(int issueNumber) {
-		return _issueLocalService.fetchIssue(issueNumber);
+	public com.liferay.amf.newsletter.model.Issue fetchIssue(long issueId) {
+		return _issueLocalService.fetchIssue(issueId);
 	}
 
 	@Override
@@ -208,15 +208,15 @@ public class IssueLocalServiceWrapper
 	/**
 	 * Returns the issue with the primary key.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue
 	 * @throws PortalException if a issue with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.amf.newsletter.model.Issue getIssue(int issueNumber)
+	public com.liferay.amf.newsletter.model.Issue getIssue(long issueId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _issueLocalService.getIssue(issueNumber);
+		return _issueLocalService.getIssue(issueId);
 	}
 
 	/**

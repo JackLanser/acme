@@ -57,27 +57,13 @@ public class IssueLocalServiceUtil {
 	/**
 	 * Creates a new issue with the primary key. Does not add the issue to the database.
 	 *
-	 * @param issueNumber the primary key for the new issue
+	 * @param issueId the primary key for the new issue
 	 * @return the new issue
 	 */
 	public static com.liferay.amf.newsletter.model.Issue createIssue(
-		int issueNumber) {
+		long issueId) {
 
-		return getService().createIssue(issueNumber);
-	}
-
-	/**
-	 * Deletes the issue with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param issueNumber the primary key of the issue
-	 * @return the issue that was removed
-	 * @throws PortalException if a issue with the primary key could not be found
-	 */
-	public static com.liferay.amf.newsletter.model.Issue deleteIssue(
-			int issueNumber)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().deleteIssue(issueNumber);
+		return getService().createIssue(issueId);
 	}
 
 	/**
@@ -90,6 +76,20 @@ public class IssueLocalServiceUtil {
 		com.liferay.amf.newsletter.model.Issue issue) {
 
 		return getService().deleteIssue(issue);
+	}
+
+	/**
+	 * Deletes the issue with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param issueId the primary key of the issue
+	 * @return the issue that was removed
+	 * @throws PortalException if a issue with the primary key could not be found
+	 */
+	public static com.liferay.amf.newsletter.model.Issue deleteIssue(
+			long issueId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteIssue(issueId);
 	}
 
 	/**
@@ -189,9 +189,9 @@ public class IssueLocalServiceUtil {
 	}
 
 	public static com.liferay.amf.newsletter.model.Issue fetchIssue(
-		int issueNumber) {
+		long issueId) {
 
-		return getService().fetchIssue(issueNumber);
+		return getService().fetchIssue(issueId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -210,15 +210,14 @@ public class IssueLocalServiceUtil {
 	/**
 	 * Returns the issue with the primary key.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue
 	 * @throws PortalException if a issue with the primary key could not be found
 	 */
-	public static com.liferay.amf.newsletter.model.Issue getIssue(
-			int issueNumber)
+	public static com.liferay.amf.newsletter.model.Issue getIssue(long issueId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getIssue(issueNumber);
+		return getService().getIssue(issueId);
 	}
 
 	/**

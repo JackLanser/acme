@@ -84,7 +84,7 @@ public class IssuePersistenceImpl
 		setModelClass(Issue.class);
 
 		setModelImplClass(IssueImpl.class);
-		setModelPKClass(int.class);
+		setModelPKClass(long.class);
 	}
 
 	/**
@@ -177,15 +177,15 @@ public class IssuePersistenceImpl
 	/**
 	 * Creates a new issue with the primary key. Does not add the issue to the database.
 	 *
-	 * @param issueNumber the primary key for the new issue
+	 * @param issueId the primary key for the new issue
 	 * @return the new issue
 	 */
 	@Override
-	public Issue create(int issueNumber) {
+	public Issue create(long issueId) {
 		Issue issue = new IssueImpl();
 
 		issue.setNew(true);
-		issue.setPrimaryKey(issueNumber);
+		issue.setPrimaryKey(issueId);
 
 		return issue;
 	}
@@ -193,13 +193,13 @@ public class IssuePersistenceImpl
 	/**
 	 * Removes the issue with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue that was removed
 	 * @throws NoSuchIssueException if a issue with the primary key could not be found
 	 */
 	@Override
-	public Issue remove(int issueNumber) throws NoSuchIssueException {
-		return remove((Serializable)issueNumber);
+	public Issue remove(long issueId) throws NoSuchIssueException {
+		return remove((Serializable)issueId);
 	}
 
 	/**
@@ -340,24 +340,24 @@ public class IssuePersistenceImpl
 	/**
 	 * Returns the issue with the primary key or throws a <code>NoSuchIssueException</code> if it could not be found.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue
 	 * @throws NoSuchIssueException if a issue with the primary key could not be found
 	 */
 	@Override
-	public Issue findByPrimaryKey(int issueNumber) throws NoSuchIssueException {
-		return findByPrimaryKey((Serializable)issueNumber);
+	public Issue findByPrimaryKey(long issueId) throws NoSuchIssueException {
+		return findByPrimaryKey((Serializable)issueId);
 	}
 
 	/**
 	 * Returns the issue with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue, or <code>null</code> if a issue with the primary key could not be found
 	 */
 	@Override
-	public Issue fetchByPrimaryKey(int issueNumber) {
-		return fetchByPrimaryKey((Serializable)issueNumber);
+	public Issue fetchByPrimaryKey(long issueId) {
+		return fetchByPrimaryKey((Serializable)issueId);
 	}
 
 	/**
@@ -553,7 +553,7 @@ public class IssuePersistenceImpl
 
 	@Override
 	protected String getPKDBName() {
-		return "issueNumber";
+		return "issueId";
 	}
 
 	@Override

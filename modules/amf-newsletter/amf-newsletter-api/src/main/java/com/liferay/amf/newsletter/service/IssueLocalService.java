@@ -77,21 +77,11 @@ public interface IssueLocalService
 	/**
 	 * Creates a new issue with the primary key. Does not add the issue to the database.
 	 *
-	 * @param issueNumber the primary key for the new issue
+	 * @param issueId the primary key for the new issue
 	 * @return the new issue
 	 */
 	@Transactional(enabled = false)
-	public Issue createIssue(int issueNumber);
-
-	/**
-	 * Deletes the issue with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param issueNumber the primary key of the issue
-	 * @return the issue that was removed
-	 * @throws PortalException if a issue with the primary key could not be found
-	 */
-	@Indexable(type = IndexableType.DELETE)
-	public Issue deleteIssue(int issueNumber) throws PortalException;
+	public Issue createIssue(long issueId);
 
 	/**
 	 * Deletes the issue from the database. Also notifies the appropriate model listeners.
@@ -101,6 +91,16 @@ public interface IssueLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public Issue deleteIssue(Issue issue);
+
+	/**
+	 * Deletes the issue with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param issueId the primary key of the issue
+	 * @return the issue that was removed
+	 * @throws PortalException if a issue with the primary key could not be found
+	 */
+	@Indexable(type = IndexableType.DELETE)
+	public Issue deleteIssue(long issueId) throws PortalException;
 
 	/**
 	 * @throws PortalException
@@ -176,7 +176,7 @@ public interface IssueLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Issue fetchIssue(int issueNumber);
+	public Issue fetchIssue(long issueId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -187,12 +187,12 @@ public interface IssueLocalService
 	/**
 	 * Returns the issue with the primary key.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue
 	 * @throws PortalException if a issue with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Issue getIssue(int issueNumber) throws PortalException;
+	public Issue getIssue(long issueId) throws PortalException;
 
 	/**
 	 * Returns a range of all the issues.

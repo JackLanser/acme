@@ -36,17 +36,17 @@ public interface Issue extends IssueModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.amf.newsletter.model.impl.IssueImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Issue, Integer> ISSUE_NUMBER_ACCESSOR =
-		new Accessor<Issue, Integer>() {
+	public static final Accessor<Issue, Long> ISSUE_ID_ACCESSOR =
+		new Accessor<Issue, Long>() {
 
 			@Override
-			public Integer get(Issue issue) {
-				return issue.getIssueNumber();
+			public Long get(Issue issue) {
+				return issue.getIssueId();
 			}
 
 			@Override
-			public Class<Integer> getAttributeClass() {
-				return Integer.class;
+			public Class<Long> getAttributeClass() {
+				return Long.class;
 			}
 
 			@Override

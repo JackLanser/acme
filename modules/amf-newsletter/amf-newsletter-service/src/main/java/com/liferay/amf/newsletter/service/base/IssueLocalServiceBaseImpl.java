@@ -88,26 +88,26 @@ public abstract class IssueLocalServiceBaseImpl
 	/**
 	 * Creates a new issue with the primary key. Does not add the issue to the database.
 	 *
-	 * @param issueNumber the primary key for the new issue
+	 * @param issueId the primary key for the new issue
 	 * @return the new issue
 	 */
 	@Override
 	@Transactional(enabled = false)
-	public Issue createIssue(int issueNumber) {
-		return issuePersistence.create(issueNumber);
+	public Issue createIssue(long issueId) {
+		return issuePersistence.create(issueId);
 	}
 
 	/**
 	 * Deletes the issue with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue that was removed
 	 * @throws PortalException if a issue with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Issue deleteIssue(int issueNumber) throws PortalException {
-		return issuePersistence.remove(issueNumber);
+	public Issue deleteIssue(long issueId) throws PortalException {
+		return issuePersistence.remove(issueId);
 	}
 
 	/**
@@ -208,20 +208,20 @@ public abstract class IssueLocalServiceBaseImpl
 	}
 
 	@Override
-	public Issue fetchIssue(int issueNumber) {
-		return issuePersistence.fetchByPrimaryKey(issueNumber);
+	public Issue fetchIssue(long issueId) {
+		return issuePersistence.fetchByPrimaryKey(issueId);
 	}
 
 	/**
 	 * Returns the issue with the primary key.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue
 	 * @throws PortalException if a issue with the primary key could not be found
 	 */
 	@Override
-	public Issue getIssue(int issueNumber) throws PortalException {
-		return issuePersistence.findByPrimaryKey(issueNumber);
+	public Issue getIssue(long issueId) throws PortalException {
+		return issuePersistence.findByPrimaryKey(issueId);
 	}
 
 	@Override
@@ -233,7 +233,7 @@ public abstract class IssueLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(Issue.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("issueNumber");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("issueId");
 
 		return actionableDynamicQuery;
 	}
@@ -249,8 +249,7 @@ public abstract class IssueLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(Issue.class);
 
-		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"issueNumber");
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName("issueId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -262,7 +261,7 @@ public abstract class IssueLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(Issue.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("issueNumber");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("issueId");
 	}
 
 	/**

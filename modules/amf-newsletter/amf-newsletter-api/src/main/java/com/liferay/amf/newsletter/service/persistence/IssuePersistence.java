@@ -57,38 +57,38 @@ public interface IssuePersistence extends BasePersistence<Issue> {
 	/**
 	 * Creates a new issue with the primary key. Does not add the issue to the database.
 	 *
-	 * @param issueNumber the primary key for the new issue
+	 * @param issueId the primary key for the new issue
 	 * @return the new issue
 	 */
-	public Issue create(int issueNumber);
+	public Issue create(long issueId);
 
 	/**
 	 * Removes the issue with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue that was removed
 	 * @throws NoSuchIssueException if a issue with the primary key could not be found
 	 */
-	public Issue remove(int issueNumber) throws NoSuchIssueException;
+	public Issue remove(long issueId) throws NoSuchIssueException;
 
 	public Issue updateImpl(Issue issue);
 
 	/**
 	 * Returns the issue with the primary key or throws a <code>NoSuchIssueException</code> if it could not be found.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue
 	 * @throws NoSuchIssueException if a issue with the primary key could not be found
 	 */
-	public Issue findByPrimaryKey(int issueNumber) throws NoSuchIssueException;
+	public Issue findByPrimaryKey(long issueId) throws NoSuchIssueException;
 
 	/**
 	 * Returns the issue with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param issueNumber the primary key of the issue
+	 * @param issueId the primary key of the issue
 	 * @return the issue, or <code>null</code> if a issue with the primary key could not be found
 	 */
-	public Issue fetchByPrimaryKey(int issueNumber);
+	public Issue fetchByPrimaryKey(long issueId);
 
 	/**
 	 * Returns all the issues.

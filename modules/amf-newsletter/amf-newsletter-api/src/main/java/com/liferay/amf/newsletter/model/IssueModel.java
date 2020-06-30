@@ -46,14 +46,14 @@ public interface IssueModel extends BaseModel<Issue> {
 	 *
 	 * @return the primary key of this issue
 	 */
-	public int getPrimaryKey();
+	public long getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this issue.
 	 *
 	 * @param primaryKey the primary key of this issue
 	 */
-	public void setPrimaryKey(int primaryKey);
+	public void setPrimaryKey(long primaryKey);
 
 	/**
 	 * Returns the issue number of this issue.
@@ -127,5 +127,19 @@ public interface IssueModel extends BaseModel<Issue> {
 	 * @param byline the byline of this issue
 	 */
 	public void setByline(String byline);
+
+	/**
+	 * Returns the issue ID of this issue.
+	 *
+	 * @return the issue ID of this issue
+	 */
+	public long getIssueId();
+
+	/**
+	 * Sets the issue ID of this issue.
+	 *
+	 * @param issueId the issue ID of this issue
+	 */
+	public void setIssueId(long issueId);
 
 }

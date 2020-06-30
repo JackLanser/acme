@@ -46,6 +46,7 @@ public class IssueWrapper
 		attributes.put("description", getDescription());
 		attributes.put("issueDate", getIssueDate());
 		attributes.put("byline", getByline());
+		attributes.put("issueId", getIssueId());
 
 		return attributes;
 	}
@@ -81,6 +82,12 @@ public class IssueWrapper
 		if (byline != null) {
 			setByline(byline);
 		}
+
+		Long issueId = (Long)attributes.get("issueId");
+
+		if (issueId != null) {
+			setIssueId(issueId);
+		}
 	}
 
 	/**
@@ -114,6 +121,16 @@ public class IssueWrapper
 	}
 
 	/**
+	 * Returns the issue ID of this issue.
+	 *
+	 * @return the issue ID of this issue
+	 */
+	@Override
+	public long getIssueId() {
+		return model.getIssueId();
+	}
+
+	/**
 	 * Returns the issue number of this issue.
 	 *
 	 * @return the issue number of this issue
@@ -129,7 +146,7 @@ public class IssueWrapper
 	 * @return the primary key of this issue
 	 */
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
@@ -179,6 +196,16 @@ public class IssueWrapper
 	}
 
 	/**
+	 * Sets the issue ID of this issue.
+	 *
+	 * @param issueId the issue ID of this issue
+	 */
+	@Override
+	public void setIssueId(long issueId) {
+		model.setIssueId(issueId);
+	}
+
+	/**
 	 * Sets the issue number of this issue.
 	 *
 	 * @param issueNumber the issue number of this issue
@@ -194,7 +221,7 @@ public class IssueWrapper
 	 * @param primaryKey the primary key of this issue
 	 */
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 

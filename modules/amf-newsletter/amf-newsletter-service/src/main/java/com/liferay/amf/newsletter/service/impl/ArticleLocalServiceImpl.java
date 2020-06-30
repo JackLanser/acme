@@ -14,6 +14,7 @@
 
 package com.liferay.amf.newsletter.service.impl;
 
+import com.liferay.amf.newsletter.model.Article;
 import com.liferay.amf.newsletter.service.base.ArticleLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
@@ -43,4 +44,14 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.newsletter.service.ArticleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.newsletter.service.ArticleLocalServiceUtil</code>.
 	 */
+	
+	public void addArticle(int issueNumber, String title, String author, int order, String content) {
+		Article article = createArticle((int)counterLocalService.increment());
+		article.setAuthor(author);
+		article.setContent(content);
+		article.setIssueNumber(issueNumber);
+		article.setTitle(title);
+		article.setOrder(order);
+		super.addArticle(article);
+	}
 }

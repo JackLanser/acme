@@ -1,5 +1,6 @@
 package com.liferay.amf.newsletter.service.listener;
 
+import com.liferay.amf.newsletter.service.ArticleLocalService;
 import com.liferay.amf.newsletter.service.IssueLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -28,7 +29,8 @@ public class JournalPostUpdateModelListener extends BaseModelListener<JournalArt
 				Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='Title']/dynamic-content");
 				Node order = content.selectSingleNode("/root/dynamic-element[@name='Order']/dynamic-content");
 				Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
-				System.out.println(issueNumber.getText() + " " + issueTitle.getText() + " "+ order.getText() + " "+ author.getText() + " " + textContent.getText());
+
+				
 			}
 			else {		
 				Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
@@ -52,5 +54,8 @@ public class JournalPostUpdateModelListener extends BaseModelListener<JournalArt
 	
 	@Reference
 	protected IssueLocalService _issueLocalService;
+	
+	@Reference
+	protected ArticleLocalService _articleLocalService;
 
 }

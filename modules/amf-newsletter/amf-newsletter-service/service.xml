@@ -19,6 +19,10 @@
         <column name="byline" type="String"></column>
         <column name="issueId" primary="true" type="long"></column>
         
+        <finder name="IssueId" return-type="Collection">
+			<finder-column name="issueId"></finder-column>
+		</finder>
+        
 	</entity>
 	<entity name="Article" local-service="true">
 
@@ -34,6 +38,10 @@
         <column name="author" type="String"></column>
         <column name="order" type="int"></column>
         <column name="content" type="String"></column>
+        
+        <finder name="ArticleId" return-type="Collection">
+			<finder-column name="articleId"></finder-column>
+		</finder>
         
         
 	</entity>

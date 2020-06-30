@@ -56,6 +56,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	
 	public void handleIssueEvents(String xmlString, long primaryKey) {
 		Issue issue = findByIssueId(primaryKey);
+		System.out.println(issue);
 		if(issue == null) {
 			addIssue(xmlString, primaryKey);
 		}

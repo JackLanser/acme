@@ -50,11 +50,8 @@ public class ArticleLocalServiceUtil {
 		return getService().addArticle(article);
 	}
 
-	public static void addArticle(
-		int issueNumber, String title, String author, int order,
-		String content) {
-
-		getService().addArticle(issueNumber, title, author, order, content);
+	public static void addArticle(String xmlString) {
+		getService().addArticle(xmlString);
 	}
 
 	/**
@@ -267,6 +264,13 @@ public class ArticleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.kernel.xml.Document loadXMLFromTitle(
+			String title)
+		throws com.liferay.portal.kernel.xml.DocumentException {
+
+		return getService().loadXMLFromTitle(title);
 	}
 
 	/**

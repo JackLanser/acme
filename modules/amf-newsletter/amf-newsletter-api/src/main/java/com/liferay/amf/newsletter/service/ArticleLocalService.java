@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 
 import java.io.Serializable;
 
@@ -70,9 +72,7 @@ public interface ArticleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Article addArticle(Article article);
 
-	public void addArticle(
-		int issueNumber, String title, String author, int order,
-		String content);
+	public void addArticle(String xmlString);
 
 	/**
 	 * Creates a new article with the primary key. Does not add the article to the database.
@@ -230,6 +230,9 @@ public interface ArticleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Document loadXMLFromTitle(String title) throws DocumentException;
 
 	/**
 	 * Updates the article in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

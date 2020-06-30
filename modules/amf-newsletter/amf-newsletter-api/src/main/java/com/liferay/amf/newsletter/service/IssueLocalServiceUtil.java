@@ -37,12 +37,6 @@ public class IssueLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.amf.newsletter.service.impl.IssueLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void addIssue(
-		int issueNumber, String issueTitle, String description,
-		String issueDate) {
-
-		getService().addIssue(issueNumber, issueTitle, description, issueDate);
-	}
 
 	/**
 	 * Adds the issue to the database. Also notifies the appropriate model listeners.
@@ -54,6 +48,10 @@ public class IssueLocalServiceUtil {
 		com.liferay.amf.newsletter.model.Issue issue) {
 
 		return getService().addIssue(issue);
+	}
+
+	public static void addIssue(String xmlString) {
+		getService().addIssue(xmlString);
 	}
 
 	/**
@@ -266,6 +264,13 @@ public class IssueLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.kernel.xml.Document loadXMLFromTitle(
+			String title)
+		throws com.liferay.portal.kernel.xml.DocumentException {
+
+		return getService().loadXMLFromTitle(title);
 	}
 
 	/**

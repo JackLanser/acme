@@ -30,15 +30,6 @@ public class IssueLocalServiceWrapper
 		_issueLocalService = issueLocalService;
 	}
 
-	@Override
-	public void addIssue(
-		int issueNumber, String issueTitle, String description,
-		String issueDate) {
-
-		_issueLocalService.addIssue(
-			issueNumber, issueTitle, description, issueDate);
-	}
-
 	/**
 	 * Adds the issue to the database. Also notifies the appropriate model listeners.
 	 *
@@ -50,6 +41,11 @@ public class IssueLocalServiceWrapper
 		com.liferay.amf.newsletter.model.Issue issue) {
 
 		return _issueLocalService.addIssue(issue);
+	}
+
+	@Override
+	public void addIssue(String xmlString) {
+		_issueLocalService.addIssue(xmlString);
 	}
 
 	/**
@@ -270,6 +266,13 @@ public class IssueLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _issueLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.xml.Document loadXMLFromTitle(String title)
+		throws com.liferay.portal.kernel.xml.DocumentException {
+
+		return _issueLocalService.loadXMLFromTitle(title);
 	}
 
 	/**

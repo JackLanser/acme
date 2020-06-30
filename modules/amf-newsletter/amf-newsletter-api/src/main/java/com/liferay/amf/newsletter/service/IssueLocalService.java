@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 
 import java.io.Serializable;
 
@@ -60,9 +62,6 @@ public interface IssueLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link IssueLocalServiceUtil} to access the issue local service. Add custom service methods to <code>com.liferay.amf.newsletter.service.impl.IssueLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addIssue(
-		int issueNumber, String issueTitle, String description,
-		String issueDate);
 
 	/**
 	 * Adds the issue to the database. Also notifies the appropriate model listeners.
@@ -72,6 +71,8 @@ public interface IssueLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Issue addIssue(Issue issue);
+
+	public void addIssue(String xmlString);
 
 	/**
 	 * Creates a new issue with the primary key. Does not add the issue to the database.
@@ -229,6 +230,9 @@ public interface IssueLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Document loadXMLFromTitle(String title) throws DocumentException;
 
 	/**
 	 * Updates the issue in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -44,12 +44,8 @@ public class ArticleLocalServiceWrapper
 	}
 
 	@Override
-	public void addArticle(
-		int issueNumber, String title, String author, int order,
-		String content) {
-
-		_articleLocalService.addArticle(
-			issueNumber, title, author, order, content);
+	public void addArticle(String xmlString) {
+		_articleLocalService.addArticle(xmlString);
 	}
 
 	/**
@@ -274,6 +270,13 @@ public class ArticleLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _articleLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.xml.Document loadXMLFromTitle(String title)
+		throws com.liferay.portal.kernel.xml.DocumentException {
+
+		return _articleLocalService.loadXMLFromTitle(title);
 	}
 
 	/**

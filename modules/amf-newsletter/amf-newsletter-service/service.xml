@@ -17,6 +17,7 @@
         <column name="description" type="String"></column>
         <column name="issueDate" type="Date"></column>
         <column name="byline" type="String"></column>
+        
 	</entity>
 	<entity name="Article" local-service="true">
 
@@ -32,5 +33,7 @@
         <column name="author" type="String"></column>
         <column name="order" type="int"></column>
         <column name="content" type="String"></column>
+        
+        
 	</entity>
 </service-builder>

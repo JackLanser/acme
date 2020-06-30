@@ -52,15 +52,11 @@ public class ZipcodeSearchServiceImpl extends ZipcodeSearchServiceBaseImpl {
 
 	public List<User> findUserByZip(String zip, int start, int end)
 		throws PrincipalException {
-
 		if (_searchPermissionCheck.contains(
 				getPermissionChecker(), _actionId)) {
 
 			return zipcodeSearchLocalService.findUserByZip(zip, start, end);
 		}
-
-		else
-
 		return new ArrayList<>();
 	}
 
@@ -70,7 +66,6 @@ public class ZipcodeSearchServiceImpl extends ZipcodeSearchServiceBaseImpl {
 
 			return zipcodeSearchLocalService.getUserCount(zip);
 		}
-		else
 
 		return 0;
 	}

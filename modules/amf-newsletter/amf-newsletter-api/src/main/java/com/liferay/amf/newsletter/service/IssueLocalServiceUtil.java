@@ -37,6 +37,12 @@ public class IssueLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.amf.newsletter.service.impl.IssueLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addIssue(
+		int issueNumber, String issueTitle, String description,
+		String issueDate) {
+
+		getService().addIssue(issueNumber, issueTitle, description, issueDate);
+	}
 
 	/**
 	 * Adds the issue to the database. Also notifies the appropriate model listeners.

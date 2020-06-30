@@ -30,6 +30,15 @@ public class IssueLocalServiceWrapper
 		_issueLocalService = issueLocalService;
 	}
 
+	@Override
+	public void addIssue(
+		int issueNumber, String issueTitle, String description,
+		String issueDate) {
+
+		_issueLocalService.addIssue(
+			issueNumber, issueTitle, description, issueDate);
+	}
+
 	/**
 	 * Adds the issue to the database. Also notifies the appropriate model listeners.
 	 *

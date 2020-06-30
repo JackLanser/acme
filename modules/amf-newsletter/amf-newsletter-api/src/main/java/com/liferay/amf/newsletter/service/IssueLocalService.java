@@ -60,6 +60,9 @@ public interface IssueLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link IssueLocalServiceUtil} to access the issue local service. Add custom service methods to <code>com.liferay.amf.newsletter.service.impl.IssueLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addIssue(
+		int issueNumber, String issueTitle, String description,
+		String issueDate);
 
 	/**
 	 * Adds the issue to the database. Also notifies the appropriate model listeners.

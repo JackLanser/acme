@@ -14,8 +14,11 @@
 
 package com.liferay.amf.newsletter.service.impl;
 
+import com.liferay.amf.newsletter.model.Issue;
 import com.liferay.amf.newsletter.service.base.IssueLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+
+import java.sql.Date;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -43,4 +46,12 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.newsletter.service.IssueLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.newsletter.service.IssueLocalServiceUtil</code>.
 	 */
+	public void addIssue(int issueNumber, String issueTitle, String description, String issueDate) {
+		
+		Issue issue = createIssue(issueNumber);
+		issue.setTitle(issueTitle);
+		issue.setDescription(description);
+		issue.setIssueDate(Date.valueOf(issueDate));
+		super.addIssue(issue);
+	}
 }

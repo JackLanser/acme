@@ -19,38 +19,14 @@ public class JournalPostUpdateModelListener extends BaseModelListener<JournalArt
 	
 	@Override
 	public void onAfterCreate(JournalArticle model) {
-		try {
-			Document content = loadXMLFromTitle(model.getContent());
-			
-			Node author = content.selectSingleNode("/root/dynamic-element[@name='Author']/dynamic-content");
-			
-			if(author != null) {
-				Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
-				Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='Title']/dynamic-content");
-				Node order = content.selectSingleNode("/root/dynamic-element[@name='Order']/dynamic-content");
-				Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
-				
-				
-			}
-			else {		
-				Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
-				Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='IssueTitle']/dynamic-content");
-				Node description = content.selectSingleNode("/root/dynamic-element[@name='Description']/dynamic-content");
-				Node issueDate = content.selectSingleNode("/root/dynamic-element[@name='IssueDate']/dynamic-content");
-				_issueLocalService.addIssue(Integer.valueOf(issueNumber.getText()), issueTitle.getText(), 
-						description.getText(), issueDate.getText());
-			}
+		String ddmsKey = model.getDDMStructureKey();
+		
+		if(ddmsKey.equals("49942")) {
+			_articleLocalService.addArticle(model.getContent());
 		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+		else _issueLocalService.addIssue(model.getContent());
 	}
 	
-	public Document loadXMLFromTitle(String title) throws DocumentException
-	{
-	    Document doc = SAXReaderUtil.read(title);
-		return doc;
-	}
 	
 	@Reference
 	protected IssueLocalService _issueLocalService;

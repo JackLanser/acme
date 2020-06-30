@@ -17,6 +17,10 @@ package com.liferay.amf.newsletter.service.impl;
 import com.liferay.amf.newsletter.model.Issue;
 import com.liferay.amf.newsletter.service.base.IssueLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Node;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.sql.Date;
 
@@ -46,12 +50,31 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.newsletter.service.IssueLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.newsletter.service.IssueLocalServiceUtil</code>.
 	 */
-	public void addIssue(int issueNumber, String issueTitle, String description, String issueDate) {
-		
-		Issue issue = createIssue(issueNumber);
-		issue.setTitle(issueTitle);
-		issue.setDescription(description);
-		issue.setIssueDate(Date.valueOf(issueDate));
-		super.addIssue(issue);
+	public void addIssue(String xmlString) {
+		try {
+			Document content = loadXMLFromTitle(xmlString);
+			
+			Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
+			Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='IssueTitle']/dynamic-content");
+			Node description = content.selectSingleNode("/root/dynamic-element[@name='Description']/dynamic-content");
+			Node issueDate = content.selectSingleNode("/root/dynamic-element[@name='IssueDate']/dynamic-content");
+			
+			Issue issue = createIssue(Integer.valueOf(issueNumber.getText()));
+			
+			issue.setTitle(issueTitle.getText());
+			issue.setDescription(description.getText());
+			issue.setIssueDate(Date.valueOf(issueDate.getText()));
+			super.addIssue(issue);
+		}
+		catch(DocumentException e) {
+			System.out.println("Error in the Issue local service");
+			e.printStackTrace();
+		}
+	}
+	
+	public Document loadXMLFromTitle(String title) throws DocumentException
+	{
+	    Document doc = SAXReaderUtil.read(title);
+		return doc;
 	}
 }

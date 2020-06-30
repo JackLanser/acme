@@ -17,6 +17,10 @@ package com.liferay.amf.newsletter.service.impl;
 import com.liferay.amf.newsletter.model.Article;
 import com.liferay.amf.newsletter.service.base.ArticleLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Node;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -45,13 +49,34 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 * Never reference this class directly. Use <code>com.liferay.amf.newsletter.service.ArticleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.newsletter.service.ArticleLocalServiceUtil</code>.
 	 */
 	
-	public void addArticle(int issueNumber, String title, String author, int order, String content) {
+	public void addArticle(String xmlString) {
+		try {
+		Document content = loadXMLFromTitle(xmlString);
+		
+		Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
+		Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='Title']/dynamic-content");
+		Node order = content.selectSingleNode("/root/dynamic-element[@name='Order']/dynamic-content");
+		Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
+		Node author = content.selectSingleNode("/root/dynamic-element[@name='Author']/dynamic-content");
+		
 		Article article = createArticle((int)counterLocalService.increment());
-		article.setAuthor(author);
-		article.setContent(content);
-		article.setIssueNumber(issueNumber);
-		article.setTitle(title);
-		article.setOrder(order);
+		
+		article.setAuthor(author.getText());
+		article.setContent(textContent.getText());
+		article.setIssueNumber(Integer.valueOf(issueNumber.getText()));
+		article.setTitle(issueTitle.getText());
+		article.setOrder(Integer.valueOf(order.getText()));
 		super.addArticle(article);
+		}
+		catch(DocumentException e) {
+			System.out.println("Error in the article local service");
+			e.printStackTrace();
+		}
+	}
+	
+	public Document loadXMLFromTitle(String title) throws DocumentException
+	{
+	    Document doc = SAXReaderUtil.read(title);
+		return doc;
 	}
 }

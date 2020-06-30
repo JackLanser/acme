@@ -49,7 +49,7 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	 * Never reference this class directly. Use <code>com.liferay.amf.newsletter.service.ArticleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.newsletter.service.ArticleLocalServiceUtil</code>.
 	 */
 	
-	public void addArticle(String xmlString) {
+	public void addArticle(String xmlString, long primaryKey) {
 		try {
 		Document content = loadXMLFromTitle(xmlString);
 		
@@ -59,7 +59,7 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 		Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
 		Node author = content.selectSingleNode("/root/dynamic-element[@name='Author']/dynamic-content");
 		
-		Article article = createArticle((int)counterLocalService.increment());
+		Article article = createArticle((int)primaryKey);
 		
 		article.setAuthor(author.getText());
 		article.setContent(textContent.getText());

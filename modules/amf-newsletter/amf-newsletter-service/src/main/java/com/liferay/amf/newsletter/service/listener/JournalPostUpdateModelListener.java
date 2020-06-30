@@ -17,19 +17,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, property = {}, service = ModelListener.class)
 public class JournalPostUpdateModelListener extends BaseModelListener<JournalArticle>{
 	
-	@Override
-	public void onAfterCreate(JournalArticle model) {
-		System.out.println("creating");
-		String ddmsKey = model.getDDMStructureKey();
-		if(ddmsKey.equals("49942")) {
-			_articleLocalService.addArticle(model.getContent());
-		}
-		else _issueLocalService.addIssue(model.getContent());
-	}
+	public static final String ARTICLE_DDMS = "49942";
 	
 	@Override
 	public void onAfterUpdate(JournalArticle model) {
-		System.out.println("updating");
+		String ddmsKey = model.getDDMStructureKey();
+		if(ddmsKey.equals(ARTICLE_DDMS)) {
+			_articleLocalService.addArticle(model.getContent(), model.getResourcePrimKey());
+		}
+		else {
+			_issueLocalService.addIssue(model.getContent(), model.getResourcePrimKey();
+		}
 	}
 	
 	

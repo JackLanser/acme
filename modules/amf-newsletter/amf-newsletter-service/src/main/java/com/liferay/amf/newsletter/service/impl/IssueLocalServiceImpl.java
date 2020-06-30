@@ -50,7 +50,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.newsletter.service.IssueLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.newsletter.service.IssueLocalServiceUtil</code>.
 	 */
-	public void addIssue(String xmlString) {
+	public void addIssue(String xmlString, long primaryKey) {
 		try {
 			Document content = loadXMLFromTitle(xmlString);
 			
@@ -59,7 +59,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 			Node description = content.selectSingleNode("/root/dynamic-element[@name='Description']/dynamic-content");
 			Node issueDate = content.selectSingleNode("/root/dynamic-element[@name='IssueDate']/dynamic-content");
 			
-			Issue issue = createIssue(Integer.valueOf(issueNumber.getText()));
+			Issue issue = createIssue(primaryKey);
 			
 			issue.setTitle(issueTitle.getText());
 			issue.setDescription(description.getText());

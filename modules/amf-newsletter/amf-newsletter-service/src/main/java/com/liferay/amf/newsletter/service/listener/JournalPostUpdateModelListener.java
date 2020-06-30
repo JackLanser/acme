@@ -19,12 +19,17 @@ public class JournalPostUpdateModelListener extends BaseModelListener<JournalArt
 	
 	@Override
 	public void onAfterCreate(JournalArticle model) {
+		System.out.println("creating");
 		String ddmsKey = model.getDDMStructureKey();
-		
 		if(ddmsKey.equals("49942")) {
 			_articleLocalService.addArticle(model.getContent());
 		}
 		else _issueLocalService.addIssue(model.getContent());
+	}
+	
+	@Override
+	public void onAfterUpdate(JournalArticle model) {
+		System.out.println("updating");
 	}
 	
 	

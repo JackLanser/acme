@@ -12,11 +12,12 @@
 		<!-- Group instance -->
 
 		<!-- Audit fields -->
-        <column name="issueNumber" type="int" primary="true"></column>
+        <column name="issueNumber" type="int" primary="false"></column>
         <column name="title" type="String"></column>
         <column name="description" type="String"></column>
         <column name="issueDate" type="Date"></column>
         <column name="byline" type="String"></column>
+        <column name="issueId" primary="true"></column>
         
 	</entity>
 	<entity name="Article" local-service="true">

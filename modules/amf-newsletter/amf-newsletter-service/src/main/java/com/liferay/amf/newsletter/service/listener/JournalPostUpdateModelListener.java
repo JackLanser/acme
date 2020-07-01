@@ -23,6 +23,7 @@ public class JournalPostUpdateModelListener extends BaseModelListener<JournalArt
 	
 	@Override
 	public void onAfterUpdate(JournalArticle model) {
+		System.out.println(model.getStatus());
 		String ddmsKey = model.getDDMStructureKey();
 		if(ddmsKey.equals(ARTICLE_DDMS)) {
 			if(model.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
@@ -44,7 +45,9 @@ public class JournalPostUpdateModelListener extends BaseModelListener<JournalArt
 					e.printStackTrace();
 				}
 			}
-			_issueLocalService.handleIssueEvents(model.getContent(), model.getResourcePrimKey());
+			else {
+				_issueLocalService.handleIssueEvents(model.getContent(), model.getResourcePrimKey());
+			}
 		}	
 	}
 	

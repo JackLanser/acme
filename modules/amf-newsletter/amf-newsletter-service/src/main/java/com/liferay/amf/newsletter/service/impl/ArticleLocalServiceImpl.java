@@ -19,6 +19,7 @@ import com.liferay.amf.newsletter.service.base.ArticleLocalServiceBaseImpl;
 import com.liferay.amf.newsletter.service.persistence.ArticlePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Node;
@@ -126,8 +127,11 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	}
 	
 	public Article deleteArticle(long primaryKey) throws PortalException {
-		return super.deleteArticle(primaryKey);
+		Article article = findByArticleId(primaryKey);
+		if(article == null) return null;
+		return super.deleteArticle(article);
 	}
+
 	
 	public Document loadXMLFromTitle(String title) throws DocumentException
 	{

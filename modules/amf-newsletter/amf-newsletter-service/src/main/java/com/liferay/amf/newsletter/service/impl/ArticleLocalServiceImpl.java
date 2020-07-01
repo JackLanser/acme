@@ -142,6 +142,11 @@ public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 	public Article findByArticleId(long primaryKey) {
 		return _articlePersistence.fetchByPrimaryKey(primaryKey);
 	}
+	
+	public List<Article> findArticlesByIssueNumber(int issueNumber){
+		return _articlePersistence.findByAbyI(issueNumber);
+	}
+	
 	@Reference
 	private ArticlePersistence _articlePersistence;
 }

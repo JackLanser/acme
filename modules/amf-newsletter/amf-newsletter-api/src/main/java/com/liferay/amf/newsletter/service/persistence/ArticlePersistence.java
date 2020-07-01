@@ -169,6 +169,149 @@ public interface ArticlePersistence extends BasePersistence<Article> {
 	public int countByArticleId(long articleId);
 
 	/**
+	 * Returns all the articles where issueNumber = &#63;.
+	 *
+	 * @param issueNumber the issue number
+	 * @return the matching articles
+	 */
+	public java.util.List<Article> findByAbyI(int issueNumber);
+
+	/**
+	 * Returns a range of all the articles where issueNumber = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param issueNumber the issue number
+	 * @param start the lower bound of the range of articles
+	 * @param end the upper bound of the range of articles (not inclusive)
+	 * @return the range of matching articles
+	 */
+	public java.util.List<Article> findByAbyI(
+		int issueNumber, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the articles where issueNumber = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param issueNumber the issue number
+	 * @param start the lower bound of the range of articles
+	 * @param end the upper bound of the range of articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching articles
+	 */
+	public java.util.List<Article> findByAbyI(
+		int issueNumber, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Article>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the articles where issueNumber = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param issueNumber the issue number
+	 * @param start the lower bound of the range of articles
+	 * @param end the upper bound of the range of articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching articles
+	 */
+	public java.util.List<Article> findByAbyI(
+		int issueNumber, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Article>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first article in the ordered set where issueNumber = &#63;.
+	 *
+	 * @param issueNumber the issue number
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching article
+	 * @throws NoSuchArticleException if a matching article could not be found
+	 */
+	public Article findByAbyI_First(
+			int issueNumber,
+			com.liferay.portal.kernel.util.OrderByComparator<Article>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns the first article in the ordered set where issueNumber = &#63;.
+	 *
+	 * @param issueNumber the issue number
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching article, or <code>null</code> if a matching article could not be found
+	 */
+	public Article fetchByAbyI_First(
+		int issueNumber,
+		com.liferay.portal.kernel.util.OrderByComparator<Article>
+			orderByComparator);
+
+	/**
+	 * Returns the last article in the ordered set where issueNumber = &#63;.
+	 *
+	 * @param issueNumber the issue number
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching article
+	 * @throws NoSuchArticleException if a matching article could not be found
+	 */
+	public Article findByAbyI_Last(
+			int issueNumber,
+			com.liferay.portal.kernel.util.OrderByComparator<Article>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns the last article in the ordered set where issueNumber = &#63;.
+	 *
+	 * @param issueNumber the issue number
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching article, or <code>null</code> if a matching article could not be found
+	 */
+	public Article fetchByAbyI_Last(
+		int issueNumber,
+		com.liferay.portal.kernel.util.OrderByComparator<Article>
+			orderByComparator);
+
+	/**
+	 * Returns the articles before and after the current article in the ordered set where issueNumber = &#63;.
+	 *
+	 * @param articleId the primary key of the current article
+	 * @param issueNumber the issue number
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next article
+	 * @throws NoSuchArticleException if a article with the primary key could not be found
+	 */
+	public Article[] findByAbyI_PrevAndNext(
+			long articleId, int issueNumber,
+			com.liferay.portal.kernel.util.OrderByComparator<Article>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Removes all the articles where issueNumber = &#63; from the database.
+	 *
+	 * @param issueNumber the issue number
+	 */
+	public void removeByAbyI(int issueNumber);
+
+	/**
+	 * Returns the number of articles where issueNumber = &#63;.
+	 *
+	 * @param issueNumber the issue number
+	 * @return the number of matching articles
+	 */
+	public int countByAbyI(int issueNumber);
+
+	/**
 	 * Caches the article in the entity cache if it is enabled.
 	 *
 	 * @param article the article

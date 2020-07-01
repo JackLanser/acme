@@ -1,0 +1,1 @@
+create index IX_9E573D9C on NewsLetter_Article (issueNumber);

@@ -103,6 +103,8 @@ public class ArticleModelImpl
 
 	public static final long ARTICLEID_COLUMN_BITMASK = 1L;
 
+	public static final long ISSUENUMBER_COLUMN_BITMASK = 2L;
+
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
 	}
@@ -336,7 +338,19 @@ public class ArticleModelImpl
 
 	@Override
 	public void setIssueNumber(int issueNumber) {
+		_columnBitmask |= ISSUENUMBER_COLUMN_BITMASK;
+
+		if (!_setOriginalIssueNumber) {
+			_setOriginalIssueNumber = true;
+
+			_originalIssueNumber = _issueNumber;
+		}
+
 		_issueNumber = issueNumber;
+	}
+
+	public int getOriginalIssueNumber() {
+		return _originalIssueNumber;
 	}
 
 	@JSON
@@ -506,6 +520,10 @@ public class ArticleModelImpl
 
 		articleModelImpl._setOriginalArticleId = false;
 
+		articleModelImpl._originalIssueNumber = articleModelImpl._issueNumber;
+
+		articleModelImpl._setOriginalIssueNumber = false;
+
 		articleModelImpl._columnBitmask = 0;
 	}
 
@@ -623,6 +641,8 @@ public class ArticleModelImpl
 	private long _originalArticleId;
 	private boolean _setOriginalArticleId;
 	private int _issueNumber;
+	private int _originalIssueNumber;
+	private boolean _setOriginalIssueNumber;
 	private String _title;
 	private String _author;
 	private int _order;

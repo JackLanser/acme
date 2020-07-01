@@ -188,16 +188,22 @@ public class IssueLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.amf.newsletter.model.Issue fetchByIssueId(
+		long primaryKey) {
+
+		return getService().fetchByIssueId(primaryKey);
+	}
+
 	public static com.liferay.amf.newsletter.model.Issue fetchIssue(
 		long issueId) {
 
 		return getService().fetchIssue(issueId);
 	}
 
-	public static com.liferay.amf.newsletter.model.Issue findByIssueId(
-		long primaryKey) {
+	public static java.util.List<com.liferay.amf.newsletter.model.Issue>
+		findAllIssues() {
 
-		return getService().findByIssueId(primaryKey);
+		return getService().findAllIssues();
 	}
 
 	public static com.liferay.amf.newsletter.model.Issue generateIssue(

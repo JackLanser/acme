@@ -187,15 +187,22 @@ public class IssueLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.amf.newsletter.model.Issue fetchByIssueId(
+		long primaryKey) {
+
+		return _issueLocalService.fetchByIssueId(primaryKey);
+	}
+
+	@Override
 	public com.liferay.amf.newsletter.model.Issue fetchIssue(long issueId) {
 		return _issueLocalService.fetchIssue(issueId);
 	}
 
 	@Override
-	public com.liferay.amf.newsletter.model.Issue findByIssueId(
-		long primaryKey) {
+	public java.util.List<com.liferay.amf.newsletter.model.Issue>
+		findAllIssues() {
 
-		return _issueLocalService.findByIssueId(primaryKey);
+		return _issueLocalService.findAllIssues();
 	}
 
 	@Override

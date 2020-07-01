@@ -176,9 +176,12 @@ public interface IssueLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Issue fetchByIssueId(long primaryKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Issue fetchIssue(long issueId);
 
-	public Issue findByIssueId(long primaryKey);
+	public List<Issue> findAllIssues();
 
 	public Issue generateIssue(String xmlString, long primaryKey)
 		throws DocumentException;

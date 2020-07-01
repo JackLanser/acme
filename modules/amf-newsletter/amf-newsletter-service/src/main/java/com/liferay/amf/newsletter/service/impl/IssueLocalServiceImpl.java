@@ -57,7 +57,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 */
 	
 	public void handleIssueEvents(String xmlString, long primaryKey) {
-		Issue issue = findByIssueId(primaryKey);
+		Issue issue = fetchByIssueId(primaryKey);
 		
 		if(issue == null) {
 			addIssue(xmlString, primaryKey);
@@ -81,7 +81,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	
 	public void updateIssue(String xmlString, long primaryKey) {
 		try {
-			Issue issue = findByIssueId(primaryKey);
+			Issue issue = fetchByIssueId(primaryKey);
 			
 			updateIssueValues(issue, xmlString);
 			
@@ -124,7 +124,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	}
 	
 	public Issue deleteIssue(long primaryKey) throws PortalException {
-		Issue issue = findByIssueId(primaryKey);
+		Issue issue = fetchByIssueId(primaryKey);
 		if(issue == null) return null;
 		return super.deleteIssue(issue);
 	}
@@ -135,8 +135,12 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return doc;
 	}
 	
-	public Issue findByIssueId(long primaryKey){
+	public Issue fetchByIssueId(long primaryKey){
 		return _issuePersistence.fetchByPrimaryKey(primaryKey);
+	}
+	
+	public List<Issue> findAllIssues(){
+		return _issuePersistence.findAll();
 	}
 	
 	@Reference

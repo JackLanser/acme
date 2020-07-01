@@ -9,13 +9,13 @@
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset markupView="lexicon">
 				<aui:row>
-					<p>Issue: ${issue.issueNumber}, ${fn:substring(issue.issueDate, 0, 10)} ${fn:substring(issue.issueDate,24, 28)}</p>
+					<h4>Issue: #${issue.issueNumber}, ${fn:substring(issue.issueDate, 0, 10)} ${fn:substring(issue.issueDate,24, 28)}</h4>
 				</aui:row>
 				<aui:row>
 					<h1>${issue.title}</h1>
 				</aui:row>
 				<aui:row>
-					<h5>${issue.description}</h5>
+					<p>${issue.description}</p>
 				</aui:row>
 			</aui:fieldset>
 		</aui:fieldset-group>

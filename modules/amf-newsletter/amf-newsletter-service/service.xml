@@ -42,6 +42,10 @@
         <finder name="ArticleId" return-type="Collection">
 			<finder-column name="articleId"></finder-column>
 		</finder>
+		
+		<finder name="AbyI" return-type="Collection">
+			<finder-column name="issueNumber"></finder-column>
+		</finder>
         
         
 	</entity>

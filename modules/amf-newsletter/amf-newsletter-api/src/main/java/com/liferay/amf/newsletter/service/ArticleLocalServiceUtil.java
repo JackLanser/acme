@@ -194,6 +194,12 @@ public class ArticleLocalServiceUtil {
 		return getService().fetchArticle(articleId);
 	}
 
+	public static java.util.List<com.liferay.amf.newsletter.model.Article>
+		findArticlesByIssueNumber(int issueNumber) {
+
+		return getService().findArticlesByIssueNumber(issueNumber);
+	}
+
 	public static com.liferay.amf.newsletter.model.Article findByArticleId(
 		long primaryKey) {
 

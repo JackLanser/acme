@@ -178,6 +178,8 @@ public interface ArticleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Article fetchArticle(long articleId);
 
+	public List<Article> findArticlesByIssueNumber(int issueNumber);
+
 	public Article findByArticleId(long primaryKey);
 
 	public Article generateArticle(String xmlString, long primaryKey)

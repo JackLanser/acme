@@ -197,6 +197,13 @@ public class ArticleLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.amf.newsletter.model.Article>
+		findArticlesByIssueNumber(int issueNumber) {
+
+		return _articleLocalService.findArticlesByIssueNumber(issueNumber);
+	}
+
+	@Override
 	public com.liferay.amf.newsletter.model.Article findByArticleId(
 		long primaryKey) {
 

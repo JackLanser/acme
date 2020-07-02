@@ -19,7 +19,6 @@ import com.liferay.amf.newsletter.service.base.ArticleLocalServiceBaseImpl;
 import com.liferay.amf.newsletter.service.persistence.ArticlePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Node;
@@ -49,104 +48,129 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ArticleLocalServiceImpl extends ArticleLocalServiceBaseImpl {
 
-	/*
+	public void addArticle(String xmlString, long primaryKey) {
+		try {
+			Article article = generateArticle(xmlString, primaryKey);
+
+			super.addArticle(article);
+		}
+		catch (DocumentException e) {
+			System.out.println("Error in the add article");
+			e.printStackTrace();
+		}
+	}
+
+	public Article deleteArticle(long primaryKey) throws PortalException {
+		Article article = findByArticleId(primaryKey);
+
+		if (article == null)
+
+			return null;
+
+		return super.deleteArticle(article);
+	}
+
+	public List<Article> findArticlesByIssueNumber(int issueNumber) {
+		return _articlePersistence.findByAbyI(issueNumber);
+	}
+
+	public Article findByArticleId(long primaryKey) {
+		return _articlePersistence.fetchByPrimaryKey(primaryKey);
+	}
+
+	public Article generateArticle(String xmlString, long primaryKey)
+		throws DocumentException {
+
+		Document content = loadXMLFromTitle(xmlString);
+
+		Node issueNumber = content.selectSingleNode(
+			"/root/dynamic-element[@name='IssueNumber']/dynamic-content");
+		Node issueTitle = content.selectSingleNode(
+			"/root/dynamic-element[@name='Title']/dynamic-content");
+		Node order = content.selectSingleNode(
+			"/root/dynamic-element[@name='Order']/dynamic-content");
+		Node textContent = content.selectSingleNode(
+			"/root/dynamic-element[@name='Content']/dynamic-content");
+		Node author = content.selectSingleNode(
+			"/root/dynamic-element[@name='Author']/dynamic-content");
+
+		Article article = createArticle(primaryKey);
+
+		article.setAuthor(author.getText());
+		article.setContent(textContent.getText());
+		article.setIssueNumber(Integer.valueOf(issueNumber.getText()));
+		article.setTitle(issueTitle.getText());
+		article.setOrder(Integer.valueOf(order.getText()));
+
+		return article;
+	}
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.newsletter.service.ArticleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.newsletter.service.ArticleLocalServiceUtil</code>.
 	 */
-	
 	public void handleArticleEvents(String xmlString, long primaryKey) {
 		Article article = findByArticleId(primaryKey);
-		if(article == null) {
+
+		if (article == null) {
 			addArticle(xmlString, primaryKey);
 		}
 		else {
 			updateArticle(xmlString, primaryKey);
 		}
 	}
-	
-	public void addArticle(String xmlString, long primaryKey) {
-		try {
-			Article article = generateArticle(xmlString, primaryKey);
-			super.addArticle(article);
-		}
-		catch(DocumentException e) {
-			System.out.println("Error in the add article");
-			e.printStackTrace();
-		}
+
+	public Document loadXMLFromTitle(String title) throws DocumentException {
+		return SAXReaderUtil.read(title);
 	}
-	
+
 	public void updateArticle(String xmlString, long primaryKey) {
 		try {
 			Article article = findByArticleId(primaryKey);
-			
+
 			updateArticleValues(article, xmlString);
-			
+
 			super.updateArticle(article);
 		}
-		catch(DocumentException e) {
+		catch (DocumentException e) {
 			System.out.println("Error in the update article");
 			e.printStackTrace();
 		}
 	}
-	
-	public void updateArticleValues(Article article, String xmlString) throws DocumentException{
+
+	public void updateArticleValues(Article article, String xmlString)
+		throws DocumentException {
+
 		Document content = loadXMLFromTitle(xmlString);
-		
-		Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
-		Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='Title']/dynamic-content");
-		Node order = content.selectSingleNode("/root/dynamic-element[@name='Order']/dynamic-content");
-		Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
-		Node author = content.selectSingleNode("/root/dynamic-element[@name='Author']/dynamic-content");
-		
+
+		Node issueNumber = content.selectSingleNode(
+			"/root/dynamic-element[@name='IssueNumber']/dynamic-content");
+
+		Node issueTitle = content.selectSingleNode(
+			"/root/dynamic-element[@name='Title']/dynamic-content");
+
+		Node order = content.selectSingleNode(
+			"/root/dynamic-element[@name='Order']/dynamic-content");
+
+		Node textContent = content.selectSingleNode(
+			"/root/dynamic-element[@name='Content']/dynamic-content");
+
+		Node author = content.selectSingleNode(
+			"/root/dynamic-element[@name='Author']/dynamic-content");
+
 		article.setAuthor(author.getText());
+
 		article.setContent(textContent.getText());
+
 		article.setIssueNumber(Integer.valueOf(issueNumber.getText()));
+
 		article.setTitle(issueTitle.getText());
+
 		article.setOrder(Integer.valueOf(order.getText()));
-	}
-	
-	public Article generateArticle(String xmlString, long primaryKey) throws DocumentException {
-		Document content = loadXMLFromTitle(xmlString);
-		
-		Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
-		Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='Title']/dynamic-content");
-		Node order = content.selectSingleNode("/root/dynamic-element[@name='Order']/dynamic-content");
-		Node textContent = content.selectSingleNode("/root/dynamic-element[@name='Content']/dynamic-content");
-		Node author = content.selectSingleNode("/root/dynamic-element[@name='Author']/dynamic-content");
-		
-		Article article = createArticle(primaryKey);
-		
-		article.setAuthor(author.getText());
-		article.setContent(textContent.getText());
-		article.setIssueNumber(Integer.valueOf(issueNumber.getText()));
-		article.setTitle(issueTitle.getText());
-		article.setOrder(Integer.valueOf(order.getText()));
-		
-		return article;
-	}
-	
-	public Article deleteArticle(long primaryKey) throws PortalException {
-		Article article = findByArticleId(primaryKey);
-		if(article == null) return null;
-		return super.deleteArticle(article);
 	}
 
-	
-	public Document loadXMLFromTitle(String title) throws DocumentException
-	{
-	    Document doc = SAXReaderUtil.read(title);
-		return doc;
-	}
-	
-	public Article findByArticleId(long primaryKey) {
-		return _articlePersistence.fetchByPrimaryKey(primaryKey);
-	}
-	
-	public List<Article> findArticlesByIssueNumber(int issueNumber){
-		return _articlePersistence.findByAbyI(issueNumber);
-	}
-	
 	@Reference
 	private ArticlePersistence _articlePersistence;
+
 }

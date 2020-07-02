@@ -239,6 +239,11 @@ public interface IssueLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>IssueLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>IssueLocalServiceUtil</code>.
+	 */
 	public void handleIssueEvents(String xmlString, long primaryKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

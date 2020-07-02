@@ -19,13 +19,13 @@ import com.liferay.amf.newsletter.service.base.IssueLocalServiceBaseImpl;
 import com.liferay.amf.newsletter.service.persistence.IssuePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.sql.Date;
+
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,100 +50,115 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 
-	/*
+	public void addIssue(String xmlString, long primaryKey) {
+		try {
+			Issue issue = generateIssue(xmlString, primaryKey);
+
+			super.addIssue(issue);
+		}
+		catch (DocumentException e) {
+			System.out.println("Error adding issue");
+			e.printStackTrace();
+		}
+	}
+
+	public Issue deleteIssue(long primaryKey) throws PortalException {
+		Issue issue = fetchByIssueId(primaryKey);
+
+		if (issue == null)
+
+			return null;
+
+		return super.deleteIssue(issue);
+	}
+
+	public Issue fetchByIssueId(long primaryKey) {
+		return _issuePersistence.fetchByPrimaryKey(primaryKey);
+	}
+
+	public List<Issue> findAllIssues() {
+		return _issuePersistence.findAll();
+	}
+
+	public Issue generateIssue(String xmlString, long primaryKey)
+		throws DocumentException {
+
+		Document content = loadXMLFromTitle(xmlString);
+
+		Node issueNumber = content.selectSingleNode(
+			"/root/dynamic-element[@name='IssueNumber']/dynamic-content");
+		Node issueTitle = content.selectSingleNode(
+			"/root/dynamic-element[@name='IssueTitle']/dynamic-content");
+		Node description = content.selectSingleNode(
+			"/root/dynamic-element[@name='Description']/dynamic-content");
+		Node issueDate = content.selectSingleNode(
+			"/root/dynamic-element[@name='IssueDate']/dynamic-content");
+
+		Issue issue = createIssue(primaryKey);
+
+		issue.setIssueNumber(Integer.valueOf(issueNumber.getText()));
+		issue.setTitle(issueTitle.getText());
+		issue.setDescription(description.getText());
+		issue.setIssueDate(Date.valueOf(issueDate.getText()));
+
+		return issue;
+	}
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.amf.newsletter.service.IssueLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.amf.newsletter.service.IssueLocalServiceUtil</code>.
 	 */
-	
 	public void handleIssueEvents(String xmlString, long primaryKey) {
 		Issue issue = fetchByIssueId(primaryKey);
-		
-		if(issue == null) {
+
+		if (issue == null) {
 			addIssue(xmlString, primaryKey);
 		}
 		else {
 			updateIssue(xmlString, primaryKey);
 		}
 	}
-	
-	public void addIssue(String xmlString, long primaryKey) {
-		try {
-			Issue issue = generateIssue(xmlString, primaryKey);
-			
-			super.addIssue(issue);
-			
-		} catch(DocumentException e) {
-			System.out.println("Error adding issue");
-			e.printStackTrace();
-		}
+
+	public Document loadXMLFromTitle(String title) throws DocumentException {
+		return SAXReaderUtil.read(title);
 	}
-	
+
 	public void updateIssue(String xmlString, long primaryKey) {
 		try {
 			Issue issue = fetchByIssueId(primaryKey);
-			
+
 			updateIssueValues(issue, xmlString);
-			
+
 			super.updateIssue(issue);
-			
-		} catch(DocumentException e) {
+		}
+		catch (DocumentException e) {
 			System.out.println("Error updating issue");
 			e.printStackTrace();
 		}
 	}
-	public void updateIssueValues(Issue issue, String xmlString) throws DocumentException {
+
+	public void updateIssueValues(Issue issue, String xmlString)
+		throws DocumentException {
+
 		Document content = loadXMLFromTitle(xmlString);
-		Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
-		Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='IssueTitle']/dynamic-content");
-		Node description = content.selectSingleNode("/root/dynamic-element[@name='Description']/dynamic-content");
-		Node issueDate = content.selectSingleNode("/root/dynamic-element[@name='IssueDate']/dynamic-content");
-		
+
+		Node issueNumber = content.selectSingleNode(
+			"/root/dynamic-element[@name='IssueNumber']/dynamic-content");
+		Node issueTitle = content.selectSingleNode(
+			"/root/dynamic-element[@name='IssueTitle']/dynamic-content");
+		Node description = content.selectSingleNode(
+			"/root/dynamic-element[@name='Description']/dynamic-content");
+		Node issueDate = content.selectSingleNode(
+			"/root/dynamic-element[@name='IssueDate']/dynamic-content");
+
 		issue.setIssueNumber(Integer.valueOf(issueNumber.getText()));
 		issue.setTitle(issueTitle.getText());
 		issue.setDescription(description.getText());
 		issue.setIssueDate(Date.valueOf(issueDate.getText()));
 	}
 
-	public Issue generateIssue(String xmlString, long primaryKey) throws DocumentException {
-		Document content = loadXMLFromTitle(xmlString);
-		
-		Node issueNumber = content.selectSingleNode("/root/dynamic-element[@name='IssueNumber']/dynamic-content");
-		Node issueTitle = content.selectSingleNode("/root/dynamic-element[@name='IssueTitle']/dynamic-content");
-		Node description = content.selectSingleNode("/root/dynamic-element[@name='Description']/dynamic-content");
-		Node issueDate = content.selectSingleNode("/root/dynamic-element[@name='IssueDate']/dynamic-content");
-		
-		Issue issue = createIssue(primaryKey);
-		
-		issue.setIssueNumber(Integer.valueOf(issueNumber.getText()));
-		issue.setTitle(issueTitle.getText());
-		issue.setDescription(description.getText());
-		issue.setIssueDate(Date.valueOf(issueDate.getText()));
-		
-		return issue;
-	}
-	
-	public Issue deleteIssue(long primaryKey) throws PortalException {
-		Issue issue = fetchByIssueId(primaryKey);
-		if(issue == null) return null;
-		return super.deleteIssue(issue);
-	}
-	
-	public Document loadXMLFromTitle(String title) throws DocumentException
-	{
-	    Document doc = SAXReaderUtil.read(title);
-		return doc;
-	}
-	
-	public Issue fetchByIssueId(long primaryKey){
-		return _issuePersistence.fetchByPrimaryKey(primaryKey);
-	}
-	
-	public List<Issue> findAllIssues(){
-		return _issuePersistence.findAll();
-	}
-	
 	@Reference
 	private IssuePersistence _issuePersistence;
-	
+
 }

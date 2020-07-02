@@ -284,6 +284,11 @@ public class IssueLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>IssueLocalService</code> via injection or a <code>ServiceTracker</code> or use <code>IssueLocalServiceUtil</code>.
+	 */
 	public static void handleIssueEvents(String xmlString, long primaryKey) {
 		getService().handleIssueEvents(xmlString, primaryKey);
 	}

@@ -4,27 +4,7 @@
 <service-builder dependency-injector="ds" package-path="com.liferay.amf.newsletter">
 	<namespace>NewsLetter</namespace>
 	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" remote-service="false" session-factory="sampleSessionFactory" table="foo" tx-manager="sampleTransactionManager uuid="true"">-->
-	<entity name="Issue" local-service="true">
-
-
-		<!-- PK fields -->
-
-		<!-- Group instance -->
-
-		<!-- Audit fields -->
-        <column name="issueNumber" type="int" primary="false"></column>
-        <column name="title" type="String"></column>
-        <column name="description" type="String"></column>
-        <column name="issueDate" type="Date"></column>
-        <column name="byline" type="String"></column>
-        <column name="issueId" primary="true" type="long"></column>
-        
-        <finder name="IssueId" return-type="Collection">
-			<finder-column name="issueId"></finder-column>
-		</finder>
-        
-	</entity>
-	<entity name="Article" local-service="true">
+	<entity local-service="true" name="Article">
 
 		<!-- PK fields -->
 
@@ -33,20 +13,39 @@
 		<!-- Group instance -->
 
 		<!-- Audit fields -->
-        <column name="issueNumber" type="int"></column>
-        <column name="title" type="String"></column>
-        <column name="author" type="String"></column>
-        <column name="order" type="int"></column>
-        <column name="content" type="String"></column>
-        
-        <finder name="ArticleId" return-type="Collection">
+		<column name="issueNumber" type="int"></column>
+		<column name="title" type="String"></column>
+		<column name="author" type="String"></column>
+		<column name="order" type="int"></column>
+		<column name="content" type="String"></column>
+
+		<finder name="ArticleId" return-type="Collection">
 			<finder-column name="articleId"></finder-column>
 		</finder>
-		
+
 		<finder name="AbyI" return-type="Collection">
 			<finder-column name="issueNumber"></finder-column>
 		</finder>
-        
-        
+
 	</entity>
+	<entity local-service="true" name="Issue">
+
+		<!-- PK fields -->
+
+		<!-- Group instance -->
+
+		<!-- Audit fields -->
+		<column name="issueNumber" type="int" primary="false"></column>
+		<column name="title" type="String"></column>
+		<column name="description" type="String"></column>
+		<column name="issueDate" type="Date"></column>
+		<column name="byline" type="String"></column>
+		<column name="issueId" primary="true" type="long"></column>
+
+		<finder name="IssueId" return-type="Collection">
+			<finder-column name="issueId"></finder-column>
+		</finder>
+
+	</entity>
+
 </service-builder>

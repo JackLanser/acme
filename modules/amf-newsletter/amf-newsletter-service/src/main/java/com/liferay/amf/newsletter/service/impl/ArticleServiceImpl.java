@@ -41,9 +41,10 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ArticleServiceImpl extends ArticleServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.amf.newsletter.service.ArticleServiceUtil</code> to access the article remote service.
 	 */
+
 }

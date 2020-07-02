@@ -285,6 +285,11 @@ public class ArticleLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>ArticleLocalService</code> via injection or a <code>ServiceTracker</code> or use <code>ArticleLocalServiceUtil</code>.
+	 */
 	public static void handleArticleEvents(String xmlString, long primaryKey) {
 		getService().handleArticleEvents(xmlString, primaryKey);
 	}

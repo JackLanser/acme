@@ -25,7 +25,7 @@ package com.liferay.amf.newsletter.model.impl;
  */
 public class ArticleImpl extends ArticleBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a article model instance should use the {@link com.liferay.amf.newsletter.model.Article} interface instead.

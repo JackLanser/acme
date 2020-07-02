@@ -295,6 +295,11 @@ public class ArticleLocalServiceWrapper
 		return _articleLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>ArticleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ArticleLocalServiceUtil</code>.
+	 */
 	@Override
 	public void handleArticleEvents(String xmlString, long primaryKey) {
 		_articleLocalService.handleArticleEvents(xmlString, primaryKey);

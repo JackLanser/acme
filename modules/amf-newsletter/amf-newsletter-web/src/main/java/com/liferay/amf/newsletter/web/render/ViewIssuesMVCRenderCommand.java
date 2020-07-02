@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.amf.newsletter.web.render;
 
 import com.liferay.amf.newsletter.model.Article;
@@ -18,31 +32,43 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+/**
+ * @author liferay
+ */
 @Component(
-		immediate = true,
-		property = {
-			"javax.portlet.name=" + NewsletterPortletKeys.NEWSLETTER,
-			"mvc.command.name=/", "mvc.command.name=" + MVCCommandNames.VIEW_ISSUE
-		},
-		service = MVCRenderCommand.class
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + NewsletterPortletKeys.NEWSLETTER,
+		"mvc.command.name=/", "mvc.command.name=" + MVCCommandNames.VIEW_ISSUE
+	},
+	service = MVCRenderCommand.class
 )
-public class ViewIssuesMVCRenderCommand implements MVCRenderCommand{
-	
+public class ViewIssuesMVCRenderCommand implements MVCRenderCommand {
+
 	@Override
-	public String render(RenderRequest renderRequest, RenderResponse renderResponse) {
-		Map<Issue, List<Article>> issueItems = new HashMap<Issue, List<Article>>();
+	public String render(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		Map<Issue, List<Article>> issueItems = new HashMap<>();
 		List<Issue> issues = _issueLocalService.findAllIssues();
-		for(Issue i : issues) {
-			List<Article> value = _ArticleLocalService.findArticlesByIssueNumber(i.getIssueNumber());
+
+		for (Issue i : issues) {
+			List<Article> value =
+				_articleLocalService.findArticlesByIssueNumber(
+					i.getIssueNumber());
+
 			issueItems.put(i, value);
 		}
+
 		renderRequest.setAttribute("issues", issueItems);
+
 		return "/view.jsp";
 	}
 
 	@Reference
-	private IssueLocalService _issueLocalService;
-	
+	private ArticleLocalService _articleLocalService;
+
 	@Reference
-	private ArticleLocalService _ArticleLocalService;
+	private IssueLocalService _issueLocalService;
+
 }

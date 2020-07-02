@@ -238,6 +238,11 @@ public interface ArticleLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>ArticleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ArticleLocalServiceUtil</code>.
+	 */
 	public void handleArticleEvents(String xmlString, long primaryKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
